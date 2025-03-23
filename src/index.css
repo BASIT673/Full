@@ -1,0 +1,24 @@
+/* Add to your global CSS file */
+/* body {
+  font-family: "Poppins", sans-serif;
+} */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body {
+  font-family: "Inter", sans-serif;
+}
+* {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-x: hidden;
+    scrollbar-width: none;
+  }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
