@@ -1523,7 +1523,7 @@ const Footer = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-6 md:mb-0">
-              <h3 className="text-2xl font-bold text-orange-800">Get Travel Deals and Updates</h3>
+              <h3 className="text-2xl font-bold text-gray-800">Get Travel Deals and Updates</h3>
               <p className="text-orange-500 mt-2">Subscribe to our newsletter for exclusive offers and travel inspiration.</p>
             </div>
             <div className="w-full md:w-96">
@@ -1714,9 +1714,9 @@ const Footer = () => {
           <h4 className="text-white text-lg font-semibold mb-6" id="destinations-heading">Popular Destinations</h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" aria-labelledby="destinations-heading">
             {[
-              "Bali, Indonesia", "Paris, France", "Santorini, Greece", "Tokyo, Japan",
-              "New York, USA", "Maldives", "Rome, Italy", "Dubai, UAE",
-              "Barcelona, Spain", "London, UK", "Bangkok, Thailand", "Cairo, Egypt"
+              "Srinagar", "Gulmarg", "Pahalgam", "Sonmarg", 
+      "Leh", "Pulwama", "Kupwara", "Anantnag", 
+      "Baramulla", "Doodhpathri", "Kargil", "Zanskar Valley" 
             ].map((destination, index) => (
               <a 
                 key={destination} 
@@ -1730,6 +1730,8 @@ const Footer = () => {
           </div>
         </div>
         
+
+
         {/* Payment & Certification */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -1737,19 +1739,19 @@ const Footer = () => {
               <h5 className="text-white text-base font-medium mb-4" id="payment-heading">We Accept</h5>
               <div className="flex flex-wrap gap-3" aria-labelledby="payment-heading">
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="./images/Hero.jpg" alt="Visa" className="h-6" /> */}
+                  <img src="./images/Hero.jpg" alt="Visa" className="h-6" />
                 </div>
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="/api/placeholder/40/25" alt="Mastercard" className="h-6" /> */}
+                  <img src="/api/placeholder/40/25" alt="Mastercard" className="h-6" />
                 </div>
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="/api/placeholder/40/25" alt="Amex" className="h-6" /> */}
+                  <img src="/api/placeholder/40/25" alt="Amex" className="h-6" />
                 </div>
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="/api/placeholder/40/25" alt="PayPal" className="h-6" /> */}
+                  <img src="/api/placeholder/40/25" alt="PayPal" className="h-6" />
                 </div>
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="/api/placeholder/40/25" alt="ApplePay" className="h-6" /> */}
+                  <img src="/api/placeholder/40/25" alt="ApplePay" className="h-6" />
                 </div>
               </div>
             </div>
@@ -1757,13 +1759,13 @@ const Footer = () => {
               <h5 className="text-white text-base font-medium mb-4" id="certification-heading">Verified By</h5>
               <div className="flex gap-4" aria-labelledby="certification-heading">
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="/api/placeholder/60/30" alt="IATA" className="h-8" /> */}
+                  <img src="/api/placeholder/60/30" alt="IATA" className="h-8" />
                 </div>
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="/api/placeholder/60/30" alt="ASTA" className="h-8" /> */}
+                  <img src="/api/placeholder/60/30" alt="ASTA" className="h-8" />
                 </div>
                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
-                  {/* <img src="/api/placeholder/60/30" alt="SSL Security" className="h-8" /> */}
+                  <img src="/api/placeholder/60/30" alt="SSL Security" className="h-8" />
                 </div>
               </div>
             </div>
@@ -1776,7 +1778,7 @@ const Footer = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-500 mb-4 md:mb-0">
-              © {currentYear} WanderWise. All rights reserved.
+              © {currentYear} Kashmir Travels. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
               <a 

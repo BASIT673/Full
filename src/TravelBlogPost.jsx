@@ -2370,10 +2370,9 @@ const TravelBlogPost = () => {
     handleCloseModal, 
     PlanJourneyModal 
   } = usePlanJourney();
-  
   useEffect(() => {
     setIsLoading(true);
-    fetch('http://localhost:5000/api/blogsection')
+    fetch('https://backend-1-7zwm.onrender.com/api/blogsection')
       .then((res) => res.json())
       .then((data) => {
         console.log('API Response:', data); // Debugging
@@ -2420,6 +2419,56 @@ const TravelBlogPost = () => {
         setIsLoading(false);
       });
   }, []);
+  
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetch('http://localhost:5000/api/blogsection')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log('API Response:', data); // Debugging
+  //       if (Array.isArray(data)) {
+  //         setBlogData(data); // Set the entire array of posts
+  //         // Initialize likes for each post
+  //         const initialLikes = {};
+  //         data.forEach((post, index) => {
+  //           initialLikes[index] = { count: 0, isLiked: false };
+  //         });
+  //         setLikes(initialLikes);
+  //       }
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error fetching blog data:', err);
+  //       // Provide fallback data for demo purposes
+  //       const fallbackData = [
+  //         {
+  //           title: "Exploring the Majestic Landscapes of New Zealand",
+  //           subtitle: "A journey through the land of the long white cloud",
+  //           location: "New Zealand",
+  //           dateRange: { start: "2024-06-15", end: "2024-06-30" },
+  //           duration: "2 weeks",
+  //           featuredImage: "/api/placeholder/800/400",
+  //           imageCaption: "Panoramic view of Milford Sound, New Zealand",
+  //           highlights: [
+  //             { title: "Milford Sound", description: "Cruise through the stunning fjords surrounded by ancient rainforest." },
+  //             { title: "Queenstown", description: "The adventure capital offering bungee jumping, skiing, and jet boating." },
+  //             { title: "Rotorua", description: "Experience geothermal wonders and Maori cultural performances." }
+  //           ],
+  //           narrative: "New Zealand's landscapes are nothing short of extraordinary. From the moment you arrive, you're enveloped in a world where nature reigns supreme. Towering mountains, crystal-clear lakes, and lush forests create a tapestry of natural beauty that feels almost surreal. During our two-week adventure, we traversed both the North and South Islands, each day bringing new wonders and unexpected discoveries. The locals, with their warm hospitality and deep connection to the land, made our journey even more meaningful. Whether hiking through ancient forests or sailing along dramatic coastlines, New Zealand offers an immersive experience that reconnects you with the raw power and beauty of our planet.",
+  //           recommendedActivities: [
+  //             "Hike the Tongariro Alpine Crossing",
+  //             "Take a helicopter tour over Fox and Franz Josef Glaciers",
+  //             "Visit Hobbiton Movie Set in Matamata",
+  //             "Go whale watching in Kaikoura",
+  //             "Explore the glowworm caves in Waitomo"
+  //           ]
+  //         }
+  //       ];
+  //       setBlogData(fallbackData);
+  //       setLikes({ 0: { count: 0, isLiked: false } });
+  //       setIsLoading(false);
+  //     });
+  // }, []);
 
   const handleLike = (index) => {
     setLikes((prevLikes) => {

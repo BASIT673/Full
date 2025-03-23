@@ -102,14 +102,14 @@ const Home = () => {
         {/* <TourQueryForm/> */}
         
     {/* <ItineraryBuilder/> */}
-    <TripPlanner/>
+    {/* <TripPlanner/> */}
 
         {/* <PremiumCertificate/> */}
         {/* <MacroflipInternshipCertificate/> */}
 
         {/* <ToursGrid/> */}
         <RentCARS />
-        {/* <BlogSection/> */}
+        <BlogSection/>
         {/* <HeroSection /> */}
         {/* <TravelBlogPost/> */}
         <ErrorBoundary>

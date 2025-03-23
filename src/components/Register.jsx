@@ -676,7 +676,7 @@ const Register = () => {
     
     try {
       const { confirmPassword, ...dataToSubmit } = formData;
-      const response = await axios.post('http://localhost:5000/api/register', dataToSubmit);
+      const response = await axios.post('https://backend-1-7zwm.onrender.com/api/register', dataToSubmit);
       
       setMessage(response.data.message);
       setLoading(false);

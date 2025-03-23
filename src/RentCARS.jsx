@@ -1849,12 +1849,13 @@ const [selectedCar, setSelectedCar] = useState(null);
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
   const fetchCars = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get('http://localhost:5000/api/cars');
+  
+      const response = await axios.get('https://backend-1-7zwm.onrender.com/api/cars');
+  
       if (response.data) {
         setCars(response.data);
       }
@@ -1865,6 +1866,22 @@ const [selectedCar, setSelectedCar] = useState(null);
       setLoading(false);
     }
   };
+  
+  // const fetchCars = async () => {
+  //   try {
+  //     setLoading(true);
+  //     setError(null);
+  //     const response = await axios.get('http://localhost:5000/api/cars');
+  //     if (response.data) {
+  //       setCars(response.data);
+  //     }
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || err.message || 'Failed to fetch cars');
+  //     console.error('Error fetching cars:', err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const featureIcons = {
     0: Car,
@@ -2993,7 +3010,7 @@ const processRentalPayment = async (rentalDetails) => {
 
     console.log("✅ Request Payload:", payload);
 
-    const orderResponse = await fetch("http://localhost:5000/api/create-order", {
+    const orderResponse = await fetch("https://backend-1-7zwm.onrender.com/api/create-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -3029,7 +3046,7 @@ const processRentalPayment = async (rentalDetails) => {
       handler: async function (response) {
         try {
           console.log("🟢 Payment Successful! Sending verification request...");
-          const verifyResponse = await fetch("http://localhost:5000/api/verify-payment", {
+          const verifyResponse = await fetch("https://backend-1-7zwm.onrender.com/api/verify-payment", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

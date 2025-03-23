@@ -1641,12 +1641,13 @@ const BlogSection = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
   const fetchPosts = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get('http://localhost:5000/api/posts');
+  
+      const response = await axios.get('https://backend-1-7zwm.onrender.com/api/posts');
+  
       if (response.data) {
         setBlogPosts(response.data);
       }
@@ -1657,6 +1658,22 @@ const BlogSection = () => {
       setLoading(false);
     }
   };
+  
+  // const fetchPosts = async () => {
+  //   try {
+  //     setLoading(true);
+  //     setError(null);
+  //     const response = await axios.get('http://localhost:5000/api/posts');
+  //     if (response.data) {
+  //       setBlogPosts(response.data);
+  //     }
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || err.message || 'Failed to fetch blog posts');
+  //     console.error('Error fetching blog posts:', err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // const handleCardClick = (postId) => {
   //   setSelectedPostId(postId);
@@ -2028,7 +2045,7 @@ const renderBlogPost = () => {
     );
   }
   
-  return <TravelBlogPost post={selectedPost} />;
+  return <TravelBlogPost path post={selectedPost} />;
 };
 
 // Updated handleCardClick function to handle ID mapping

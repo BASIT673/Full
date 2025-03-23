@@ -173,7 +173,7 @@ const Login = ({ onClose }) => {
   //   }
   // };
   try {
-    const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+    const response = await axios.post('https://backend-1-7zwm.onrender.com/api/auth/login', formData);
     
     // Instead of directly setting localStorage, use the context's login function
     login(response.data.token, response.data.user);

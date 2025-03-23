@@ -1746,7 +1746,7 @@ const handlePayment = async (item) => {
     const discountAmount = basePrice * (discountPercent / 100);
     const amount = basePrice - discountAmount + 1250; // Base - discount + taxes
     
-    const response = await fetch('http://localhost:5000/api/create-order', {
+    const response = await fetch('https://backend-1-7zwm.onrender.com/api/create-order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1790,7 +1790,7 @@ const handlePayment = async (item) => {
         };
         
         // 3. Verify payment
-        const verifyResponse = await fetch('http://localhost:5000/api/verify-payment', {
+        const verifyResponse = await fetch('https://backend-1-7zwm.onrender.com/api/verify-payment', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

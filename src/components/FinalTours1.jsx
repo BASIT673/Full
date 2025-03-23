@@ -422,10 +422,9 @@ const handleBookNow1 = async () => {
 useEffect(() => {
   const fetchTours = async () => {
     try {
-      // Ensure ngrok URL is correct and active
+      // Ensure URL is correct and active
       const response = await fetch(
-        "https://fab9-2405-201-550a-a815-b13b-c9d1-e63-5d60.ngrok-free.app/api/trending",
-      
+        "https://backend-1-7zwm.onrender.com/api/Grid",
         {
           method: "GET",
           mode: "cors", // Explicitly enabling CORS mode
@@ -435,8 +434,10 @@ useEffect(() => {
           },
         }
       );
+
+      // Log the raw response for debugging
       const text = await response.text();
-      console.log('Raw response:', text.substring(0, 500));
+      console.log("Raw response:", text.substring(0, 500));
 
       // Handle non-200 responses
       if (!response.ok) {
@@ -444,7 +445,7 @@ useEffect(() => {
       }
 
       // Parse the JSON response
-      const data = await response.json();
+      const data = JSON.parse(text);
       setTours(data);
     } catch (err) {
       console.error("Fetch error details:", err);
@@ -456,6 +457,44 @@ useEffect(() => {
 
   fetchTours();
 }, []);
+
+// useEffect(() => {
+//   const fetchTours = async () => {
+//     try {
+//       // Ensure ngrok URL is correct and active
+//       const response = await fetch(
+//         "https://backend-1-7zwm.onrender.com/api/trending",
+      
+//         {
+//           method: "GET",
+//           mode: "cors", // Explicitly enabling CORS mode
+//           headers: {
+//             Accept: "application/json",
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+//       const text = await response.text();
+//       console.log('Raw response:', text.substring(0, 500));
+
+//       // Handle non-200 responses
+//       if (!response.ok) {
+//         throw new Error(`Server error: ${response.status} ${response.statusText}`);
+//       }
+
+//       // Parse the JSON response
+//       const data = await response.json();
+//       setTours(data);
+//     } catch (err) {
+//       console.error("Fetch error details:", err);
+//       setError(err.message);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   fetchTours();
+// }, []);
 // useEffect(() => {
 //   const fetchTours = async () => {
 //     try {
@@ -2128,7 +2167,7 @@ useEffect(() => {
           console.log("Request Payload:", payload);
     
           console.log("🟢 Sending Create Order API Call...");
-          const orderResponse = await fetch('http://localhost:5000/api/create-order', {
+          const orderResponse = await fetch('https://backend-1-7zwm.onrender.com/api/create-order', {
             method: 'POST',
             headers: { 
               'Content-Type': 'application/json',
@@ -2164,7 +2203,7 @@ useEffect(() => {
             handler: async function (response) {
               try {
                 console.log("🟢 Payment Successful! Sending verification request...");
-                const verifyResponse = await fetch('http://localhost:5000/api/verify-payment', {
+                const verifyResponse = await fetch('https://backend-1-7zwm.onrender.com/api/verify-payment', {
                   method: 'POST',
                   headers: { 
                     'Content-Type': 'application/json',

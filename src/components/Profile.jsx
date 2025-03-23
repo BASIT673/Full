@@ -333,7 +333,7 @@ const Profile = () => {
         }
   
         // Fetch user data
-        const userRes = await axios.get("http://localhost:5000/api/auth/me", {
+        const userRes = await axios.get("https://backend-1-7zwm.onrender.com/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("🔥 User API Response:", userRes.data);
@@ -343,7 +343,7 @@ const Profile = () => {
         setUser(userRes.data.user);
   
         // Use user ID to fetch bookings
-        const bookingsRes = await axios.get(`http://localhost:5000/api/user/my-bookings`, {
+        const bookingsRes = await axios.get(`https://backend-1-7zwm.onrender.com/api/user/my-bookings`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   

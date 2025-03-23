@@ -1161,20 +1161,20 @@ const AgentProfileDashboard = () => {
   
   // Sample agent data
   const agent = {
-    name: "Sarah Johnson",
+    name: "",
     agentId: "KT-4872",
-    agency: "Explore Kashmir Tours",
-    email: "sarah.johnson@explorekashmir.com",
-    phone: "+91 9876543210",
-    location: "Srinagar, Kashmir",
-    joinDate: "March 15, 2023",
+    agency: "",
+    email: "",
+    phone: "",
+    location: "",
+    joinDate: "",
     profileImg: "/api/placeholder/150/150",
     stats: {
-      totalBookings: 147,
-      activeBookings: 12,
-      monthlyRevenue: 287500,
-      totalCommission: 45600,
-      conversionRate: 68
+      totalBookings: 0,
+      activeBookings: 0,
+      monthlyRevenue: 0,
+      totalCommission: 0,
+      conversionRate: 0
     }
   };
   

@@ -4471,27 +4471,60 @@ const DestinationGallery = ({ onViewAll }) => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
   const fetchDestinations = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('http://localhost:5000/api/destinations');
-      
+  
+      const response = await fetch('https://backend-1-7zwm.onrender.com/api/destinations', {
+        method: "GET",
+        mode: "cors", // Explicitly enabling CORS mode
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+  
+      // Log the raw response for debugging
+      const text = await response.text();
+      console.log("Raw response:", text.substring(0, 500));
+  
+      // Handle non-200 responses
       if (!response.ok) {
-        throw new Error('Failed to fetch destinations');
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
       }
-      
-      const data = await response.json();
-      console.log(data)
+  
+      // Parse the JSON response
+      const data = JSON.parse(text);
       setDestinationCategories(data);
     } catch (err) {
-      setError(err.message || 'Failed to fetch destinations');
-      console.error('Error fetching destinations:', err);
+      console.error("Error fetching destinations:", err);
+      setError(err.message || "Failed to fetch destinations");
     } finally {
       setLoading(false);
     }
   };
+  
+  // const fetchDestinations = async () => {
+  //   try {
+  //     setLoading(true);
+  //     setError(null);
+  //     const response = await fetch('http://localhost:5000/api/destinations');
+      
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch destinations');
+  //     }
+      
+  //     const data = await response.json();
+  //     console.log(data)
+  //     setDestinationCategories(data);
+  //   } catch (err) {
+  //     setError(err.message || 'Failed to fetch destinations');
+  //     console.error('Error fetching destinations:', err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const featureIcons = {
     map: Map,
@@ -8332,7 +8365,7 @@ const DestinationGallery = ({ onViewAll }) => {
                   console.log("Request Payload:", payload);
             
                   console.log("🟢 Sending Create Order API Call...");
-                  const orderResponse = await fetch('http://localhost:5000/api/create-order', {
+                  const orderResponse = await fetch('https://backend-1-7zwm.onrender.com/api/create-order', {
                     method: 'POST',
                     headers: { 
                       'Content-Type': 'application/json',
@@ -8368,7 +8401,7 @@ const DestinationGallery = ({ onViewAll }) => {
                     handler: async function (response) {
                       try {
                         console.log("🟢 Payment Successful! Sending verification request...");
-                        const verifyResponse = await fetch('http://localhost:5000/api/verify-payment', {
+                        const verifyResponse = await fetch('https://backend-1-7zwm.onrender.com/api/verify-payment', {
                           method: 'POST',
                           headers: { 
                             'Content-Type': 'application/json',

@@ -3333,7 +3333,7 @@ const proceedWithPayment = async (selectedTour, userData, token, calculatedPrice
       console.log("Request Payload:", payload);
 
       console.log("🟢 Sending Create Order API Call...");
-      const orderResponse = await fetch('http://localhost:5000/api/create-order', {
+      const orderResponse = await fetch('https://backend-1-7zwm.onrender.com/api/create-order', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -3369,7 +3369,7 @@ const proceedWithPayment = async (selectedTour, userData, token, calculatedPrice
         handler: async function (response) {
           try {
             console.log("🟢 Payment Successful! Sending verification request...");
-            const verifyResponse = await fetch('http://localhost:5000/api/verify-payment', {
+            const verifyResponse = await fetch('https://backend-1-7zwm.onrender.com/api/verify-payment', {
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json',
@@ -5391,58 +5391,89 @@ const ToursGrid1 = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSortModal, setShowSortModal] = useState(false);
   const [showAllTours, setShowAllTours] = useState(false);
-
   useEffect(() => {
-    let mounted = true;
-    
+    let isMounted = true; // Track mount status
+  
     const fetchTours = async () => {
       setLoading(true);
       setError(null);
-    
+  
       try {
         console.log("Fetching tours...");
-         const response = await fetch(" https://0fb3-2405-201-550a-a815-b13b-c9d1-e63-5d60.ngrok-free.app/api/Grid");
-        // const response = await fetch("http://localhost:5000/api/Grid");
-      //0fb3-2405-201-550a-a815-b13b-c9d1-e63-5d60.ngrok-free.app/api/trending
-      const text = await response.text();
-    console.log('Raw response:', text.substring(0, 500));
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-    
+        const response = await fetch("https://backend-1-7zwm.onrender.com/api/Grid");
+        if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
+  
         const data = await response.json();
         console.log("API response:", data);
-    
-        if (mounted) {
-          if (Array.isArray(data)) {
-            setTours(data);
-          } else if (data.data && Array.isArray(data.data.tours)) {
-            setTours(data.data.tours);
-          } else if (data.tours && Array.isArray(data.tours)) {
-            setTours(data.tours);
-          } else {
-            setTours([]);
-            console.error("Could not find tours array in response", data);
-          }
+  
+        if (isMounted && Array.isArray(data)) {
+          setTours(data);
         }
       } catch (error) {
         console.error("Error fetching tours:", error);
-        if (mounted) {
-          setError(error.message);
-        }
+        if (isMounted) setError(error.message);
       } finally {
-        if (mounted) {
-          setLoading(false);
-        }
+        if (isMounted) setLoading(false);
       }
     };
-    
+  
     fetchTours();
-    
+  
     return () => {
-      mounted = false;
+      isMounted = false; // Cleanup
     };
   }, []);
+  
+  // useEffect(() => {
+  //   let mounted = true;
+    
+  //   const fetchTours = async () => {
+  //     setLoading(true);
+  //     setError(null);
+    
+  //     try {
+  //       console.log("Fetching tours...");
+  //        const response = await fetch(" https://backend-1-7zwm.onrender.com/api/Grid");
+    
+  //     const text = await response.text();
+  //   console.log('Raw response:', text.substring(0, 500));
+  //       if (!response.ok) {
+  //         throw new Error(`Failed to fetch: ${response.status}`);
+  //       }
+    
+  //       const data = await response.json();
+  //       console.log("API response:", data);
+    
+  //       if (mounted) {
+  //         if (Array.isArray(data)) {
+  //           setTours(data);
+  //         } else if (data.data && Array.isArray(data.data.tours)) {
+  //           setTours(data.data.tours);
+  //         } else if (data.tours && Array.isArray(data.tours)) {
+  //           setTours(data.tours);
+  //         } else {
+  //           setTours([]);
+  //           console.error("Could not find tours array in response", data);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching tours:", error);
+  //       if (mounted) {
+  //         setError(error.message);
+  //       }
+  //     } finally {
+  //       if (mounted) {
+  //         setLoading(false);
+  //       }
+  //     }
+  //   };
+    
+  //   fetchTours();
+    
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, []);
 
   const locations = Array.isArray(tours)
     ? [...new Set(tours.map((tour) => tour.location))]
