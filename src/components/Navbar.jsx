@@ -3622,7 +3622,7 @@ const KashmirHeader = () => {
               {/* <a href="/contact" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Contact Us</a> */}
               
               {/* Travel Agent Portal Link */}
-              <a href="/agent-portal" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
+              <a href="/register" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
                 Agent Portal
               </a>
             </nav>
@@ -3752,7 +3752,7 @@ const KashmirHeader = () => {
                 <a href="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Travel Blog</a>
                 {/* <a href="/contact" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Contact Us</a> */}
                 <TripPlanner/>
-                {/* Agent Portal Link */}
+               
                 <a href="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Agent Portal</a>
               
                 {!isAuthenticated ? (
