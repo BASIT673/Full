@@ -1432,6 +1432,427 @@ import React from 'react';
 // export default Footer;
 
 import TourQueryForm from './querfrom';
+// import  { useState, useEffect } from 'react';
+// import { Facebook, Twitter, Instagram, Linkedin, Youtube, Send, Phone, Mail, MapPin, CreditCard, Globe, ArrowUp, Check, AlertCircle } from 'lucide-react';
+
+// const Footer = () => {
+//   const currentYear = new Date().getFullYear();
+//   const [email, setEmail] = useState('');
+//   const [emailError, setEmailError] = useState('');
+//   const [isSubscribed, setIsSubscribed] = useState(false);
+//   const [showBackToTop, setShowBackToTop] = useState(false);
+//   const [currentLanguage, setCurrentLanguage] = useState('English');
+//   const [showForm, setShowForm] = useState(false); // State to manage form visibility
+
+//   const handleFormToggle = () => {
+//     setShowForm(!showForm); // Toggle form visibility
+//   };
+  
+//   // Show back to top button when scrolled down
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       if (window.scrollY > 300) {
+//         setShowBackToTop(true);
+//       } else {
+//         setShowBackToTop(false);
+//       }
+//     };
+    
+//     window.addEventListener('scroll', handleScroll);
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
+  
+//   // Function to scroll back to top
+//   const scrollToTop = () => {
+//     window.scrollTo({
+//       top: 0,
+//       behavior: 'smooth'
+//     });
+//   };
+  
+//   // Email validation
+//   const validateEmail = (email) => {
+//     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+//     return re.test(email);
+//   };
+  
+//   // Handle newsletter form submission
+//   const handleSubscribe = (e) => {
+//     e.preventDefault();
+    
+//     if (!email) {
+//       setEmailError('Email is required');
+//       return;
+//     }
+    
+//     if (!validateEmail(email)) {
+//       setEmailError('Please enter a valid email address');
+//       return;
+//     }
+    
+//     // If validation passes
+//     setEmailError('');
+//     setIsSubscribed(true);
+//     // Here you would typically make an API call to subscribe the user
+    
+//     // Reset form after 3 seconds
+//     setTimeout(() => {
+//       setIsSubscribed(false);
+//       setEmail('');
+//     }, 3000);
+//   };
+  
+//   // List of languages
+//   const languages = [
+//     'English', "Hindi","Urdu",'Español', 'Français', 'Deutsch', 'Italiano', '日本語', '中文'
+//   ];
+  
+//   // Social media profiles with additional info
+//   const socialMedia = [
+//     { icon: <Facebook size={18} />, name: 'Facebook', url: '#', followers: '250K+' },
+//     { icon: <Instagram size={18} />, name: 'Instagram', url: '#', followers: '420K+' },
+//     { icon: <Twitter size={18} />, name: 'Twitter', url: '#', followers: '180K+' },
+//     { icon: <Youtube size={18} />, name: 'YouTube', url: '#', followers: '110K+' },
+//     { icon: <Linkedin size={18} />, name: 'LinkedIn', url: '#', followers: '75K+' }
+//   ];
+//   // bg-gray-900 text-gray-300
+//   return (
+//     <footer className=" bg-gray-900 text-gray-300  relative" role="contentinfo" aria-label="Site footer">
+//       {/* Newsletter Section with Form Validation */}
+//       <div className=" py-10 transition-all duration-300 bg-gradient-to-r from-orange-50 to-amber-50 hover:bg-blue-800">
+//         <div className="container mx-auto px-4">
+//           <div className="flex flex-col md:flex-row items-center justify-between">
+//             <div className="mb-6 md:mb-0">
+//               <h3 className="text-2xl font-bold text-gray-800">Get Travel Deals and Updates</h3>
+//               <p className="text-orange-500 mt-2">Subscribe to our newsletter for exclusive offers and travel inspiration.</p>
+//             </div>
+//             <div className="w-full md:w-96">
+//               <form onSubmit={handleSubscribe} aria-label="Newsletter subscription form">
+//                 <div className="relative">
+//                   <label htmlFor="email-input" className="sr-only">Email address</label>
+//                   <input 
+//                     id="email-input"
+//                     type="email" 
+//                     placeholder="Your email address" 
+//                     className={`w-full py-3 px-4 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${emailError ? 'border-2 border-red-500' : ''}`}
+//                     value={email}
+//                     onChange={(e) => setEmail(e.target.value)}
+//                     aria-describedby={emailError ? "email-error" : undefined}
+//                   />
+//                   {!isSubscribed && (
+//                     <button 
+//                       type="submit"
+//                       className="absolute right-1 top-1 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+//                       aria-label="Subscribe to newsletter"
+//                     >
+//                       <Send size={20} />
+//                     </button>
+//                   )}
+//                   {isSubscribed && (
+//                     <span className="absolute right-1 top-1 bg-green-600 text-white p-2 rounded-lg flex items-center animate-fadeIn">
+//                       <Check size={20} />
+//                     </span>
+//                   )}
+//                 </div>
+//                 {emailError && (
+//                   <p id="email-error" className="text-red-400 text-sm mt-1 flex items-center" role="alert">
+//                     <AlertCircle size={14} className="mr-1" />
+//                     {emailError}
+//                   </p>
+//                 )}
+//                 {isSubscribed && (
+//                   <p className="text-green-400 text-sm mt-1 animate-fadeIn" role="status">
+//                     Thank you for subscribing!
+//                   </p>
+//                 )}
+//               </form>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+      
+//       {/* Language Selector */}
+//       <div className="border-b border-gray-800">
+//         <div className="container mx-auto px-4 py-3">
+//           <div className="flex justify-end">
+//             <div className="relative group">
+//               <button
+//                 className="flex items-center text-gray-400 hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-md px-2 py-1"
+//                 aria-expanded="false"
+//                 aria-haspopup="true"
+//                 aria-label="Select language"
+//               >
+//                 <Globe size={16} className="mr-2" />
+//                 <span>{currentLanguage}</span>
+//               </button>
+//               <div className="absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 hidden group-hover:block z-10">
+//                 <div className="py-1" role="menu" aria-orientation="vertical">
+//                   {languages.map((language) => (
+//                     <button
+//                       key={language}
+//                       className={`block px-4 py-2 text-sm text-left w-full hover:bg-gray-700 focus:outline-none focus:bg-gray-700 transition-colors duration-150 ${language === currentLanguage ? 'text-blue-400' : 'text-gray-300'}`}
+//                       onClick={() => setCurrentLanguage(language)}
+//                       role="menuitem"
+//                     >
+//                       {language}
+//                     </button>
+//                   ))}
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+      
+//       {/* Main Footer Content */}
+//       <div className="container mx-auto px-4 pt-12 pb-8">
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+//           {/* Company Info */}
+//           <div className="lg:col-span-2">
+//             <div className="flex items-center mb-6 transform transition-transform duration-300 hover:scale-105">
+//               {/* <img src="/api/placeholder/45/45" alt="" className="h-10 w-auto mr-2" /> */}
+//               <span className="text-2xl font-bold text-white">Kashmir Travels</span>
+//             </div>
+//             <p className="text-gray-400 mb-6 pr-4">
+//               Your trusted partner for unforgettable travel experiences. We create personalized 
+//               adventures that connect you with cultures, landscapes, and memories that last a lifetime.
+//             </p>
+            
+//             {/* Enhanced Social Media Section */}
+//             <div className="mb-8">
+//               <h5 className="text-white text-base font-medium mb-4">Follow Our Journey</h5>
+//               <div className="flex flex-wrap gap-3">
+//                 {socialMedia.map((platform) => (
+//                   <div key={platform.name} className="relative group">
+//                     <a 
+//                       href={platform.url} 
+//                       className="bg-gray-800 hover:bg-blue-600 rounded-full p-2.5 transition-colors duration-300 block"
+//                       aria-label={`Follow us on ${platform.name}`}
+//                     >
+//                       {platform.icon}
+//                     </a>
+//                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+//                       <div className="bg-gray-800 text-white text-xs rounded py-1 px-2 flex flex-col items-center">
+//                         <span>{platform.name}</span>
+//                         <span className="text-blue-400">{platform.followers}</span>
+//                         <div className="w-2 h-2 bg-gray-800 transform rotate-45 absolute -bottom-1 left-1/2 ml-[-4px]"></div>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 ))}
+//               </div>
+//             </div>
+            
+//             <div className="space-y-3">
+//               <div className="flex items-start">
+//                 <Phone size={16} className="mr-3 mt-1 text-blue-400" />
+//                 <div>
+//                   <p className="text-white font-medium">24/7 Customer Support</p>
+//                   <p className="text-gray-400">
+//                     <a href="tel:+91 9541515012" className="hover:text-blue-400 transition-colors duration-300">+91 9541515012</a>
+//                   </p>
+//                 </div>
+//               </div>
+//               <div className="flex items-start">
+//                 <Mail size={16} className="mr-3 mt-1 text-blue-400" />
+//                 <div>
+//                   <p className="text-gray-400">
+//                     <a href="mailto:support@KashmirTravels.com" className="hover:text-blue-400 transition-colors duration-300">support@KashmirTravels.com</a>
+//                   </p>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+          
+//           {/* Quick Links */}
+//           <div>
+//             <h4 className="text-white text-lg font-semibold mb-6 border-b border-gray-700 pb-2" id="explore-heading">Explore</h4>
+//             <ul className="space-y-3" aria-labelledby="explore-heading">
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Top Destinations</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Tour Packages</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Weekend Getaways</a></li>
+             
+//               <li><a  href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Adventure Tours</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Honeymoon Packages</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Group Tours</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Luxury Escapes</a></li>
+//             </ul>
+           
+//           </div>
+          
+//           {/* Information */}
+//           <div>
+//             <h4 className="text-white text-lg font-semibold mb-6 border-b border-gray-700 pb-2" id="info-heading">Information</h4>
+//             <ul className="space-y-3" aria-labelledby="info-heading">
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">About Us</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Guides</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Blog</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Careers</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Terms & Conditions</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Privacy Policy</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Contact Us</a></li>
+//             </ul>
+//           </div>
+          
+//           {/* Support */}
+//           <div>
+//             <h4 className="text-white text-lg font-semibold mb-6 border-b border-gray-700 pb-2" id="support-heading">Support</h4>
+//             <ul className="space-y-3" aria-labelledby="support-heading">
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Customer Support</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">FAQs</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Booking Process</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Cancellation Policy</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Visa Assistance</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Insurance</a></li>
+//               <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Partner with Us</a></li>
+//             </ul>
+//           </div>
+//         </div>
+        
+//         {/* Destinations Grid - Now with animation */}
+//         <div className="mt-12 pt-8 border-t border-gray-800">
+//           <h4 className="text-white text-lg font-semibold mb-6" id="destinations-heading">Popular Destinations</h4>
+//           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" aria-labelledby="destinations-heading">
+//             {[
+//               "Srinagar", "Gulmarg", "Pahalgam", "Sonmarg", 
+//       "Leh", "Pulwama", "Kupwara", "Anantnag", 
+//       "Baramulla", "Doodhpathri", "Kargil", "Zanskar Valley" 
+//             ].map((destination, index) => (
+//               <a 
+//                 key={destination} 
+//                 href="#" 
+//                 className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-300 transform hover:translate-x-1 hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded px-1"
+//                 style={{ transitionDelay: `${index * 30}ms` }}
+//               >
+//                 {destination}
+//               </a>
+//             ))}
+//           </div>
+//         </div>
+        
+
+
+//         {/* Payment & Certification */}
+//         <div className="mt-12 pt-8 border-t border-gray-800">
+//           <div className="flex flex-col md:flex-row justify-between items-center">
+//             <div className="mb-6 md:mb-0">
+//               <h5 className="text-white text-base font-medium mb-4" id="payment-heading">We Accept</h5>
+//               <div className="flex flex-wrap gap-3" aria-labelledby="payment-heading">
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="./images/Hero.jpg" alt="Visa" className="h-6" />
+//                 </div>
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="/api/placeholder/40/25" alt="Mastercard" className="h-6" />
+//                 </div>
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="/api/placeholder/40/25" alt="Amex" className="h-6" />
+//                 </div>
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="/api/placeholder/40/25" alt="PayPal" className="h-6" />
+//                 </div>
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="/api/placeholder/40/25" alt="ApplePay" className="h-6" />
+//                 </div>
+//               </div>
+//             </div>
+//             <div>
+//               <h5 className="text-white text-base font-medium mb-4" id="certification-heading">Verified By</h5>
+//               <div className="flex gap-4" aria-labelledby="certification-heading">
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="/api/placeholder/60/30" alt="IATA" className="h-8" />
+//                 </div>
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="/api/placeholder/60/30" alt="ASTA" className="h-8" />
+//                 </div>
+//                 <div className="bg-gray-800 p-2 rounded hover:bg-gray-700 transition-colors duration-300">
+//                   <img src="/api/placeholder/60/30" alt="SSL Security" className="h-8" />
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+      
+//       {/* Copyright with improved mobile layout */}
+//       <div className="bg-gray-950 py-6">
+//         <div className="container mx-auto px-4">
+//           <div className="flex flex-col md:flex-row justify-between items-center">
+//             <p className="text-sm text-gray-500 mb-4 md:mb-0">
+//               © {currentYear} Kashmir Travels. All rights reserved.
+//             </p>
+//             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+//               <a 
+//                 href="#" 
+//                 className="hover:text-white transition-colors duration-300 focus:outline-none focus:text-white"
+//                 aria-label="Terms of Service"
+//               >
+//                 Terms of Service
+//               </a>
+//               <span className="hidden md:inline">|</span>
+//               <a 
+//                 href="#" 
+//                 className="hover:text-white transition-colors duration-300 focus:outline-none focus:text-white"
+//                 aria-label="Privacy Policy"
+//               >
+//                 Privacy Policy
+//               </a>
+//               <span className="hidden md:inline">|</span>
+//               <a 
+//                 href="#" 
+//                 className="hover:text-white transition-colors duration-300 focus:outline-none focus:text-white"
+//                 aria-label="Cookies Policy"
+//               >
+//                 Cookies Policy
+//               </a>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+      
+//       {/* Back to Top Button */}
+//       {showBackToTop && (
+//         <button
+//           onClick={scrollToTop}
+//           className="fixed bottom-24 right-6 lg:bottom-6 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 z-30"
+//           aria-label="Back to top"
+//         >
+//           <ArrowUp size={20} />
+//         </button>
+//       )}
+      
+//       {/* App Banner (Mobile Only) - Enhanced for accessibility */}
+//       {/* <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-blue-900 py-3 px-4 shadow-lg z-20">
+//         <div className="flex justify-between items-center">
+//           <div>
+//             <p className="text-white font-medium">Download our App</p>
+//             <p className="text-blue-200 text-sm">Get exclusive mobile deals</p>
+//           </div>
+//           <a 
+//             href="#" 
+//             className="bg-white text-blue-900 px-4 py-2 rounded-lg font-medium text-sm transition-transform duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white"
+//             aria-label="Download our mobile app"
+//           >
+//             Get the App
+//           </a>
+//         </div>
+//       </div> */}
+      
+//       {/* Add global animation styles */}
+//       <style jsx>{`
+//         @keyframes fadeIn {
+//           from { opacity: 0; }
+//           to { opacity: 1; }
+//         }
+//         .animate-fadeIn {
+//           animation: fadeIn 0.3s ease-in-out;
+//         }
+//       `}</style>
+//     </footer>
+//   );
+// };
+
+// export default Footer;
+
 import  { useState, useEffect } from 'react';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Send, Phone, Mail, MapPin, CreditCard, Globe, ArrowUp, Check, AlertCircle } from 'lucide-react';
 
@@ -1515,16 +1936,16 @@ const Footer = () => {
     { icon: <Youtube size={18} />, name: 'YouTube', url: '#', followers: '110K+' },
     { icon: <Linkedin size={18} />, name: 'LinkedIn', url: '#', followers: '75K+' }
   ];
-  // bg-gray-900 text-gray-300
+  
   return (
-    <footer className=" bg-gray-900 text-gray-300  relative" role="contentinfo" aria-label="Site footer">
+    <footer className="bg-gray-900 text-gray-300 relative" role="contentinfo" aria-label="Site footer">
       {/* Newsletter Section with Form Validation */}
-      <div className=" py-10 transition-all duration-300 bg-gradient-to-r from-orange-50 to-amber-50 hover:bg-blue-800">
+      <div className="py-10 transition-all duration-300 bg-gradient-to-r from-orange-100 to-amber-50 hover:from-orange-200 hover:to-amber-100">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-6 md:mb-0">
               <h3 className="text-2xl font-bold text-gray-800">Get Travel Deals and Updates</h3>
-              <p className="text-orange-500 mt-2">Subscribe to our newsletter for exclusive offers and travel inspiration.</p>
+              <p className="text-orange-600 mt-2">Subscribe to our newsletter for exclusive offers and travel inspiration.</p>
             </div>
             <div className="w-full md:w-96">
               <form onSubmit={handleSubscribe} aria-label="Newsletter subscription form">
@@ -1534,7 +1955,7 @@ const Footer = () => {
                     id="email-input"
                     type="email" 
                     placeholder="Your email address" 
-                    className={`w-full py-3 px-4 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${emailError ? 'border-2 border-red-500' : ''}`}
+                    className={`w-full py-3 px-4 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all ${emailError ? 'border-2 border-red-500' : ''}`}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     aria-describedby={emailError ? "email-error" : undefined}
@@ -1542,7 +1963,7 @@ const Footer = () => {
                   {!isSubscribed && (
                     <button 
                       type="submit"
-                      className="absolute right-1 top-1 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="absolute right-1 top-1 bg-orange-600 hover:bg-orange-700 text-white p-2 rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                       aria-label="Subscribe to newsletter"
                     >
                       <Send size={20} />
@@ -1577,7 +1998,7 @@ const Footer = () => {
           <div className="flex justify-end">
             <div className="relative group">
               <button
-                className="flex items-center text-gray-400 hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-md px-2 py-1"
+                className="flex items-center text-gray-400 hover:text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-md px-2 py-1"
                 aria-expanded="false"
                 aria-haspopup="true"
                 aria-label="Select language"
@@ -1590,7 +2011,7 @@ const Footer = () => {
                   {languages.map((language) => (
                     <button
                       key={language}
-                      className={`block px-4 py-2 text-sm text-left w-full hover:bg-gray-700 focus:outline-none focus:bg-gray-700 transition-colors duration-150 ${language === currentLanguage ? 'text-blue-400' : 'text-gray-300'}`}
+                      className={`block px-4 py-2 text-sm text-left w-full hover:bg-gray-700 focus:outline-none focus:bg-gray-700 transition-colors duration-150 ${language === currentLanguage ? 'text-orange-400' : 'text-gray-300'}`}
                       onClick={() => setCurrentLanguage(language)}
                       role="menuitem"
                     >
@@ -1610,7 +2031,6 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="flex items-center mb-6 transform transition-transform duration-300 hover:scale-105">
-              {/* <img src="/api/placeholder/45/45" alt="" className="h-10 w-auto mr-2" /> */}
               <span className="text-2xl font-bold text-white">Kashmir Travels</span>
             </div>
             <p className="text-gray-400 mb-6 pr-4">
@@ -1626,7 +2046,7 @@ const Footer = () => {
                   <div key={platform.name} className="relative group">
                     <a 
                       href={platform.url} 
-                      className="bg-gray-800 hover:bg-blue-600 rounded-full p-2.5 transition-colors duration-300 block"
+                      className="bg-gray-800 hover:bg-orange-600 rounded-full p-2.5 transition-colors duration-300 block"
                       aria-label={`Follow us on ${platform.name}`}
                     >
                       {platform.icon}
@@ -1634,7 +2054,7 @@ const Footer = () => {
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                       <div className="bg-gray-800 text-white text-xs rounded py-1 px-2 flex flex-col items-center">
                         <span>{platform.name}</span>
-                        <span className="text-blue-400">{platform.followers}</span>
+                        <span className="text-orange-400">{platform.followers}</span>
                         <div className="w-2 h-2 bg-gray-800 transform rotate-45 absolute -bottom-1 left-1/2 ml-[-4px]"></div>
                       </div>
                     </div>
@@ -1645,19 +2065,19 @@ const Footer = () => {
             
             <div className="space-y-3">
               <div className="flex items-start">
-                <Phone size={16} className="mr-3 mt-1 text-blue-400" />
+                <Phone size={16} className="mr-3 mt-1 text-orange-400" />
                 <div>
                   <p className="text-white font-medium">24/7 Customer Support</p>
                   <p className="text-gray-400">
-                    <a href="tel:+91 9541515012" className="hover:text-blue-400 transition-colors duration-300">+91 9541515012</a>
+                    <a href="tel:+91 9541515012" className="hover:text-orange-400 transition-colors duration-300">+91 9541515012</a>
                   </p>
                 </div>
               </div>
               <div className="flex items-start">
-                <Mail size={16} className="mr-3 mt-1 text-blue-400" />
+                <Mail size={16} className="mr-3 mt-1 text-orange-400" />
                 <div>
                   <p className="text-gray-400">
-                    <a href="mailto:support@KashmirTravels.com" className="hover:text-blue-400 transition-colors duration-300">support@KashmirTravels.com</a>
+                    <a href="mailto:support@KashmirTravels.com" className="hover:text-orange-400 transition-colors duration-300">support@KashmirTravels.com</a>
                   </p>
                 </div>
               </div>
@@ -1668,29 +2088,27 @@ const Footer = () => {
           <div>
             <h4 className="text-white text-lg font-semibold mb-6 border-b border-gray-700 pb-2" id="explore-heading">Explore</h4>
             <ul className="space-y-3" aria-labelledby="explore-heading">
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Top Destinations</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Tour Packages</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Weekend Getaways</a></li>
-             
-              <li><a  href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Adventure Tours</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Honeymoon Packages</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Group Tours</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Luxury Escapes</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Top Destinations</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Tour Packages</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Weekend Getaways</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Adventure Tours</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Honeymoon Packages</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Group Tours</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Luxury Escapes</a></li>
             </ul>
-           
           </div>
           
           {/* Information */}
           <div>
             <h4 className="text-white text-lg font-semibold mb-6 border-b border-gray-700 pb-2" id="info-heading">Information</h4>
             <ul className="space-y-3" aria-labelledby="info-heading">
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">About Us</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Guides</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Blog</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Careers</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Terms & Conditions</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Contact Us</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">About Us</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Guides</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Blog</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Careers</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Terms & Conditions</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Contact Us</a></li>
             </ul>
           </div>
           
@@ -1698,13 +2116,13 @@ const Footer = () => {
           <div>
             <h4 className="text-white text-lg font-semibold mb-6 border-b border-gray-700 pb-2" id="support-heading">Support</h4>
             <ul className="space-y-3" aria-labelledby="support-heading">
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Customer Support</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">FAQs</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Booking Process</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Cancellation Policy</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Visa Assistance</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Insurance</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Partner with Us</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Customer Support</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">FAQs</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Booking Process</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Cancellation Policy</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Visa Assistance</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Travel Insurance</a></li>
+              <li><a href="#" className="hover:text-orange-400 transition-colors duration-300 hover:pl-1 block focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">Partner with Us</a></li>
             </ul>
           </div>
         </div>
@@ -1715,13 +2133,13 @@ const Footer = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2" aria-labelledby="destinations-heading">
             {[
               "Srinagar", "Gulmarg", "Pahalgam", "Sonmarg", 
-      "Leh", "Pulwama", "Kupwara", "Anantnag", 
-      "Baramulla", "Doodhpathri", "Kargil", "Zanskar Valley" 
+              "Leh", "Pulwama", "Kupwara", "Anantnag", 
+              "Baramulla", "Doodhpathri", "Kargil", "Zanskar Valley" 
             ].map((destination, index) => (
               <a 
                 key={destination} 
                 href="#" 
-                className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-300 transform hover:translate-x-1 hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded px-1"
+                className="text-sm text-gray-400 hover:text-orange-400 transition-colors duration-300 transform hover:translate-x-1 hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded px-1"
                 style={{ transitionDelay: `${index * 30}ms` }}
               >
                 {destination}
@@ -1730,8 +2148,6 @@ const Footer = () => {
           </div>
         </div>
         
-
-
         {/* Payment & Certification */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -1783,7 +2199,7 @@ const Footer = () => {
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
               <a 
                 href="#" 
-                className="hover:text-white transition-colors duration-300 focus:outline-none focus:text-white"
+                className="hover:text-orange-400 transition-colors duration-300 focus:outline-none focus:text-orange-400"
                 aria-label="Terms of Service"
               >
                 Terms of Service
@@ -1791,7 +2207,7 @@ const Footer = () => {
               <span className="hidden md:inline">|</span>
               <a 
                 href="#" 
-                className="hover:text-white transition-colors duration-300 focus:outline-none focus:text-white"
+                className="hover:text-orange-400 transition-colors duration-300 focus:outline-none focus:text-orange-400"
                 aria-label="Privacy Policy"
               >
                 Privacy Policy
@@ -1799,7 +2215,7 @@ const Footer = () => {
               <span className="hidden md:inline">|</span>
               <a 
                 href="#" 
-                className="hover:text-white transition-colors duration-300 focus:outline-none focus:text-white"
+                className="hover:text-orange-400 transition-colors duration-300 focus:outline-none focus:text-orange-400"
                 aria-label="Cookies Policy"
               >
                 Cookies Policy
@@ -1813,29 +2229,12 @@ const Footer = () => {
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 lg:bottom-6 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900 z-30"
+          className="fixed bottom-24 right-6 lg:bottom-6 bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900 z-30"
           aria-label="Back to top"
         >
           <ArrowUp size={20} />
         </button>
       )}
-      
-      {/* App Banner (Mobile Only) - Enhanced for accessibility */}
-      {/* <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-blue-900 py-3 px-4 shadow-lg z-20">
-        <div className="flex justify-between items-center">
-          <div>
-            <p className="text-white font-medium">Download our App</p>
-            <p className="text-blue-200 text-sm">Get exclusive mobile deals</p>
-          </div>
-          <a 
-            href="#" 
-            className="bg-white text-blue-900 px-4 py-2 rounded-lg font-medium text-sm transition-transform duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white"
-            aria-label="Download our mobile app"
-          >
-            Get the App
-          </a>
-        </div>
-      </div> */}
       
       {/* Add global animation styles */}
       <style jsx>{`

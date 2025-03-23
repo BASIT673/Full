@@ -5578,15 +5578,23 @@ const ToursGrid1 = () => {
               <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-600 to-blue-400 transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300"></div>
             </h1>
           </div>
-          <button 
+          <button
+  className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
+             hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2"
+  onClick={toggleShowAllTours}
+>
+  {showAllTours ? "Show Less" : "View All"} <span className="arrow-icon text-lg">→</span>
+</button>
+
+          {/* <button 
             onClick={toggleShowAllTours}
-            className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-800 border border-blue-600 rounded-md hover:bg-blue-50 transition-colors flex items-center"
+            className="px-4 py-2 text-sm font-mediumbg-gradient-to-r from-orange-500 to-amber-500 text orange-500 rounded-md hover:bg-blue-50 transition-colors flex items-center"
           >
             {showAllTours ? "Show Less" : "View All"}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
 

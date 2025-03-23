@@ -3468,8 +3468,8 @@ useEffect(() => {
           <div className="trending-tour-underline w-16 h-1 bg-blue-500 mt-1"></div>
         </div>
         <button
-          className="view-all-button bg-blue-600 text-white px-5 py-2 rounded-md shadow-md
-                    hover:bg-blue-700 transition-all duration-300 flex items-center gap-2"
+          className="view-all-button bg-gradient-to-r from-orange-500 to-amber-500 text-white px-5 py-2 rounded-md shadow-md
+                    hover:bg-orange-700 transition-all duration-300 flex items-center gap-2"
           onClick={handleViewAllClick}
         >
           View All <span className="arrow-icon text-lg">→</span>

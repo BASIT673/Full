@@ -831,196 +831,167 @@ import  TourQueryForm from './querfrom';
 
 import FeatureCards from './FeaturedCards';
 // import TripPlanner from './TripPlanner';
-const HeroSection = () => {
+// const HeroSection = () => {
 
   
-  const handleOptionSelect = (option, categoryType, categoryTitle) => {
-    setQueryParams({
-      option: option,
-      type: categoryType,
-      categoryTitle: categoryTitle
-    });
-    setShowQueryForm(true);
+//   const handleOptionSelect = (option, categoryType, categoryTitle) => {
+//     setQueryParams({
+//       option: option,
+//       type: categoryType,
+//       categoryTitle: categoryTitle
+//     });
+//     setShowQueryForm(true);
+//   };
+  
+//   // Featured destinations with location coordinates
+//   const featuredDestinations = [
+//     { id: 1, name: 'Santorini, Greece', x: 25, y: 35, category: 'Beach' },
+//     { id: 2, name: 'Bali, Indonesia', x: 70, y: 55, category: 'Island' },
+//     { id: 3, name: 'Swiss Alps', x: 40, y: 20, category: 'Mountain' },
+//     { id: 4, name: 'Tokyo, Japan', x: 85, y: 30, category: 'City' },
+//     { id: 5, name: 'Machu Picchu, Peru', x: 20, y: 65, category: 'Adventure' },
+//   ];
+  
+  // import React from 'react';
+  // import VisualCategoryCarousel from './VisualCategoryCarousel';
+  // import TripPlanner from './TripPlanner';
+  
+  const HeroSection = ({ featuredDestinations, handleOptionSelect }) => {
+    return (
+      <div className="relative min-h-screen w-full overflow-y-auto font-sans bg-white">
+        {/* Hero Content */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-6">
+          <div className="text-center mb-8 mt-0">
+            <h1 className="text-4xl font-bold text-gray-800 mb-0 mt-0 md:mt-20">
+              Explore the <span className="text-orange-600">World</span> Like Never Before
+            </h1>
+            <p className="text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden">
+              Discover breathtaking destinations and unforgettable experiences curated by travel experts
+            </p>
+          </div>
+          
+          <VisualCategoryCarousel
+            featuredDestinations={featuredDestinations}
+            onOptionSelect={handleOptionSelect}
+          />
+          
+          <div className="mt-2 bg-gray-50 rounded-lg p-4 shadow-sm relative z-20">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="flex items-center mb-3 md:mb-0 relative">
+                <h3 className="text-base font-semibold text-gray-800 mr-4">Need inspiration?</h3>
+                <div className="relative z-20">
+                  <TripPlanner />
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap justify-center gap-2">
+                <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
+                  <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-medium">Save up to 30%</span>
+                </div>
+                
+                <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
+                  <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-medium">Verified stays</span>
+                </div>
+                
+                <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
+                  <div className="h-6 w-6 rounded-full bg-purple-100 flex items-center justify-center mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-medium">24/7 support</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
   
-  // Featured destinations with location coordinates
-  const featuredDestinations = [
-    { id: 1, name: 'Santorini, Greece', x: 25, y: 35, category: 'Beach' },
-    { id: 2, name: 'Bali, Indonesia', x: 70, y: 55, category: 'Island' },
-    { id: 3, name: 'Swiss Alps', x: 40, y: 20, category: 'Mountain' },
-    { id: 4, name: 'Tokyo, Japan', x: 85, y: 30, category: 'City' },
-    { id: 5, name: 'Machu Picchu, Peru', x: 20, y: 65, category: 'Adventure' },
-  ];
-  
+  export default HeroSection;
 
-
-  return (
-    <div className="   z-40 relative min-h-screen w-full overflow-y-auto  left-0 font-sans bg-white">
-      {/* Hero Content */}
-       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-5xl px-6">
-      <div className="text-center   mb-8 mt-0">
-          <h1 className="text-4xl  font-bold text-gray-800 mb sm:mb-0 mt-[-10]sm:mt-0 md:mt-20 ">
-            Explore the <span className="text-orange-600">World</span> Like Never Before
-          </h1>
+//   return (
+//     <div className="   z-40 relative min-h-screen w-full overflow-y-auto  left-0 font-sans bg-white">
+//       {/* Hero Content */}
+//        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-5xl px-6">
+//       <div className="text-center   mb-8 mt-0">
+//           <h1 className="text-4xl  font-bold text-gray-800 mb sm:mb-0 mt-[-10]sm:mt-0 md:mt-20 ">
+//             Explore the <span className="text-orange-600">World</span> Like Never Before
+//           </h1>
         
 
-          <p className="text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden "> 
-            Discover breathtaking destinations and unforgettable experiences curated by travel experts 
-          </p> 
+//           <p className="text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden "> 
+//             Discover breathtaking destinations and unforgettable experiences curated by travel experts 
+//           </p> 
     
-        </div> 
+//         </div> 
         
      
  
-<VisualCategoryCarousel 
-      featuredDestinations={featuredDestinations}
-      onOptionSelect={handleOptionSelect} 
-    />
+// <VisualCategoryCarousel 
+//       featuredDestinations={featuredDestinations}
+//       onOptionSelect={handleOptionSelect} 
+//     />
     
     
-     {/* <FeatureCards/> */}
-     {/* Added content to fill space below carousel */}
-     {/* <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-     <button className="bg-orange-600 hover:bg-orange-700 text-white font-medium py-3 px-6 rounded-full transition duration-300 flex items-center">
-       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-         <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-       </svg>
-       Start Your Journey
-     </button>
+   
+// <div className="mt-2 bg-gray-50 rounded-lg p-4 shadow-sm">
+//   <div className="flex flex-col md:flex-row items-center justify-between">
+//     <div className="flex items-center mb-3 md:mb-0">
+//       <h3 className="text-base font-semibold text-gray-800 mr-4">Need inspiration?</h3>
      
-     <div className="flex items-center text-gray-700">
-       <span className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center mr-2">
-         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-         </svg>
-         Best time to book
-       </span>
-       <span className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center">
-         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-         </svg>
-         Trusted by 2M+ travelers
-       </span>
-     </div>
-   </div> */}
+// <TripPlanner/>
 
-   {/* Travel inspiration section below carousel */}
-{/* <div className="mt-8 bg-gray-50 rounded-xl p-6 shadow-sm">
-  <div className="flex flex-col md:flex-row items-center justify-between">
-    <div className="mb-4 md:mb-0 md:mr-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">Need inspiration?</h3>
-      <p className="text-gray-600 text-sm max-w-md">
-        Tell us what you're looking for and we'll create a personalized itinerary just for you.
-      </p>
-      <div className="mt-4 flex gap-3">
-        <button className="bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-300">
-          Plan My Trip
-        </button>
-        <button className="border border-gray-300 hover:border-gray-400 text-gray-700 text-sm font-medium py-2 px-4 rounded-lg transition duration-300">
-          Browse Popular
-        </button>
-      </div>
-    </div>
+//     </div>
     
-    <div className="flex flex-wrap justify-center gap-2">
-      <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-100 flex items-center">
-        <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-          </svg>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500">Price alerts</p>
-          <p className="text-sm font-medium">Save up to 30%</p>
-        </div>
-      </div>
+//     <div className="flex flex-wrap justify-center gap-2">
+//       <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
+//         <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-2">
+//           <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+//             <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+//           </svg>
+//         </div>
+//         <span className="text-xs font-medium">Save up to 30%</span>
+//       </div>
       
-      <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-100 flex items-center">
-        <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500">Verified stays</p>
-          <p className="text-sm font-medium">100% satisfaction</p>
-        </div>
-      </div>
+//       <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
+//         <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-2">
+//           <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+//             <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+//           </svg>
+//         </div>
+//         <span className="text-xs font-medium">Verified stays</span>
+//       </div>
       
-      <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-100 flex items-center">
-        <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-          </svg>
-        </div>
-        <div>
-          <p className="text-xs text-gray-500">24/7 support</p>
-          <p className="text-sm font-medium">Travel with confidence</p>
-        </div>
-      </div>
-    </div>
-  </div> */}
-
-    {/* </div> */}
-
-      {/* Compact travel inspiration section below carousel */}
-<div className="mt-2 bg-gray-50 rounded-lg p-4 shadow-sm">
-  <div className="flex flex-col md:flex-row items-center justify-between">
-    <div className="flex items-center mb-3 md:mb-0">
-      <h3 className="text-base font-semibold text-gray-800 mr-4">Need inspiration?</h3>
-      {/* <button className="bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition duration-300">
-        Plan My Trip
-      </button> */}
-      
-<TripPlanner/>
-{/* <button onClick={TripPlanner} class="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium text-white transition duration-300 ease-out border-2 border-orange-500 rounded-lg shadow-md group bg-orange-500 hover:bg-white">
-  <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-orange-600 group-hover:translate-x-0 ease">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-      <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-    </svg>
-  </span>
-  <span class="absolute flex items-center justify-center w-full h-full text-orange-500 transition-all duration-300 transform group-hover:translate-x-full ease">Plan My Trip</span>
-  <span class="relative">Plan My Trip</span>
-</button> */}
-    </div>
-    
-    <div className="flex flex-wrap justify-center gap-2">
-      <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
-        <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-          </svg>
-        </div>
-        <span className="text-xs font-medium">Save up to 30%</span>
-      </div>
-      
-      <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
-        <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-        </div>
-        <span className="text-xs font-medium">Verified stays</span>
-      </div>
-      
-      <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
-        <div className="h-6 w-6 rounded-full bg-purple-100 flex items-center justify-center mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-          </svg>
-        </div>
-        <span className="text-xs font-medium">24/7 support</span>
-      </div>
-    </div>
-  </div>
-</div>
+//       <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
+//         <div className="h-6 w-6 rounded-full bg-purple-100 flex items-center justify-center mr-2">
+//           <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+//             <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+//           </svg>
+//         </div>
+//         <span className="text-xs font-medium">24/7 support</span>
+//       </div>
+//     </div>
+//   </div>
+// </div>
      
-</div>
- </div>
-  );
-};
+// </div>
+//  </div>
+//   );
+// };
 
-export default HeroSection;
+// export default HeroSection;
 
 // import React, { useState, useEffect } from 'react';
 

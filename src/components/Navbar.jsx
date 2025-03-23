@@ -3703,10 +3703,11 @@ const KashmirHeader = () => {
                   <X size={24} />
                 </button>
               </div>
-              
+            
               <nav className="flex flex-col p-4">
+              <TripPlanner/>
                 <a href="/" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Home</a>
-
+               
                 {/* Destinations Dropdown */}
                 <div className="relative">
                   <button
@@ -3751,7 +3752,7 @@ const KashmirHeader = () => {
                 <a href="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Tour Packages</a>
                 <a href="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Travel Blog</a>
                 {/* <a href="/contact" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Contact Us</a> */}
-                <TripPlanner/>
+              
                
                 <a href="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Agent Portal</a>
               

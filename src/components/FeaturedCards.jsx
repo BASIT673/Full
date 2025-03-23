@@ -3259,7 +3259,7 @@ const renderAllOffers = () => {
    };
 
   return (
-    <div className="relative bg-gray-50 p-4 mb-10">
+    <div className="relative bg-gray-50 p-4 ">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Explore Our Offers</h2>
 
@@ -3333,7 +3333,7 @@ const renderAllOffers = () => {
 </div> */}
 {/* Feature Cards - Responsive for All Devices */}
 
-<div className="translate-y-10 grid grid-cols-1 md:grid-cols-2 gap-6 px-4 md:px-12">
+<div className="translate-y-10 grid grid-cols-1 md:grid-cols-2 gap-6 px-4 mb-10 md:px-12">
   {features.map((feature) => (
     <div
       key={feature.id}
