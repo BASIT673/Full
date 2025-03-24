@@ -20,6 +20,11 @@ export default {
         sans: ["Inter", "sans-serif"],
       }
     },
+    screens: {
+      'xs': '375px',
+      'sm': '640px',
+      // other breakpoints...
+    },
   plugins: [],
 }}
 
