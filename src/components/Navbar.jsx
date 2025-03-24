@@ -3560,6 +3560,32 @@ const KashmirHeader = () => {
       expandedMobileSection === section ? null : section
     );
   };
+  // Add this function to your component
+const handleSmoothScroll = (e, target) => {
+  e.preventDefault();
+  
+  // If it's a regular page navigation (not an anchor)
+  if (target === '/') {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    return;
+  }
+  
+  // For anchor links
+  const element = document.querySelector(target);
+  if (element) {
+    const headerOffset = 80; // Adjust based on your header height
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+};
  
   // Get the username to display
   const displayName = isAuthenticated ? (userData?.username || 'User') : 'Guest';
