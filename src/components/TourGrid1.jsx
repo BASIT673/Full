@@ -5566,7 +5566,7 @@ const ToursGrid1 = () => {
   };
 
   return (
-    <div className="container px-4 mt-10 mx-auto">
+    <div id="tours" className="container px-4 mt-10 mx-auto">
       <div className="mb-8 space-y-6 w-full">
         {/* Trending Tours Header with View All Button */}
         <div className="trending-tours-header flex justify-between items-center mb-6 ">
@@ -5579,8 +5579,8 @@ const ToursGrid1 = () => {
             </h1>
           </div>
           <button
-  className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
-             hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2"
+  className="-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
+             hover:from-orangebg-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2"
   onClick={toggleShowAllTours}
 >
   {showAllTours ? "Show Less" : "View All"} <span className="arrow-icon text-lg">→</span>

@@ -3506,6 +3506,7 @@
 // };
 
 // export default KashmirHeader;
+import { Link } from "react-router-dom";
 import React, { useState, useEffect, useContext } from 'react';
 import { User, ChevronDown, ChevronUp, Menu, X , Calendar,LogOut,UserCircle} from 'lucide-react'; // Assuming these are imported
 import { AuthContext } from './AuthContext'; // Update with correct path
@@ -3592,14 +3593,23 @@ const KashmirHeader = () => {
                   Destinations <ChevronDown size={16} className="ml-1" />
                 </a>
                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
+                  {/* <div className="grid grid-cols-2 gap-2 px-4">
+                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
+                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
+                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
+                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
+                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
+                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Jammu</a>
+                  </div> */}
                   <div className="grid grid-cols-2 gap-2 px-4">
-                    <a href="/destinations/srinagar" className="py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
-                    <a href="/destinations/gulmarg" className="py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
-                    <a href="/destinations/pahalgam" className="py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
-                    <a href="/destinations/sonamarg" className="py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
-                    <a href="/destinations/leh-ladakh" className="py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
-                    <a href="/destinations/jammu" className="py-2 text-gray-700 hover:text-orange-600">Jammu</a>
-                  </div>
+  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
+  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
+  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
+  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
+  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
+  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Jammu</a>
+</div>
+
                 </div>
               </div>
               
@@ -3609,22 +3619,26 @@ const KashmirHeader = () => {
                   Experiences <ChevronDown size={16} className="ml-1" />
                 </a>
                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
-                  <a href="/experiences/shikara-rides" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
-                  <a href="/experiences/houseboats" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
-                  <a href="/experiences/trekking" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
-                  <a href="/experiences/wazwan" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
-                  <a href="/experiences/skiing" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
                 </div>
               </div>
               
-              <a href="" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Tour Packages</a>
+              {/* <a href="" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Tour Packages</a> */}
               {/* <a href="/blog" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Travel Blog</a> */}
               {/* <a href="/contact" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Contact Us</a> */}
               
               {/* Travel Agent Portal Link */}
-              <a href="/register" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
+              {/* <a href="/register" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
                 Agent Portal
-              </a>
+              </a> */}
+              <a href="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Rent a Car</a>
+<Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+  Agent Portal
+</Link>
             </nav>
 {/* <TripPlanner/> */}
             {/* User Actions */}
@@ -3719,12 +3733,12 @@ const KashmirHeader = () => {
                   </button>
                   {expandedMobileSection === 'destinations' && (
                     <div className="pl-4 py-2 bg-gray-50 rounded-md my-2">
-                      <a href="/destinations/srinagar" className="block py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
-                      <a href="/destinations/gulmarg" className="block py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
-                      <a href="/destinations/pahalgam" className="block py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
-                      <a href="/destinations/sonamarg" className="block py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
-                      <a href="/destinations/leh-ladakh" className="block py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
-                      <a href="/destinations/jammu" className="block py-2 text-gray-700 hover:text-orange-600">Jammu</a>
+                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
+                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
+                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
+                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
+                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
+                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Jammu</a>
                     </div>
                   )}
                 </div>
@@ -3740,21 +3754,37 @@ const KashmirHeader = () => {
                   </button>
                   {expandedMobileSection === 'experiences' && (
                     <div className="pl-4 py-2 bg-gray-50 rounded-md my-2">
-                      <a href="/experiences/shikara-rides" className="block py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
-                      <a href="/experiences/houseboats" className="block py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
-                      <a href="/experiences/trekking" className="block py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
-                      <a href="/experiences/wazwan" className="block py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
-                      <a href="/experiences/skiing" className="block py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
+                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
+                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
+                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
+                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
+                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
                     </div>
                   )}
                 </div>
+            
+{/* 
+<Link to="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+  Rent a Car
+</Link>
 
-                <a href="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Tour Packages</a>
-                <a href="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Travel Blog</a>
+<Link to="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+  Travel Blog
+</Link> */}
+{/* <Link to="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+  cars
+</Link> */}
+<a href="/cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Rent a Car</a>
+<Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+  Agent Portal
+</Link>
+
+                {/* <a href="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Tour Packages</a> */}
+                {/* <a href="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Travel Blog</a> */}
                 {/* <a href="/contact" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Contact Us</a> */}
               
                
-                <a href="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Agent Portal</a>
+                {/* <a href="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Agent Portal</a> */}
               
                 {!isAuthenticated ? (
                   <button 

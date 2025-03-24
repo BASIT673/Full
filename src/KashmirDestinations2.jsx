@@ -8560,7 +8560,7 @@ const DestinationGallery = ({ onViewAll }) => {
               console.log('Tab changed to:', activeTab);
             }, [activeTab]);
     return (
-      <div className="z-50 fixed inset-0 flex items-center justify-center p-4">
+      <div  id="destinations" className=" z-50 fixed inset-0 flex items-center justify-center p-4">
         {/* Backdrop */}
         <div className="absolute inset-0 bg-black/70" onClick={onClose} />
   
@@ -9152,13 +9152,31 @@ return (
     {/* Header Section */}
     <div className="flex justify-between items-center mb-6">
       <h2 className="text-2xl font-bold text-gray-800">Popular Destinations</h2>
-      <button
+       {/* <button
+        className="-gradient-to-r from-orange-500 to-amber-500 px-3 py-2 rounded-lg shadow-md
+             hover:from-orangebg-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2"
+        onClick={handleViewAllClick}
+      >
+        View All <span className="arrow-icon text-lg">→</span>
+      </button>  */}
+  {/* <button
         className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
                  hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2"
         onClick={handleViewAllClick}
       >
-        View All <span className="arrow-icon text-lg">→</span>
-      </button>
+        View All <span className=" whitespace-nowrap arrow-icon text-lg sm:text-lg">→</span>
+      </button>  */}
+
+<button
+  className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
+             hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2 text-base"
+  onClick={handleViewAllClick}
+>
+  <span className="truncate">View All</span>
+  <span className="arrow-icon text-lg">→</span>
+</button>
+
+
     </div>
     
     {/* Tabs */}

@@ -525,20 +525,29 @@ const TripPlanner = () => {
 
           return (
   <>
-    {/* Main Button */}
-    {/* <button
-      onClick={openModal}
-      className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-0.5 font-medium text-white hover:text-white shadow-md hover:shadow-lg active:shadow-sm transition duration-300 ease-out"
-      aria-label="Plan your trip to Kashmir"
+   <button
+  onClick={openModal}
+  className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-0.5 font-medium text-white hover:text-white shadow-md hover:shadow-lg active:shadow-sm transition duration-300 ease-out"
+  aria-label="Plan your trip to Kashmir"
+>
+  <span className="relative flex items-center gap-2 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 px-4 py-[0.5rem] sm:px-6 sm:py-3 text-[clamp(0.75rem,2vw,1rem)] transition-all duration-300 ease-out group-hover:bg-opacity-0">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-[clamp(1rem,4vw,1.25rem)] w-[clamp(1rem,4vw,1.25rem)]"
+      viewBox="0 0 20 20"
+      fill="currentColor"
     >
-      <span className="relative flex items-center gap-2 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 px-6 py-3 transition-all duration-300 ease-out group-hover:bg-opacity-0">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-        </svg>
-        Plan My Trip
-      </span>
-    </button> */}
-    <button
+      <path
+        fillRule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+        clipRule="evenodd"
+      />
+    </svg>
+    Plan My Trip
+  </span>
+</button>
+
+    {/* <button
   onClick={openModal}
   className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-0.5 font-medium text-white hover:text-white shadow-md hover:shadow-lg active:shadow-sm transition duration-300 ease-out"
   aria-label="Plan your trip to Kashmir"
@@ -558,16 +567,16 @@ const TripPlanner = () => {
     </svg>
     Plan My Trip
   </span>
-</button>
+</button> */}
 
 
     {/* Modal */}
     {isModalOpen && (
       <div className="fixed inset-0 z-[100] overflow-y-auto">
-        <div className="fixed inset-0 z-[100] flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
+        <div className="fixed inset-0 z-[60]  flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
 
         {/* <div className=" fixed inset-0 z-[100]flex min-h-screen items-center justify-center p-4 text-center sm:p-0"> */}
-          <div className="fixed inset-0   bg-black bg-opacity-60 transition-opacity" onClick={closeModal}></div>
+          <div className=" inset-0  bg-black bg-opacity-60 transition-opacity" onClick={closeModal}></div>
 
           <div
             ref={modalRef}

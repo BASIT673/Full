@@ -3835,7 +3835,7 @@ const processRentalPayment = async (rentalDetails) => {
   return (
     // In your parent component's render/return section
 
-    <div className="container mx-auto p-4 w-full max-w-7xl">
+    <div id='cars' className="container mx-auto p-4 w-full max-w-7xl">
       {/* Search and Filter */}
       <div className="mb-8">
         <div className="flex flex-col md:flex-row gap-4 items-center">

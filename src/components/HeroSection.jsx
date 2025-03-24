@@ -834,14 +834,14 @@ import FeatureCards from './FeaturedCards';
 // const HeroSection = () => {
 
   
-//   const handleOptionSelect = (option, categoryType, categoryTitle) => {
-//     setQueryParams({
-//       option: option,
-//       type: categoryType,
-//       categoryTitle: categoryTitle
-//     });
-//     setShowQueryForm(true);
-//   };
+  const handleOptionSelect = (option, categoryType, categoryTitle) => {
+    setQueryParams({
+      option: option,
+      type: categoryType,
+      categoryTitle: categoryTitle
+    });
+    setShowQueryForm(true);
+  };
   
 //   // Featured destinations with location coordinates
 //   const featuredDestinations = [
@@ -855,12 +855,48 @@ import FeatureCards from './FeaturedCards';
   // import React from 'react';
   // import VisualCategoryCarousel from './VisualCategoryCarousel';
   // import TripPlanner from './TripPlanner';
-  
-  const HeroSection = ({ featuredDestinations, handleOptionSelect }) => {
-    return (
-      <div className="relative min-h-screen w-full overflow-y-auto font-sans bg-white">
-        {/* Hero Content */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-6">
+     {/* Hero Content */}
+      {/* //   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-6">
+      //     <div className="text-center mb-8 mt-0">
+      //       <h1 className="text-4xl font-bold text-gray-800 mb-0 mt-0 md:mt-20">
+      //         Explore the <span className="text-orange-600">World</span> Like Never Before
+      //       </h1>
+      //       <p className="text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden">
+      //         Discover breathtaking destinations and unforgettable experiences curated by travel experts
+      //       </p>
+      //     </div> */}
+         {/* Hero Container */}
+{/* Hero Container */}
+// import React from 'react';
+// Assuming TripPlanner is a component you've already defined
+// import TripPlanner from './TripPlanner';
+// import VisualCategoryCarousel from './VisualCategoryCarousel';
+const HeroSection = ({ featuredDestinations, handleOptionSelect }) => {
+  return (
+ <div className="relative min-h-screen w-full overflow-y-auto font-sans bg-white">
+ 
+ {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-4 sm:px-6">
+ <div className="text-center mb-6 sm:mb-8">
+ <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2 sm:mb-0 sm:mt-0 md:mt-20">
+  Explore the <span className="text-orange-600">World</span> Like Never Before
+  </h1>
+ <p className="text-base sm:text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-3 sm:mt-5">
+  Discover breathtaking destinations and unforgettable experiences curated by travel experts
+ </p>
+ </div>
+ </div>  */}
+ <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-6">
+  <div className="text-center mb-8 mt-0">
+    <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-0 mt-0 md:mt-20">
+      Explore the <span className="text-orange-600">World</span> Like Never Before
+    </h1>
+    <p className="text-base sm:text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden">
+      Discover breathtaking destinations and unforgettable experiences curated by travel experts
+    </p>
+  </div>
+{/* </div> */}
+
+    {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-6">
           <div className="text-center mb-8 mt-0">
             <h1 className="text-4xl font-bold text-gray-800 mb-0 mt-0 md:mt-20">
               Explore the <span className="text-orange-600">World</span> Like Never Before
@@ -868,58 +904,291 @@ import FeatureCards from './FeaturedCards';
             <p className="text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden">
               Discover breathtaking destinations and unforgettable experiences curated by travel experts
             </p>
-          </div>
+          </div> */}
+ <VisualCategoryCarousel
+  featuredDestinations={featuredDestinations}
+ onOptionSelect={handleOptionSelect}
+ />
+ <div className="mt-2 bg-gray-50 rounded-lg p-4 shadow-sm relative z-20">
+ <div className="flex flex-col md:flex-row items-center justify-between">
+ {/* Heading & Trip Planner */}
+ <div className="flex items-center mb-3 md:mb-0 relative">
+  <h3 className="text-sm sm:text-base font-semibold text-gray-800 mr-2 sm:mr-4 whitespace-nowrap">
+ Need inspiration?
+ </h3>
+  <div className="relative z-20">
+  <TripPlanner />
+ </div>
+ </div>
+ {/* Feature Cards */}
+ <div className="flex flex-wrap justify-center gap-2">
+  {/* Feature Item */}
+  {[
+  {
+ bgColor: "bg-blue-100",
+  iconColor: "text-blue-600",
+ text: "Save up to 30%",
+ icon: (
+ <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+),
+  },
+ {
+ bgColor: "bg-green-100",
+  iconColor: "text-green-600",
+  text: "Verified stays",
+  icon: (
+  <path
+ fillRule="evenodd"
+d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+ clipRule="evenodd"
+ />
+  ),
+ },
+  {
+ bgColor: "bg-purple-100",
+  iconColor: "text-purple-600",
+ text: "24/7 support",
+ icon: (
+  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+ ),
+  },
+  ].map((item, index) => (
+  <div
+  key={index}
+ className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center min-w-[120px] sm:min-w-[150px]"
+  >
+  <div
+  className={`h-6 w-6 rounded-full flex items-center justify-center mr-2 ${item.bgColor}`}
+  >
+  <svg
+ xmlns="http://www.w3.org/2000/svg"
+ className={`h-4 w-4 ${item.iconColor}`}
+ viewBox="0 0 20 20"
+  fill="currentColor"
+  >
+  {item.icon}
+ </svg>
+  </div>
+  <span className="text-xs sm:text-sm font-medium">{item.text}</span>
+ </div>
+  ))}
+  </div>
+ </div>
+ </div>
+ </div>
+ 
+ </div>
+  );
+ }
+
+  export default HeroSection; 
+// const HeroSection = ({ featuredDestinations, handleOptionSelect }) => {
+//   return (
+//     <div className="relative min-h-screen w-full overflow-y-auto font-sans bg-white">
+//       {/* Hero content - centered and responsive  */}
+      
+//        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-6">
+//           <div className="text-center mb-8 mt-0">
+//             <h1 className="text-4xl font-bold text-gray-800 mb-0 mt-0 md:mt-20">
+//               Explore the <span className="text-orange-600">World</span> Like Never Before
+//             </h1>
+//             <p className="text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden">
+//               Discover breathtaking destinations and unforgettable experiences curated by travel experts
+//             </p>
+//           </div>
+//       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-3 sm:px-4 md:px-6">
+//         <div className="text-center mb-4 sm:mb-6 md:mb-8">
+//           <h1 className="text-2xl xs:text-3xl sm:text-4xl font-bold text-gray-800 mb-2 sm:mb-0 sm:mt-0 md:mt-16 lg:mt-20 leading-tight">
+//             Explore the <span className="text-orange-600">World</span> Like Never Before
+//           </h1>
+//           <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto mt-2 sm:mt-3 md:mt-5 px-2">
+//             Discover breathtaking destinations and unforgettable experiences curated by travel experts
+//           </p>
+//         </div>
+//       </div> 
+//   {/* Additional content here - Ensure it is positioned with padding to avoid overlap */}
+//   <div className="relative z-0 mt-[500px] sm:mt-[600px]">
+//     <p>Additional content goes here...</p>
+//      {/* Visual Category Carousel */}
+//      <VisualCategoryCarousel
+//         featuredDestinations={featuredDestinations}
+//         onOptionSelect={handleOptionSelect}
+//       />
+      
+//       {/* Bottom info box - made more responsive */}
+//       <div className="mt-2 bg-gray-50 rounded-lg p-2 sm:p-3 md:p-4 shadow-sm relative z-20 mx-2 sm:mx-3 md:mx-4">
+//         <div className="flex flex-col md:flex-row items-center justify-between">
+//           {/* Heading & Trip Planner */}
+//           <div className="flex items-center mb-3 md:mb-0 relative w-full md:w-auto justify-center md:justify-start">
+//             <h3 className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 mr-2 sm:mr-4 whitespace-nowrap">
+//               Need inspiration?
+//             </h3>
+//             <div className="relative z-20">
+//               <TripPlanner />
+//             </div>
+//           </div>
           
-          <VisualCategoryCarousel
-            featuredDestinations={featuredDestinations}
-            onOptionSelect={handleOptionSelect}
-          />
+//           {/* Feature Cards - responsive grid */}
+//           <div className="flex flex-wrap justify-center md:justify-end gap-1 sm:gap-2 w-full md:w-auto">
+//             {/* Feature Items */}
+//             {[
+//               {
+//                 bgColor: "bg-blue-100",
+//                 iconColor: "text-blue-600",
+//                 text: "Save up to 30%",
+//                 icon: (
+//                   <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+//                 ),
+//               },
+//               {
+//                 bgColor: "bg-green-100",
+//                 iconColor: "text-green-600",
+//                 text: "Verified stays",
+//                 icon: (
+//                   <path
+//                     fillRule="evenodd"
+//                     d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+//                     clipRule="evenodd"
+//                   />
+//                 ),
+//               },
+//               {
+//                 bgColor: "bg-purple-100",
+//                 iconColor: "text-purple-600",
+//                 text: "24/7 support",
+//                 icon: (
+//                   <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+//                 ),
+//               },
+//             ].map((item, index) => (
+//               <div
+//                 key={index}
+//                 className="bg-white px-2 xs:px-3 py-1 rounded-lg border border-gray-100 flex items-center min-w-[100px] xs:min-w-[120px] sm:min-w-[150px]"
+//               >
+//                 <div
+//                   className={`h-5 w-5 sm:h-6 sm:w-6 rounded-full flex items-center justify-center mr-1 sm:mr-2 ${item.bgColor}`}
+//                 >
+//                   <svg
+//                     xmlns="http://www.w3.org/2000/svg"
+//                     className={`h-3 w-3 sm:h-4 sm:w-4 ${item.iconColor}`}
+//                     viewBox="0 0 20 20"
+//                     fill="currentColor"
+//                   >
+//                     {item.icon}
+//                   </svg>
+//                 </div>
+//                 <span className="text-xs sm:text-sm font-medium">{item.text}</span>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// // </div>
+
+      
+     
+//   );
+// };
+
+// export default HeroSection;
+//   const HeroSection = ({ featuredDestinations, handleOptionSelect }) => {
+//     return (
+//       <div className="relative min-h-screen w-full overflow-y-auto font-sans bg-white">
+      
+// <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl px-4 sm:px-6">
+//   <div className="text-center mb-6 sm:mb-8">
+//     <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2 sm:mb-0 sm:mt-0 md:mt-20">
+//       Explore the <span className="text-orange-600">World</span> Like Never Before
+//     </h1>
+//     <p className="text-base sm:text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-3 sm:mt-5">
+//       Discover breathtaking destinations and unforgettable experiences curated by travel experts
+//     </p>
+//   </div>
+// </div>
+
           
-          <div className="mt-2 bg-gray-50 rounded-lg p-4 shadow-sm relative z-20">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="flex items-center mb-3 md:mb-0 relative">
-                <h3 className="text-base font-semibold text-gray-800 mr-4">Need inspiration?</h3>
-                <div className="relative z-20">
-                  <TripPlanner />
-                </div>
-              </div>
-              
-              <div className="flex flex-wrap justify-center gap-2">
-                <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
-                  <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-medium">Save up to 30%</span>
-                </div>
-                
-                <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
-                  <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-medium">Verified stays</span>
-                </div>
-                
-                <div className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center">
-                  <div className="h-6 w-6 rounded-full bg-purple-100 flex items-center justify-center mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-medium">24/7 support</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+//           <VisualCategoryCarousel
+//             featuredDestinations={featuredDestinations}
+//             onOptionSelect={handleOptionSelect}
+//           />
+//           <div className="mt-2 bg-gray-50 rounded-lg p-4 shadow-sm relative z-20">
+//   <div className="flex flex-col md:flex-row items-center justify-between">
+//     {/* Heading & Trip Planner */}
+//     <div className="flex items-center mb-3 md:mb-0 relative">
+//       <h3 className="text-sm sm:text-base font-semibold text-gray-800 mr-2 sm:mr-4 whitespace-nowrap">
+//         Need inspiration?
+//       </h3>
+//       <div className="relative z-20">
+//         <TripPlanner />
+//       </div>
+//     </div>
+
+//     {/* Feature Cards */}
+//     <div className="flex flex-wrap justify-center gap-2">
+//       {/* Feature Item */}
+//       {[
+//         {
+//           bgColor: "bg-blue-100",
+//           iconColor: "text-blue-600",
+//           text: "Save up to 30%",
+//           icon: (
+//             <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+//           ),
+//         },
+//         {
+//           bgColor: "bg-green-100",
+//           iconColor: "text-green-600",
+//           text: "Verified stays",
+//           icon: (
+//             <path
+//               fillRule="evenodd"
+//               d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+//               clipRule="evenodd"
+//             />
+//           ),
+//         },
+//         {
+//           bgColor: "bg-purple-100",
+//           iconColor: "text-purple-600",
+//           text: "24/7 support",
+//           icon: (
+//             <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+//           ),
+//         },
+//       ].map((item, index) => (
+//         <div
+//           key={index}
+//           className="bg-white px-3 py-1 rounded-lg border border-gray-100 flex items-center min-w-[120px] sm:min-w-[150px]"
+//         >
+//           <div
+//             className={`h-6 w-6 rounded-full flex items-center justify-center mr-2 ${item.bgColor}`}
+//           >
+//             <svg
+//               xmlns="http://www.w3.org/2000/svg"
+//               className={`h-4 w-4 ${item.iconColor}`}
+//               viewBox="0 0 20 20"
+//               fill="currentColor"
+//             >
+//               {item.icon}
+//             </svg>
+//           </div>
+//           <span className="text-xs sm:text-sm font-medium">{item.text}</span>
+//         </div>
+//       ))}
+//     </div>
+//   </div>
+// </div>
+
+
+//         </div>
+     
+      
+//     );
+//   };
   
-  export default HeroSection;
+//   export default HeroSection;
 
 //   return (
 //     <div className="   z-40 relative min-h-screen w-full overflow-y-auto  left-0 font-sans bg-white">

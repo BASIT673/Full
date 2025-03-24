@@ -3467,13 +3467,24 @@ useEffect(() => {
           <h2 className="text-2xl font-bold text-gray-900">Trending Tours</h2>
           <div className="trending-tour-underline w-16 h-1 bg-blue-500 mt-1"></div>
         </div>
-        <button
-          className="view-all-button bg-gradient-to-r from-orange-500 to-amber-500 text-white px-5 py-2 rounded-md shadow-md
-                    hover:bg-orange-700 transition-all duration-300 flex items-center gap-2"
-          onClick={handleViewAllClick}
-        >
-          View All <span className="arrow-icon text-lg">→</span>
-        </button>
+        {/* <button
+  className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
+             hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2 text-base"
+  onClick={handleViewAllClick}
+>
+  <span className="truncate">View All</span>
+  <span className="arrow-icon text-lg">→</span>
+</button> */}
+
+<button
+  className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-4 py-2 rounded-lg shadow-md
+             hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2 text-base sm:text-lg"
+  onClick={handleViewAllClick}
+>
+  <span className="truncate max-w-[100px] sm:max-w-none">View All</span>
+  <span className="arrow-icon text-lg sm:text-xl">→</span>
+</button>
+
       </div>
 
       {/* Tours Carousel */}
