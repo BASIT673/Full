@@ -3563,7 +3563,6 @@ const KashmirHeader = () => {
  
   // Get the username to display
   const displayName = isAuthenticated ? (userData?.username || 'User') : 'Guest';
-
   return (
     <>
       <header
@@ -3582,65 +3581,54 @@ const KashmirHeader = () => {
               /> */}
               <span className={`text-2xl font-bold ${isScrolled ? 'text-orange-600' : 'text-orange-600'}`}>Kashmir Travels</span>
             </div>
-
+  
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex space-x-6">
-              <a href="/" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800 border-spacing-0'}`}>Home</a>
+            <nav className="hidden lg:flex space-x-6 items-center">
+              <a href="/" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800 border-spacing-0'}`}
+                 onClick={(e) => handleSmoothScroll(e, '/')}>Home</a>
               
               {/* Destinations Dropdown */}
               <div className="relative group">
-                <a href="/destinations" className={`flex items-center font-medium group-hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
+                <a href="#destinations" className={`flex items-center font-medium group-hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}
+                   onClick={(e) => handleSmoothScroll(e, '#destinations')}>
                   Destinations <ChevronDown size={16} className="ml-1" />
                 </a>
                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
-                  {/* <div className="grid grid-cols-2 gap-2 px-4">
-                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
-                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
-                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
-                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
-                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
-                    <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Jammu</a>
-                  </div> */}
                   <div className="grid grid-cols-2 gap-2 px-4">
-  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
-  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
-  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
-  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
-  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
-  <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Jammu</a>
-</div>
-
+                    <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#tours')}>Srinagar</a>
+                    <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#tours')}>Gulmarg</a>
+                    <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#tours')}>Pahalgam</a>
+                    <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#tours')}>Sonamarg</a>
+                    <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#tours')}>Leh Ladakh</a>
+                    <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#tours')}>Jammu</a>
+                  </div>
                 </div>
               </div>
               
               {/* Experiences Dropdown */}
               <div className="relative group">
-                <a href="/experiences" className={`flex items-center font-medium group-hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
+                <a href="#experiences" className={`flex items-center font-medium group-hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}
+                   onClick={(e) => handleSmoothScroll(e, '#experiences')}>
                   Experiences <ChevronDown size={16} className="ml-1" />
                 </a>
                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
-                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
-                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
-                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
-                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
-                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#destinations')}>Shikara Rides</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#destinations')}>Houseboat Stays</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#destinations')}>Himalayan Trekking</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#destinations')}>Wazwan Cuisine</a>
+                  <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#destinations')}>Skiing in Gulmarg</a>
                 </div>
               </div>
               
-              {/* <a href="" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Tour Packages</a> */}
-              {/* <a href="/blog" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Travel Blog</a> */}
-              {/* <a href="/contact" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>Contact Us</a> */}
+              <a href="#cars" className="font-medium text-gray-800 hover:text-orange-600" onClick={(e) => handleSmoothScroll(e, '#cars')}>
+                Rent a Car
+              </a>
               
-              {/* Travel Agent Portal Link */}
-              {/* <a href="/register" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
+              <Link to="/register" className="font-medium text-gray-800 hover:text-orange-600">
                 Agent Portal
-              </a> */}
-              <a href="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Rent a Car</a>
-<Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
-  Agent Portal
-</Link>
+              </Link>
             </nav>
-{/* <TripPlanner/> */}
+  
             {/* User Actions */}
             <div className="flex items-center space-x-4">
               <div className="relative">
@@ -3656,7 +3644,7 @@ const KashmirHeader = () => {
                   </span>
                   <ChevronDown size={16} className="ml-1" />
                 </button>
-
+  
                 {isProfileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-30 border border-gray-100">
                     {isAuthenticated ? (
@@ -3680,7 +3668,7 @@ const KashmirHeader = () => {
                   </div>
                 )}
               </div>
-
+  
               {/* Mobile menu button */}
               <button
                 className="lg:hidden hover:text-orange-500 focus:outline-none text-gray-700"
@@ -3719,8 +3707,12 @@ const KashmirHeader = () => {
               </div>
             
               <nav className="flex flex-col p-4">
-              <TripPlanner/>
-                <a href="/" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Home</a>
+                <TripPlanner/>
+                <a href="/" 
+                   className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100"
+                   onClick={(e) => { handleSmoothScroll(e, '/'); toggleMenu(); }}>
+                  Home
+                </a>
                
                 {/* Destinations Dropdown */}
                 <div className="relative">
@@ -3733,16 +3725,40 @@ const KashmirHeader = () => {
                   </button>
                   {expandedMobileSection === 'destinations' && (
                     <div className="pl-4 py-2 bg-gray-50 rounded-md my-2">
-                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
-                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
-                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
-                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
-                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
-                      <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Jammu</a>
+                      <a href="#tours" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#tours'); toggleMenu(); }}>
+                        Srinagar
+                      </a>
+                      <a href="#tours" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#tours'); toggleMenu(); }}>
+                        Gulmarg
+                      </a>
+                      <a href="#tours" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#tours'); toggleMenu(); }}>
+                        Pahalgam
+                      </a>
+                      <a href="#tours" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#tours'); toggleMenu(); }}>
+                        Sonamarg
+                      </a>
+                      <a href="#tours" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#tours'); toggleMenu(); }}>
+                        Leh Ladakh
+                      </a>
+                      <a href="#tours" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#tours'); toggleMenu(); }}>
+                        Jammu
+                      </a>
                     </div>
                   )}
                 </div>
-
+  
                 {/* Experiences Dropdown */}
                 <div className="relative">
                   <button
@@ -3754,38 +3770,44 @@ const KashmirHeader = () => {
                   </button>
                   {expandedMobileSection === 'experiences' && (
                     <div className="pl-4 py-2 bg-gray-50 rounded-md my-2">
-                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
-                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
-                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
-                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
-                      <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
+                      <a href="#destinations" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#destinations'); toggleMenu(); }}>
+                        Shikara Rides
+                      </a>
+                      <a href="#destinations" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#destinations'); toggleMenu(); }}>
+                        Houseboat Stays
+                      </a>
+                      <a href="#destinations" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#destinations'); toggleMenu(); }}>
+                        Himalayan Trekking
+                      </a>
+                      <a href="#destinations" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#destinations'); toggleMenu(); }}>
+                        Wazwan Cuisine
+                      </a>
+                      <a href="#destinations" 
+                         className="block py-2 text-gray-700 hover:text-orange-600"
+                         onClick={(e) => { handleSmoothScroll(e, '#destinations'); toggleMenu(); }}>
+                        Skiing in Gulmarg
+                      </a>
                     </div>
                   )}
                 </div>
             
-{/* 
-<Link to="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
-  Rent a Car
-</Link>
-
-<Link to="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
-  Travel Blog
-</Link> */}
-{/* <Link to="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
-  cars
-</Link> */}
-<a href="/cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Rent a Car</a>
-<Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
-  Agent Portal
-</Link>
-
-                {/* <a href="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Tour Packages</a> */}
-                {/* <a href="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Travel Blog</a> */}
-                {/* <a href="/contact" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Contact Us</a> */}
-              
-               
-                {/* <a href="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Agent Portal</a> */}
-              
+                <a href="#cars" 
+                   className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100"
+                   onClick={(e) => { handleSmoothScroll(e, '#cars'); toggleMenu(); }}>
+                  Rent a Car
+                </a>
+                <Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+                  Agent Portal
+                </Link>
+  
                 {!isAuthenticated ? (
                   <button 
                     onClick={openAuthModal}
@@ -3838,6 +3860,277 @@ const KashmirHeader = () => {
       />
     </>
   );
+//   return (
+//     <>
+//       <header
+//         className={`fixed w-full z-50 transition-all duration-300 ${
+//           isScrolled ? 'bg-white shadow-md py-2 text-black' : 'bg-white shadow-md py-2 text-black'
+//         }`}
+//       >
+//         <div className="container mx-auto px-4">
+//           <div className="flex justify-between items-center">
+//             {/* Logo */}
+//             <div className="flex items-center">
+//               {/* <img
+//                 src="./images/logo.jpg"
+//                 alt="Kashmir Travels Logo"
+//                 className="h-11 w-auto mr-2"
+//               /> */}
+//               <span className={`text-2xl font-bold ${isScrolled ? 'text-orange-600' : 'text-orange-600'}`}>Kashmir Travels</span>
+//             </div>
+
+//             {/* Desktop Navigation */}
+//             <nav className="hidden lg:flex space-x-6">
+//               <a href="/" className={`font-medium hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800 border-spacing-0'}`}>Home</a>
+              
+//               {/* Destinations Dropdown */}
+//               <div className="relative group">
+//                 <a href="/destinations" className={`flex items-center font-medium group-hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
+//                   Destinations <ChevronDown size={16} className="ml-1" />
+//                 </a>
+//                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
+//                   {/* <div className="grid grid-cols-2 gap-2 px-4">
+//                     <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
+//                     <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
+//                     <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
+//                     <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
+//                     <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
+//                     <a href="/tours" className="py-2 text-gray-700 hover:text-orange-600">Jammu</a>
+//                   </div> */}
+//                   <div className="grid grid-cols-2 gap-2 px-4">
+//   <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
+//   <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
+//   <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
+//   <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
+//   <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
+//   <a href="#tours" className="py-2 text-gray-700 hover:text-orange-600">Jammu</a>
+// </div>
+
+//                 </div>
+//               </div>
+              
+//               {/* Experiences Dropdown */}
+//               <div className="relative group">
+//                 <a href="/experiences" className={`flex items-center font-medium group-hover:text-orange-500 ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}>
+//                   Experiences <ChevronDown size={16} className="ml-1" />
+//                 </a>
+//                 <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
+//                   <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
+//                   <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
+//                   <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
+//                   <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
+//                   <a href="#destinations" className="block px-4 py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
+//                 </div>
+//                 <a href="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Rent a Car</a>
+// <Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+//   Agent Portal
+// </Link>
+//               </div>
+              
+           
+//               <a href="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Rent a Car</a>
+// <Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+//   Agent Portal
+// </Link>
+//             </nav>
+// {/* <TripPlanner/> */}
+//             {/* User Actions */}
+//             <div className="flex items-center space-x-4">
+//               <div className="relative">
+//                 <button
+//                   onClick={toggleProfileDropdown}
+//                   className={`flex items-center hover:text-orange-500 focus:outline-none ${isScrolled ? 'text-gray-700' : 'text-gray-700'}`}
+//                 >
+//                   <div className={`${isScrolled ? 'bg-orange-100' : 'bg-orange-100'} rounded-full p-1.5`}>
+//                     <User size={18} />
+//                   </div>
+//                   <span className="ml-2 hidden sm:inline">
+//                     Hi, {displayName}
+//                   </span>
+//                   <ChevronDown size={16} className="ml-1" />
+//                 </button>
+
+//                 {isProfileDropdownOpen && (
+//                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-30 border border-gray-100">
+//                     {isAuthenticated ? (
+//                       <>
+//                         <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-orange-50">My Profile</a>
+//                         <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-orange-50">My Bookings</a>
+//                         <button
+//                           onClick={handleLogout}
+//                           className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50"
+//                         >
+//                           Logout
+//                         </button>
+//                       </>
+//                     ) : (
+//                       <>
+//                         <button onClick={openAuthModal} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-orange-50">
+//                           Login / Sign Up
+//                         </button>
+//                       </>
+//                     )}
+//                   </div>
+//                 )}
+//               </div>
+
+//               {/* Mobile menu button */}
+//               <button
+//                 className="lg:hidden hover:text-orange-500 focus:outline-none text-gray-700"
+//                 onClick={toggleMenu}
+//               >
+//                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </header>
+      
+//       {/* Mobile Navigation Overlay */}
+//       {isMenuOpen && (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden" onClick={toggleMenu}>
+//           {/* Prevent clicks inside from closing */}
+//           <div className="absolute right-0 top-0 h-full w-3/4 bg-white shadow-lg" onClick={e => e.stopPropagation()}>
+//             <div className="h-full overflow-y-auto pb-20">
+//               {/* Logo and Close button */}
+//               <div className="flex justify-between items-center p-4 border-b border-gray-100">
+//                 <div className="flex items-center">
+//                   {/* <img
+//                     src="./images/logo.jpg"
+//                     alt="Kashmir Travels Logo"
+//                     className="h-8 w-auto mr-2"
+//                   /> */}
+//                   <span className="text-xl font-bold text-orange-600">Kashmir</span>
+//                 </div>
+                
+//                 <button 
+//                   onClick={toggleMenu}
+//                   className="text-gray-700 hover:text-orange-600"
+//                 >
+//                   <X size={24} />
+//                 </button>
+//               </div>
+            
+//               <nav className="flex flex-col p-4">
+//               <TripPlanner/>
+//                 <a href="/" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Home</a>
+               
+//                 {/* Destinations Dropdown */}
+//                 <div className="relative">
+//                   <button
+//                     onClick={() => toggleMobileSection('destinations')}
+//                     className="w-full text-left text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100 flex items-center justify-between"
+//                   >
+//                     Destinations 
+//                     {expandedMobileSection === 'destinations' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+//                   </button>
+//                   {expandedMobileSection === 'destinations' && (
+//                     <div className="pl-4 py-2 bg-gray-50 rounded-md my-2">
+//                       <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Srinagar</a>
+//                       <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Gulmarg</a>
+//                       <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Pahalgam</a>
+//                       <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Sonamarg</a>
+//                       <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Leh Ladakh</a>
+//                       <a href="#tours" className="block py-2 text-gray-700 hover:text-orange-600">Jammu</a>
+//                     </div>
+//                   )}
+//                 </div>
+
+//                 {/* Experiences Dropdown */}
+//                 <div className="relative">
+//                   <button
+//                     onClick={() => toggleMobileSection('experiences')}
+//                     className="w-full text-left text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100 flex items-center justify-between"
+//                   >
+//                     Experiences 
+//                     {expandedMobileSection === 'experiences' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+//                   </button>
+//                   {expandedMobileSection === 'experiences' && (
+//                     <div className="pl-4 py-2 bg-gray-50 rounded-md my-2">
+//                       <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Shikara Rides</a>
+//                       <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Houseboat Stays</a>
+//                       <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Himalayan Trekking</a>
+//                       <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Wazwan Cuisine</a>
+//                       <a href="#destinations" className="block py-2 text-gray-700 hover:text-orange-600">Skiing in Gulmarg</a>
+//                     </div>
+//                   )}
+//                 </div>
+            
+// {/* 
+// <Link to="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+//   Rent a Car
+// </Link>
+
+// <Link to="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+//   Travel Blog
+// </Link> */}
+// {/* <Link to="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+//   cars
+// </Link> */}
+// <a href="#cars" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Rent a Car</a>
+// <Link to="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">
+//   Agent Portal
+// </Link>
+
+//                 {/* <a href="/packages" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Tour Packages</a> */}
+//                 {/* <a href="/blog" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Travel Blog</a> */}
+//                 {/* <a href="/contact" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Contact Us</a> */}
+              
+               
+//                 {/* <a href="/register" className="text-gray-800 hover:text-orange-600 font-medium py-3 border-b border-gray-100">Agent Portal</a> */}
+              
+//                 {!isAuthenticated ? (
+//                   <button 
+//                     onClick={openAuthModal}
+//                     className="mt-6 bg-orange-600 text-white py-3 px-4 rounded-lg hover:bg-orange-700 transition-colors w-full font-medium"
+//                   >
+//                     Login / Sign Up
+//                   </button>
+//                 ) : (
+//                   <div className="mt-6 space-y-3">
+//                     <div className="bg-orange-50 p-4 rounded-lg flex items-center space-x-3">
+//                       <div className="bg-orange-100 rounded-full p-2">
+//                         <User size={20} className="text-orange-600" />
+//                       </div>
+//                       <div>
+//                         <p className="font-medium">{displayName}</p>
+//                         <p className="text-sm text-gray-500">Manage your account</p>
+//                       </div>
+//                     </div>
+//                     <a href="/profile" className="block py-2 text-gray-800 hover:text-orange-600">
+//                       <div className="flex items-center space-x-2">
+//                         <UserCircle size={18} />
+//                         <span>My Profile</span>
+//                       </div>
+//                     </a>
+//                     <a href="/bookings" className="block py-2 text-gray-800 hover:text-orange-600">
+//                       <div className="flex items-center space-x-2">
+//                         <Calendar size={18} />
+//                         <span>My Bookings</span>
+//                       </div>
+//                     </a>
+//                     <button 
+//                       onClick={handleLogout}
+//                       className="mt-2 w-full bg-orange-100 text-orange-700 py-3 px-4 rounded-lg hover:bg-orange-200 transition-colors font-medium flex justify-center items-center space-x-2"
+//                     >
+//                       <LogOut size={18} />
+//                       <span>Logout</span>
+//                     </button>
+//                   </div>
+//                 )}
+//               </nav>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+      
+//       {/* Auth Modal */}
+//       <AuthModal 
+//         isOpen={isAuthModalOpen} 
+//         onClose={closeAuthModal} 
+//       />
+//     </>
+//   );
 };
 
 export default KashmirHeader;

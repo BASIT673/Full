@@ -9148,7 +9148,7 @@ const visibleDestinations = calculateVisibleDestinations();
 //   });
 // }, [filteredDestinations, visibleDestinations, currentIndex, isMobile]);
 return (
-  <div className="container mx-auto p-4 w-full max-w-7xl">
+  <div id="destinations" className="container mx-auto p-4 w-full max-w-7xl">
     {/* Header Section */}
     <div className="flex justify-between items-center mb-6">
       <h2 className="text-2xl font-bold text-gray-800">Popular Destinations</h2>
