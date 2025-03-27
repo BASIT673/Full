@@ -2224,7 +2224,8 @@ const BlogPostCard = ({ post, postIndex, likeState, onLike, onPlanJourney }) => 
           >
             <div className="absolute inset-0 bg-gradient-to-t from-orange-900/40 to-transparent z-10 opacity-60 transition-opacity group-hover:opacity-40" />
             <img 
-              src={featuredImage} 
+              // src={featuredImage} 
+              src={`https://backend-1-7zwm.onrender.com${featuredImage}`}
               alt={title} 
               className="w-full h-auto object-cover max-h-96 transform transition-transform duration-700 group-hover:scale-105" 
               onError={(e) => {

@@ -1890,9 +1890,9 @@ const [selectedCar, setSelectedCar] = useState(null);
     3: Settings,
   };
 
-  const getImageUrl = (image) => {
-    return `http://localhost:5000/uploads/${image}`;
-  };
+  // const getImageUrl = (image) => {
+  //   return ` src={`https://backend-1-7zwm.onrender.com${featuredImage}`}/${image}`;
+  // };
 
   // const handleRentCar = (car) => {
   //   // Implement your rental logic here
@@ -2732,7 +2732,7 @@ const RentalQueryForm = ({ car, onSubmit, onClose }) => {
       if (token) {
         try {
           console.log("🟢 Fetching user details...");
-          const userRes = await axios.get("http://localhost:5000/api/auth/me", {
+          const userRes = await axios.get("https://backend-1-7zwm.onrender.com/api/auth/me", {
             headers: { Authorization: `Bearer ${token}` },
           });
           userData = userRes.data;
@@ -3713,7 +3713,8 @@ const processRentalPayment = async (rentalDetails) => {
       } border border-orange-100 hover:border-orange-200 transition-all duration-300`}>
         <div className="relative group">
           <img 
-            src={car.image}
+            // src={car.image}
+            src={`https://backend-1-7zwm.onrender.com${car.image}}`}
             alt={car.name} 
             className={`w-full object-cover ${isSlider ? 'h-72' : 'h-56'}`}
           />

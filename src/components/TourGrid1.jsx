@@ -2072,7 +2072,7 @@ const handleBookNow1 = async (selectedTour, tour) => {
   if (token) {
     try {
       console.log("🟢 Fetching user details...");
-      const userRes = await axios.get('http://localhost:5000/api/auth/me', {
+      const userRes = await axios.get('https://backend-1-7zwm.onrender.com/api/auth/me', {
         headers: { Authorization: `Bearer ${token}` },
       });
       userData = userRes.data;
@@ -3565,7 +3565,8 @@ const TourModal = ({ tour, isOpen, onClose, selectedTour, handleBookNow }) => {
           {/* Image Section - Reduced height */}
           <div className="md:w-2/5 relative h-52 md:h-auto">
             <img
-              src={tour.image || "http://localhost:5000/uploads/placeholder.jpg"}
+                src={`https://backend-1-7zwm.onrender.com${tour.image}`}
+              // src={tour.image || "http://localhost:5000/uploads/placeholder.jpg"}
               alt={tour.title}
               className="h-full w-full object-cover md:rounded-l-lg"
             />
@@ -4240,7 +4241,8 @@ const TourCard = ({ tour, onClick }) => (
     {/* Image Container */}
     <div className="relative h-56 overflow-hidden">
       <img
-        src={tour.image}
+        // src={tour.image}
+        src={`https://backend-1-7zwm.onrender.com${tour.image}`}
         alt={tour.title}
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
