@@ -3145,8 +3145,8 @@ useEffect(() => {
             {/* Image Section */}
             <div className="md:w-2/5 relative h-52 md:h-auto">
               <img
-                // src={tour.image || "/api/placeholder/400/300"}
-                src={`https://backend-1-7zwm.onrender.com${tour.image}`}
+                src={tour.image || "/api/placeholder/400/300"}
+                // src={`https://backend-1-7zwm.onrender.com${tour.image}`}
                 alt={tour.title}
                 className="h-full w-full object-cover md:rounded-l-lg"
               />
