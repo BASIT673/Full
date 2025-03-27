@@ -3650,7 +3650,7 @@ const handleSmoothScroll = (e, target) => {
                 Rent a Car
               </a>
               
-              <Link to="/register" className="font-medium text-gray-800 hover:text-orange-600">
+              <Link to="/admin-dashboard" className="font-medium text-gray-800 hover:text-orange-600">
                 Agent Portal
               </Link>
             </nav>

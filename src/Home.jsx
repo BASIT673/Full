@@ -87,7 +87,7 @@ const Home = () => {
         <HeroSection/>
         {/* <AgentProfile/> */}
     {/* <PackageManagement/> */}
-          <FeatureCards/>
+          {/* <FeatureCards/> */}
           <FeatureCards1/>
           {/* <TourQueryFormKashmir/> */}
         {/* <TravelSelector
@@ -100,8 +100,8 @@ const Home = () => {
 
       {/* /> */}
         <ToursGrid1/>
-        {/* <FinalTours1/> */}
-        {/* <KashmirDestinations2/> */}
+        <FinalTours1/>
+        <KashmirDestinations2/>
         {/* <TrekkingSection/> */}
         {/* <TourQueryForm/> */}
         
@@ -113,14 +113,15 @@ const Home = () => {
 
         {/* <ToursGrid/> */}
         {/* <RentCARS /> */}
-        {/* <BlogSection/> */}
+        <BlogSection/>
+
         {/* <HeroSection /> */}
         {/* <TravelBlogPost/> */}
         <ErrorBoundary>
   {/* <BlogSection /> */}
 {/* <TravelPackageCRUD/> */}
 </ErrorBoundary>
-{/* <TestimonialsCarousel/> */}
+<TestimonialsCarousel/>
 
         <Footer />
       </>

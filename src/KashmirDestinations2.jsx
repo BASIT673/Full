@@ -4855,7 +4855,7 @@ const DestinationGallery = ({ onViewAll }) => {
         <div className="relative h-56">
           <img 
             // src={destination.image || "/api/placeholder/300/200"} 
-            src={`http://localhost:5000${destination.image}`}
+            src={`https://backend-1-7zwm.onrender.com${destination.image}`}
             alt={destination.title} 
             className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
           />
@@ -6259,7 +6259,7 @@ const DestinationGallery = ({ onViewAll }) => {
               console.log("Request Payload:", payload);
         
               console.log("🟢 Sending Create Order API Call...");
-              const orderResponse = await fetch('http://localhost:5000/api/create-order', {
+              const orderResponse = await fetch('https://backend-1-7zwm.onrender.com/api/create-order', {
                 method: 'POST',
                 headers: { 
                   'Content-Type': 'application/json',
@@ -6295,7 +6295,7 @@ const DestinationGallery = ({ onViewAll }) => {
                 handler: async function (response) {
                   try {
                     console.log("🟢 Payment Successful! Sending verification request...");
-                    const verifyResponse = await fetch('http://localhost:5000/api/verify-payment', {
+                    const verifyResponse = await fetch('https://backend-1-7zwm.onrender.com/api/verify-payment', {
                       method: 'POST',
                       headers: { 
                         'Content-Type': 'application/json',
@@ -7563,7 +7563,7 @@ const DestinationGallery = ({ onViewAll }) => {
                 try {
                   // 1. Send to backend API
                   try {
-                    await axios.post('http://localhost:5000/api/tour-queries', formData);
+                    await axios.post('https://backend-1-7zwm.onrender.com/api/tour-queries', formData);
                     console.log('✅ Query saved to database');
                   } catch (error) {
                     console.error('❌ Error saving query:', error);
@@ -8571,7 +8571,7 @@ const DestinationGallery = ({ onViewAll }) => {
             <div className="md:w-2/5 relative h-52 md:h-auto">
               <img
                 // src={destination.image || "/api/placeholder/400/320"}
-                src={`http://localhost:5000${destination.image}`}
+                src={`https://backend-1-7zwm.onrender.com${destination.image}`}
                 alt={destination.title || "Destination"}
                 className="h-full w-full object-cover md:rounded-l-lg"
               />
