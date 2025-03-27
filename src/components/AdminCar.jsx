@@ -1644,41 +1644,87 @@ const AdminCar = () => {
       setIsUploading(false);
     }
   };
-
+  const handleDelete = async (carId) => {
+    if (!window.confirm('Are you sure you want to delete this car?')) return;
+    try {
+      const response = await fetch(`${API_URL}/${carId}`, { method: 'DELETE' });
+      if (response.ok) {
+        fetchCars();
+      } else {
+        const errorData = await response.json();
+        console.error('Error deleting car:', errorData);
+        alert('Failed to delete car');
+      }
+    } catch (error) {
+      console.error('Error deleting car:', error);
+      alert('An error occurred while deleting the car');
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.image) return alert('Please upload an image.');
-
+  
     const carData = { ...formData };
-
+  
     try {
-      const response = await fetch(selectedCar ? `${API_URL}/${selectedCar.id}` : API_URL, {
-        method: selectedCar ? 'PUT' : 'POST',
+      // Use the car's _id for both update and create
+      const url = selectedCar ? `${API_URL}/${selectedCar._id}` : API_URL;
+      const method = selectedCar ? 'PUT' : 'POST';
+  
+      const response = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(carData),
       });
-
+  
       if (response.ok) {
         fetchCars();
         closeModal();
       } else {
         const errorData = await response.json();
         console.error('Error saving car:', errorData);
+        alert('Failed to save car');
       }
     } catch (error) {
       console.error('Error saving car:', error);
+      alert('An error occurred while saving the car');
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!formData.image) return alert('Please upload an image.');
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this car?')) return;
-    try {
-      const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-      if (response.ok) fetchCars();
-    } catch (error) {
-      console.error('Error deleting car:', error);
-    }
-  };
+  //   const carData = { ...formData };
+
+  //   try {
+  //     const response = await fetch(selectedCar ? `${API_URL}/${selectedCar.id}` : API_URL, {
+  //       method: selectedCar ? 'PUT' : 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(carData),
+  //     });
+
+  //     if (response.ok) {
+  //       fetchCars();
+  //       closeModal();
+  //     } else {
+  //       const errorData = await response.json();
+  //       console.error('Error saving car:', errorData);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error saving car:', error);
+  //   }
+  // };
+
+  // const handleDelete = async (id) => {
+  //   if (!window.confirm('Are you sure you want to delete this car?')) return;
+  //   try {
+  //     const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+  //     if (response.ok) fetchCars();
+  //   } catch (error) {
+  //     console.error('Error deleting car:', error);
+  //   }
+  // };
 
   const handleEdit = (car) => {
     setSelectedCar(car);

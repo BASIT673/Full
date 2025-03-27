@@ -854,27 +854,49 @@ useEffect(() => {
      </div>
   );
 ;
-  const AllToursPage = ({ tours, onTourClick, onBack }) => {
-    return (
-      <div className="all-tours-page">
-        <div className="header flex items-center mb-6">
-          <button 
-            onClick={onBack}
-            className="back-button bg-gray-200 hover:bg-gray-300 p-2 rounded-full mr-4"
-          >
-            ← show less
-          </button>
-          <h1 className="text-2xl font-bold">All Trending Tours</h1>
-        </div>
+//   const AllToursPage = ({ tours, onTourClick, onBack }) => {
+//     return (
+//       <div className="all-tours-page header flex items-center mt-2  mb-6">
+//          <button
+//   className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-4 py-2 rounded-lg shadow-md
+//              hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2 text-base sm:text-lg"
+//   onClick={onBack}
+// >
+//   <span className="truncate max-w-[100px] sm:max-w-none">View less</span>
+//   <span className="arrow-icon text-lg sm:text-xl">→</span>
+// </button>
+
         
-        <div className="tours-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tours.map(tour => (
-            <TourCard key={tour.id} tour={tour} onClick={onTourClick} />
-          ))}
-        </div>
+//         <div className="tours-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//           {tours.map(tour => (
+//             <TourCard key={tour.id} tour={tour} onClick={onTourClick} />
+//           ))}
+//         </div>
+//       </div>
+//     );
+//   };
+const AllToursPage = ({ tours, onTourClick, onBack }) => {
+  return (
+    <div className="all-tours-page header flex justify-between items-center mt-2 mb-6">
+      {/* Button aligned to the right */}
+      <button
+        className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-4 py-2 rounded-lg shadow-md
+                   hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2 text-base sm:text-lg"
+        onClick={onBack}
+      >
+        <span className="truncate max-w-[100px] sm:max-w-none">View less</span>
+        <span className="arrow-icon text-lg sm:text-xl">→</span>
+      </button>
+
+      {/* Tours Grid */}
+      <div className="tours-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {tours.map((tour) => (
+          <TourCard key={tour.id} tour={tour} onClick={onTourClick} />
+        ))}
       </div>
-    );
-  };
+    </div>
+  );
+};
 
   const DetailedTourPage = ({ tour, onClose, handleBookNow }) => {
     const [activeTab, setActiveTab] = useState('overview');
@@ -2567,36 +2589,64 @@ useEffect(() => {
    
   if (isAllToursPage) {
     // Define the AllToursPage component inline if it's not imported
-    const AllToursPage = ({ tours, onTourClick, onBack }) => {
-      return (
-        <div className="all-tours-page p-4">
-          <div className="header flex items-center mb-6">
-            <button 
-              onClick={onBack}
-              className="back-button bg-gray-200 hover:bg-gray-300 p-2 rounded-full mr-4"
-            >
-              ← Back
-            </button>
-            <h1 className="text-2xl font-bold">All Trending Tours</h1>
-          </div>
+//     const AllToursPage = ({ tours, onTourClick, onBack }) => {
+//       return (
+//         <div className="all-tours-page p-4">
+//           <button
+//   className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-4 py-2 rounded-lg shadow-md
+//              hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2 text-base sm:text-lg"
+//   onClick={onBack}
+// >
+//   <span className="truncate max-w-[100px] sm:max-w-none">View  less</span>
+//   <span className="arrow-icon text-lg sm:text-xl">→</span>
+// </button>
           
-          <div className="tours-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tours && tours.length > 0 ? (
-              tours.map((tour, index) => (
-                <TourCard 
-                  key={tour.id || index} 
-                  tour={tour} 
-                  onClick={onTourClick} 
-                />
-              ))
-            ) : (
-              <p>No tours available</p>
-            )}
-          </div>
-        </div>
-      );
-    };
-    
+          
+//           <div className="tours-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//             {tours && tours.length > 0 ? (
+//               tours.map((tour, index) => (
+//                 <TourCard 
+//                   key={tour.id || index} 
+//                   tour={tour} 
+//                   onClick={onTourClick} 
+//                 />
+//               ))
+//             ) : (
+//               <p>No tours available</p>
+//             )}
+//           </div>
+//         </div>
+//       );
+//     };
+const AllToursPage = ({ tours, onTourClick, onBack }) => {
+  return (
+    <div className="all-tours-page p-4">
+      {/* Button aligned to the right */}
+      <div className="flex justify-end mb-4">
+        <button
+          className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-4 py-2 rounded-lg shadow-md
+                     hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2 text-base sm:text-lg"
+          onClick={onBack}
+        >
+          <span className="truncate max-w-[100px] sm:max-w-none">Show less</span>
+          <span className="arrow-icon text-lg sm:text-xl">→</span>
+        </button>
+      </div>
+
+      {/* Tours Grid */}
+      <div className="tours-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {tours && tours.length > 0 ? (
+          tours.map((tour, index) => (
+            <TourCard key={tour.id || index} tour={tour} onClick={onTourClick} />
+          ))
+        ) : (
+          <p>No tours available</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
     return <AllToursPage tours={tours} onTourClick={handleTourClick} onBack={handleBackToHome} />;
   }
    

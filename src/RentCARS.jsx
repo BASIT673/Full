@@ -1817,10 +1817,11 @@
 // };
 
 // export default RentCARS;
+
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import axios from 'axios';
-import { Loader, Heart, Share2, ChevronDown, Info, Car, Fuel, Users, Settings, ChevronLeft, ChevronRight, Pause, Play, Filter, Star, MapPin } from 'lucide-react';
-
+import { CheckCircle2, AlertTriangle ,ArrowRight,Loader, Heart, Share2, ChevronDown, Info, Car, Fuel, Users, Settings, ChevronLeft, ChevronRight, Pause, Play, Filter, Star, MapPin,ShieldCheck, FileText ,MessageCircle,Calendar } from 'lucide-react';
+import { toast, Toaster } from 'react-hot-toast';
 const RentCARS = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
@@ -1835,6 +1836,11 @@ const RentCARS = () => {
   const [error, setError] = useState(null);
   const [showRentalForm, setShowRentalForm] = useState(false);
 const [selectedCar, setSelectedCar] = useState(null);
+const [isAllCarsPage, setIsAllCarsPage] = useState(false);
+const [showCalendar, setShowCalendar] = useState(false);
+const [showInquiryModal, setShowInquiryModal] = useState(false);
+const [showTermsModal, setShowTermsModal] = useState(false);
+const [inquiryMessage, setInquiryMessage] = useState('');
   const autoplayInterval = 5000;
 
   useEffect(() => {
@@ -2662,6 +2668,222 @@ const [selectedCar, setSelectedCar] = useState(null);
 //     }
 //   }
 // `;
+const CarInquiryButton = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [inquiry, setInquiry] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const resetForm = () => {
+    setInquiry({
+      name: '',
+      email: '',
+      phone: '',
+      message: ''
+    });
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    resetForm();
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInquiry(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validate phone number (optional)
+    if (inquiry.phone && !/^\+?[\d\s()-]{10,}$/.test(inquiry.phone)) {
+      toast.error('Please enter a valid phone number');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/car-inquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(inquiry)
+      });
+
+      if (response.ok) {
+        toast.success('Your inquiry has been submitted successfully!', {
+          duration: 4000,
+          icon: <CheckCircle2 className="text-green-500" />,
+          style: {
+            border: '1px solid #10B981',
+            padding: '16px',
+            color: '#10B981',
+          },
+        });
+        handleCloseModal();
+      } else {
+        toast.error('Failed to submit inquiry. Please try again.', {
+          icon: <AlertTriangle className="text-red-500" />,
+          style: {
+            border: '1px solid #EF4444',
+            padding: '16px',
+            color: '#EF4444',
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Inquiry submission error:', error);
+      toast.error('An unexpected error occurred. Please try again.', {
+        icon: <AlertTriangle className="text-red-500" />,
+        style: {
+          border: '1px solid #EF4444',
+          padding: '16px',
+          color: '#EF4444',
+        },
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <>
+      {/* Toaster for notifications */}
+      <Toaster position="top-right" reverseOrder={false} />
+
+      {/* Inquiry Button */}
+      <button 
+        onClick={handleOpenModal}
+        className="bg-orange-500 text-white rounded-xl py-3 px-6 flex items-center justify-center hover:bg-orange-600 transition-colors duration-300 w-full sm:w-auto shadow-md hover:shadow-lg"
+      >
+        <Calendar className="mr-2 w-5 h-5" />
+        Inquire Now
+      </button>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-auto p-8 relative">
+            {/* Close Button */}
+            <button 
+              onClick={handleCloseModal}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Modal Content */}
+            <h2 className="text-2xl font-bold text-orange-600 mb-6 text-center">
+              Car Inquiry Form
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-300"
+                  placeholder="Enter your full name"
+                  value={inquiry.name}
+                  onChange={handleInputChange}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-300"
+                  placeholder="you@example.com"
+                  value={inquiry.email}
+                  onChange={handleInputChange}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number (Optional)
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-300"
+                  placeholder="(000) 000-0000"
+                  value={inquiry.phone}
+                  onChange={handleInputChange}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  Your Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-300"
+                  placeholder="Tell us about your car inquiry"
+                  value={inquiry.message}
+                  onChange={handleInputChange}
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors duration-300 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              >
+                {isSubmitting ? (
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                ) : (
+                  'Submit Inquiry'
+                )}
+              </button>
+            </form>
+          </div>
+          
+          {/* Modal Backdrop */}
+          <div 
+            className="fixed inset-0 z-40 bg-transparent" 
+            onClick={handleCloseModal}
+          ></div>
+        </div>
+      )}
+    </>
+  );
+};
 const handleRentCar = async (car) => {
   if (!car) {
     alert("❌ Invalid car selected. Please try again.");
@@ -3702,7 +3924,64 @@ const processRentalPayment = async (rentalDetails) => {
       </div>
     </div>
   );
+  // import React, { useState } from 'react';
+  // import { 
+  //   Heart, Share2, MapPin, Star, ChevronDown, Info, Calendar, MessageCircle, 
+  //   ShieldCheck, FileText 
+  // } from 'lucide-react';
+  
+  
 
+const rentCarAPI = async (carId) => {
+return { success: true };
+};
+
+const submitInquiryAPI = async (inquiryData) => {
+return { success: true };
+};
+      // return (
+      //   <div className="bg-gradient-to-br from-orange-50 via-white to-amber-50 rounded-2xl overflow-hidden border border-orange-100">
+      //     {/* Existing image and top section */}
+          
+      //     <div className="p-6">
+      //       {/* Existing car details */}
+            
+      //       <div className="grid grid-cols-2 gap-3 mb-4">
+      //         <button 
+      //           onClick={handleRentNow}
+      //           className="bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl py-3 flex items-center justify-center"
+      //         >
+      //           <ShieldCheck className="mr-2 w-5 h-5" /> Rent Now
+      //         </button>
+              
+      //         <button 
+      //           onClick={handleBookLater}
+      //           className="border border-orange-500 text-orange-500 rounded-xl py-3 flex items-center justify-center"
+      //         >
+      //           <Calendar className="mr-2 w-5 h-5" /> Book Later
+      //         </button>
+      //       </div>
+            
+      //       <div className="grid grid-cols-2 gap-3">
+      //         <button 
+      //           onClick={handleInquiry}
+      //           className="border border-gray-300 text-gray-700 rounded-xl py-3 flex items-center justify-center"
+      //         >
+      //           <MessageCircle className="mr-2 w-5 h-5" /> Inquire
+      //         </button>
+              
+      //         <button 
+      //           className="border border-gray-300 text-gray-700 rounded-xl py-3 flex items-center justify-center"
+      //         >
+      //           <FileText className="mr-2 w-5 h-5" /> Terms
+      //         </button>
+      //       </div>
+      //     </div>
+      //   </div>
+      // );
+    // };
+  
+  // export default CarCard;
   const CarCard = ({ car, isSlider = false }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
@@ -3811,7 +4090,21 @@ const processRentalPayment = async (rentalDetails) => {
               </div>
             </div>
           )}
-
+    <div className="grid grid-cols-2 gap-3 mb-4 w-full">
+                    <button 
+                        // onClick={handleRentNow}
+                        className=" w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl py-3 flex items-center justify-center hover:bg-orange-600 transition"
+                    >
+                        <ShieldCheck className="mr-2 w-5 h-5" /> Rent Now
+                    </button>
+                    {/* <CarInquiryButton/> */}
+                    {/* <button 
+                        // onClick={handleBookLater}
+                        className="border border-orange-500 text-orange-500 rounded-xl py-3 flex items-center justify-center hover:bg-orange-50 transition"
+                    >
+                        <Calendar className="mr-2 w-5 h-5" />Inquire Now
+                    </button> */}
+                </div>
           <button
             onClick={() => handleRentCar(car)}
             className={`w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl font-medium
@@ -3833,19 +4126,47 @@ const processRentalPayment = async (rentalDetails) => {
 
   const carTypes = [...new Set(cars.filter(car => car.type).map(car => car.type))];
 
-  return (
-    // In your parent component's render/return section
 
-    <div id='cars' className="container mx-auto p-4 w-full max-w-7xl">
+
+return (
+  <div id='cars' className="container mx-auto p-4 w-full max-w-7xl">
+    {/* Rental Query Form */}
+    {showRentalForm && selectedCar && (
+      <RentalQueryForm 
+        car={selectedCar} 
+        onSubmit={processRentalPayment} 
+        onClose={() => setShowRentalForm(false)} 
+      />
+    )}
+
+    {/* Header and View All Section */}
+    <div className="mb-8">
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <h2 className="text-2xl font-bold text-gray-800">
+          {isAllCarsPage ? 'All Cars' : 'Premium Car Rentals'}
+        </h2>
+        {filteredCars.length > (isMobile ? 1 : 3) && (
+          // <button 
+          //   onClick={() => setIsAllCarsPage(!isAllCarsPage)}
+          //   className="flex items-center text-orange-600 hover:text-orange-700 font-medium text-sm transition-colors duration-300"
+          // >
+          //   {isAllCarsPage ? 'Back to Featured' : 'View All'}
+          //   <ArrowRight className="ml-2 w-4 h-4" />
+          // </button>
+          <button
+          className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
+                     hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2"
+          // onClick={toggleShowAllTours}
+          // onClick={() => setIsAllDestinationsPage(!isAllDestinationsPage)}
+          onClick={() => setIsAllCarsPage(!isAllCarsPage)}
+        >
+          {isAllCarsPage  ? "Show Less" : "View All"} <span className="arrow-icon text-lg">→</span>
+        </button>
+        )}
+      </div>
+
       {/* Search and Filter */}
-      {showRentalForm && selectedCar && (
-  <RentalQueryForm 
-    car={selectedCar} 
-    onSubmit={processRentalPayment} 
-    onClose={() => setShowRentalForm(false)} 
-  />
-)}
-      <div className="mb-8">
+      <div className="mt-4">
         <div className="flex flex-col md:flex-row gap-4 items-center">
           <div className="relative w-full md:w-2/3">
             <input
@@ -3869,13 +4190,7 @@ const processRentalPayment = async (rentalDetails) => {
             Filters {filterOpen ? '▲' : '▼'}
           </button>
         </div>
-        {/* {showRentalForm && selectedCar && (
-  <RentalQueryForm 
-    car={selectedCar} 
-    onSubmit={processRentalPayment} 
-    onClose={() => setShowRentalForm(false)} 
-  />
-)} */}
+
         {/* Filters Panel */}
         {filterOpen && (
           <div className="bg-white mt-4 p-4 rounded-lg border border-gray-200 shadow-md">
@@ -3928,100 +4243,136 @@ const processRentalPayment = async (rentalDetails) => {
           </div>
         )}
       </div>
+    </div>
 
-      {/* Desktop View - Grid Layout */}
-      {!isMobile && (
-        <div className="relative w-full">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {visibleCars.map((car, index) => (
-              <div key={car._id || index}>
-                <CarCard car={car} />
-              </div>
-            ))}
+    {/* Cars Display */}
+    {isAllCarsPage ? (
+      // Grid view for all cars
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+        {filteredCars.map((car, index) => (
+          <div key={car._id || index}>
+            <CarCard 
+              car={car} 
+              onClick={() => {
+                setSelectedCar(car);
+                setShowRentalForm(true);
+              }}
+            />
           </div>
-
-          {/* Navigation Buttons */}
-          <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between items-center px-4 pointer-events-none">
-            <button
-              onClick={handlePreviousCar}
-              className="bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all group pointer-events-auto"
-              aria-label="Previous Car"
-            >
-              <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-orange-600" />
-            </button>
-            <button
-              onClick={handleNextCar}
-              className="bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all group pointer-events-auto"
-              aria-label="Next Car"
-            >
-              <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-orange-600" />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Mobile View - Carousel */}
-      {isMobile && filteredCars.length > 0 && (
-        <div className="relative"
-          onMouseEnter={() => setIsAutoplayPaused(true)}
-          onMouseLeave={() => setIsAutoplayPaused(false)}
-        >
-          <div>
-            <CarCard car={filteredCars[currentIndex]} isSlider />
-          </div>
-          
-          {/* Mobile Controls */}
-          <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between items-center px-4">
-            <button
-              onClick={handlePreviousCar}
-              className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
-              aria-label="Previous Car"
-            >
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
-            </button>
-            <button
-              onClick={handleNextCar}
-              className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
-              aria-label="Next Car"
-            >
-              <ChevronRight className="w-5 h-5 text-gray-700" />
-            </button>
-          </div>
-
-          {/* Autoplay Toggle */}
-          <button
-            onClick={toggleAutoplay}
-            className="absolute bottom-4 right-4 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
-            aria-label={isAutoplayPaused ? "Resume Autoplay" : "Pause Autoplay"}
-          >
-            {isAutoplayPaused ? (
-              <Play className="w-4 h-4 text-gray-700" />
-            ) : (
-              <Pause className="w-4 h-4 text-gray-700" />
-            )}
-          </button>
-        </div>
-      )}
-
-      {/* Navigation Dots */}
-      <div className="flex justify-center mt-6 space-x-2">
-        {filteredCars.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`
-              transition-all duration-300 
-              ${index === currentIndex 
-                ? 'bg-orange-500 w-6 rounded-full' 
-                : 'bg-gray-300 w-2 rounded-full'}
-              h-2
-            `}
-            aria-label={`Go to car ${index + 1}`}
-          />
         ))}
       </div>
-    </div>
-  );
+    ) : (
+      // Carousel view
+      <>
+        {/* Desktop View */}
+        {!isMobile && (
+          <div className="relative w-full">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {visibleCars.map((car, index) => (
+                <div key={car._id || index}>
+                  <CarCard 
+                    car={car} 
+                    onClick={() => {
+                      setSelectedCar(car);
+                      setShowRentalForm(true);
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between items-center px-4 pointer-events-none">
+              <button
+                onClick={handlePreviousCar}
+                className="bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all group pointer-events-auto"
+                aria-label="Previous Car"
+              >
+                <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-orange-600" />
+              </button>
+              <button
+                onClick={handleNextCar}
+                className="bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-all group pointer-events-auto"
+                aria-label="Next Car"
+              >
+                <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-orange-600" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Mobile View */}
+        {isMobile && filteredCars.length > 0 && (
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsAutoplayPaused(true)}
+            onMouseLeave={() => setIsAutoplayPaused(false)}
+          >
+            <div>
+              <CarCard 
+                car={filteredCars[currentIndex]} 
+                isSlider 
+                onClick={() => {
+                  setSelectedCar(filteredCars[currentIndex]);
+                  setShowRentalForm(true);
+                }}
+              />
+            </div>
+            
+            {/* Mobile Controls */}
+            <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between items-center px-4">
+              <button
+                onClick={handlePreviousCar}
+                className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+                aria-label="Previous Car"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-700" />
+              </button>
+              <button
+                onClick={handleNextCar}
+                className="bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+                aria-label="Next Car"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-700" />
+              </button>
+            </div>
+
+            {/* Autoplay Toggle */}
+            <button
+              onClick={toggleAutoplay}
+              className="absolute bottom-4 right-4 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all"
+              aria-label={isAutoplayPaused ? "Resume Autoplay" : "Pause Autoplay"}
+            >
+              {isAutoplayPaused ? (
+                <Play className="w-4 h-4 text-gray-700" />
+              ) : (
+                <Pause className="w-4 h-4 text-gray-700" />
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center mt-6 space-x-2">
+          {filteredCars.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`
+                transition-all duration-300 
+                ${index === currentIndex 
+                  ? 'bg-orange-500 w-6 rounded-full' 
+                  : 'bg-gray-300 w-2 rounded-full'}
+                h-2
+              `}
+              aria-label={`Go to car ${index + 1}`}
+            />
+          ))}
+        </div>
+      </>
+    )}
+  </div>
+);
 };
 
 export default RentCARS;

@@ -114,7 +114,7 @@ const Home = () => {
         {/* <MacroflipInternshipCertificate/> */}
 
         {/* <ToursGrid/> */}
-        {/* <RentCARS /> */}
+        <RentCARS />
         <BlogSection/>
 
         {/* <HeroSection /> */}

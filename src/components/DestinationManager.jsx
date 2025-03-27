@@ -4436,7 +4436,7 @@ const DestinationManager = () => {
                   <img 
                     src={`https://backend-1-7zwm.onrender.com${item.image}` }
                     alt={item.title} 
-                    onError={(e) => { e.target.src = "https://via.placeholder.com/300x200?text=Image+Not+Found"; }}
+                    // onError={(e) => { e.target.src = "https://via.placeholder.com/300x200?text=Image+Not+Found"; }}
                     className="w-full h-48 object-cover mb-2 rounded"
                   />
                   <h3 className="font-semibold">{item.title || 'Untitled'}</h3>
