@@ -1285,7 +1285,7 @@ const BlogPostManager = () => {
   // Fetch all posts
   const fetchPosts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/blogsection');
+      const response = await fetch('https://backend-1-7zwm.onrender.com/api/blogsection');
       const data = await response.json();
       setPosts(data);
     } catch (error) {
@@ -1303,7 +1303,7 @@ const BlogPostManager = () => {
       const uploadFormData = new FormData();
       uploadFormData.append("image", file);
 
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch("https://backend-1-7zwm.onrender.com/api/upload", {
         method: "POST",
         body: uploadFormData,
       });
@@ -1311,7 +1311,7 @@ const BlogPostManager = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const fullImageUrl = `http://localhost:5000${data.imageUrl}`;
+        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
         setFormData(prev => ({ ...prev, featuredImage: fullImageUrl }));
         setImagePreview(fullImageUrl);
       }
@@ -1364,8 +1364,8 @@ const BlogPostManager = () => {
       }
 
       const url = editingPost
-        ? `http://localhost:5000/api/blogsection/${editingPost._id}`
-        : 'http://localhost:5000/api/blogsection';
+        ? `https://backend-1-7zwm.onrender.com/api/blogsection/${editingPost._id}`
+        : 'https://backend-1-7zwm.onrender.com/api/blogsection';
 
       const method = editingPost ? 'PATCH' : 'POST';
 
@@ -1468,7 +1468,7 @@ const BlogPostManager = () => {
                 onClick={async () => {
                   if (window.confirm('Delete this post?')) {
                     try {
-                      const response = await fetch(`http://localhost:5000/api/blogsection/${post._id}`, { method: 'DELETE' });
+                      const response = await fetch(`https://backend-1-7zwm.onrender.com/api/blogsection/${post._id}`, { method: 'DELETE' });
                       if (response.ok) {
                         fetchPosts();
                       } else {

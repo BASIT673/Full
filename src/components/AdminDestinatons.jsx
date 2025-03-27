@@ -504,7 +504,7 @@ const DestinationManager = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/destinations');
+      const response = await fetch('https://backend-1-7zwm.onrender.com/api/destinations');
       const data = await response.json();
       setCategories(data);
     } catch (error) {
@@ -760,8 +760,8 @@ const DestinationManager = () => {
       };
 
       const url = isEditing 
-        ? `http://localhost:5000/api/destinations/${selectedCategory}/items/${selectedItem._id}`
-        : `http://localhost:5000/api/destinations/${selectedCategory}/items`;
+        ? `https://backend-1-7zwm.onrender.com/api/destinations/${selectedCategory}/items/${selectedItem._id}`
+        : `https://backend-1-7zwm.onrender.com/api/destinations/${selectedCategory}/items`;
       
       const response = await fetch(url, {
         method: isEditing ? 'PATCH' : 'POST',
@@ -784,7 +784,7 @@ const DestinationManager = () => {
     if (!window.confirm('Are you sure you want to delete this destination?')) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/destinations/${categoryTitle}/items/${itemId}`, {
+      const response = await fetch(`https://backend-1-7zwm.onrender.com/api/destinations/${categoryTitle}/items/${itemId}`, {
         method: 'DELETE'
       });
 
@@ -1240,7 +1240,7 @@ const DestinationManager = () => {
               {category.items.map(item => (
                 <div key={item._id} className="border rounded p-4">
                   <img 
-                    src={`http://localhost:5000${item.image}` }
+                    src={`https://backend-1-7zwm.onrender.com${item.image}` }
                     alt={item.title} 
                     onError={(e) => { e.target.src = "https://via.placeholder.com/300x200?text=Image+Not+Found"; }}
                     className="w-full h-48 object-cover mb-2 rounded"

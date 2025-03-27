@@ -22,6 +22,7 @@ import VisualCategoryCarousel from "./components/VisualCategoryCarousel;";
 
 import { useState } from "react";
 import FeatureCards from "./components/FeaturedCards";
+import FeatureCards1 from "./components/FeaturedDynmic";
 import TravelPagesRouter from "./components/TravelFooter";
 import BestKashmir from "./BestKashmir";
 import TourQueryFormKashmir from "./components/QuerFomrKashmir";
@@ -31,6 +32,8 @@ import KashmirHeader from "./components/Navbar";
 import AgentProfile from "./components/AgentProfile";
 import ItineraryBuilder from "./components/Itenary";
 import TripPlanner from "./components/TripPlanner";
+import TravelPackageCRUD from "./components/TravelPackageCRUD";
+import PackageManagement from "./components/PackageMangement";
 const Home = () => {
   const [category, setCategory] = useState('trending');
   const [view, setView] = useState("home");
@@ -83,8 +86,9 @@ const Home = () => {
         <KashmirHeader/>
         <HeroSection/>
         {/* <AgentProfile/> */}
-    
+    {/* <PackageManagement/> */}
           <FeatureCards/>
+          <FeatureCards1/>
           {/* <TourQueryFormKashmir/> */}
         {/* <TravelSelector
         currentView={view}
@@ -96,8 +100,8 @@ const Home = () => {
 
       {/* /> */}
         <ToursGrid1/>
-        <FinalTours1/>
-        <KashmirDestinations2/>
+        {/* <FinalTours1/> */}
+        {/* <KashmirDestinations2/> */}
         {/* <TrekkingSection/> */}
         {/* <TourQueryForm/> */}
         
@@ -108,15 +112,15 @@ const Home = () => {
         {/* <MacroflipInternshipCertificate/> */}
 
         {/* <ToursGrid/> */}
-        <RentCARS />
-        <BlogSection/>
+        {/* <RentCARS /> */}
+        {/* <BlogSection/> */}
         {/* <HeroSection /> */}
         {/* <TravelBlogPost/> */}
         <ErrorBoundary>
   {/* <BlogSection /> */}
-
+{/* <TravelPackageCRUD/> */}
 </ErrorBoundary>
-<TestimonialsCarousel/>
+{/* <TestimonialsCarousel/> */}
 
         <Footer />
       </>

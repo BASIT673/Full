@@ -1561,8 +1561,8 @@
 import React, { useState, useEffect } from 'react';
 import { Pencil, Trash, Plus, X, Car, Fuel, Users } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api/cars';
-const UPLOAD_URL = 'http://localhost:5000/api/upload';
+const API_URL = 'https://backend-1-7zwm.onrender.com/api/cars';
+const UPLOAD_URL = 'https://backend-1-7zwm.onrender.com/api/upload';
 
 const featureIcons = [Car, Fuel, Users, Car];
 
@@ -1585,7 +1585,7 @@ const AdminCar = () => {
 
   const fetchCars = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/cars');
+      const response = await fetch('https://backend-1-7zwm.onrender.com/api/cars');
       if (!response.ok) throw new Error('Failed to fetch cars');
       
       const data = await response.json();
@@ -1632,7 +1632,7 @@ const AdminCar = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const fullImageUrl = `http://localhost:5000${data.imageUrl}`;
+        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
         setFormData((prev) => ({ ...prev, image: fullImageUrl }));
         setPreviewUrl(fullImageUrl);
       } else {

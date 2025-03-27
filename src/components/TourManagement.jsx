@@ -343,7 +343,7 @@ const TourManagement = () => {
   // };
   const fetchTours = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/Grid');
+      const response = await axios.get('https://backend-1-7zwm.onrender.com/api/Grid');
       // Verify the actual response structure
       setTours(response.data.data?.tours || response.data);
     } catch (error) {
@@ -438,12 +438,12 @@ const TourManagement = () => {
     formData.append('image', file);
   
     try {
-      const response = await axios.post('http://localhost:5000/api/upload', formData, {
+      const response = await axios.post('https://backend-1-7zwm.onrender.com/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
   
       const uploadedImagePath = response.data.imageUrl; // "/uploads/1739887359913.jpeg"
-      const fullImageUrl = `http://localhost:5000${uploadedImagePath}`; // Full URL
+      const fullImageUrl = `https://backend-1-7zwm.onrender.com${uploadedImagePath}`; // Full URL
   
       console.log('Full image URL:', fullImageUrl);
   
@@ -474,12 +474,12 @@ const TourManagement = () => {
 
       if (isEditing && selectedTour) {
         await axios.patch(
-          `http://localhost:5000/api/Grid/${selectedTour._id}`,
+          `https://backend-1-7zwm.onrender.com/api/Grid/${selectedTour._id}`,
           payload
         );
       } else {
         await axios.post(
-          'http://localhost:5000/api/Grid',
+          'https://backend-1-7zwm.onrender.com/api/Grid',
           payload
         );
       }
@@ -528,7 +528,7 @@ const TourManagement = () => {
   // Delete tour
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/Grid/${id}`);
+      await axios.delete(`https://backend-1-7zwm.onrender.com/api/Grid/${id}`);
       fetchTours();
     } catch (error) {
       console.error('Error deleting tour:', error);

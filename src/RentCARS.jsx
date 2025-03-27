@@ -3837,6 +3837,13 @@ const processRentalPayment = async (rentalDetails) => {
 
     <div id='cars' className="container mx-auto p-4 w-full max-w-7xl">
       {/* Search and Filter */}
+      {showRentalForm && selectedCar && (
+  <RentalQueryForm 
+    car={selectedCar} 
+    onSubmit={processRentalPayment} 
+    onClose={() => setShowRentalForm(false)} 
+  />
+)}
       <div className="mb-8">
         <div className="flex flex-col md:flex-row gap-4 items-center">
           <div className="relative w-full md:w-2/3">
@@ -3861,13 +3868,13 @@ const processRentalPayment = async (rentalDetails) => {
             Filters {filterOpen ? '▲' : '▼'}
           </button>
         </div>
-        {showRentalForm && selectedCar && (
+        {/* {showRentalForm && selectedCar && (
   <RentalQueryForm 
     car={selectedCar} 
     onSubmit={processRentalPayment} 
     onClose={() => setShowRentalForm(false)} 
   />
-)}
+)} */}
         {/* Filters Panel */}
         {filterOpen && (
           <div className="bg-white mt-4 p-4 rounded-lg border border-gray-200 shadow-md">

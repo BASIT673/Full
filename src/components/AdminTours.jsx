@@ -1103,7 +1103,7 @@ const TourManager = () => {
 
   const fetchTours = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/trending');
+      const response = await fetch('https://backend-1-7zwm.onrender.com/api/trending');
       const data = await response.json();
       setTours(data);
     } catch (error) {
@@ -1134,7 +1134,7 @@ const TourManager = () => {
       const formData = new FormData();
       formData.append('image', file);
   
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch('https://backend-1-7zwm.onrender.com/api/upload', {
         method: 'POST',
         body: formData,
       });
@@ -1142,7 +1142,7 @@ const TourManager = () => {
       const data = await response.json();
   
       if (response.ok) {
-        const fullImageUrl = `http://localhost:5000${data.imageUrl}`; // Ensure the full URL is used
+        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`; // Ensure the full URL is used
         setFormData((prev) => ({ ...prev, image: fullImageUrl }));
         setImagePreview(fullImageUrl); // Update preview
         showAlert('Image uploaded successfully!', 'success');
@@ -1333,8 +1333,8 @@ const TourManager = () => {
     e.preventDefault();
     try {
       const url = isEditing 
-        ? `http://localhost:5000/api/trending/${editId}`
-        : 'http://localhost:5000/api/trending';
+        ? `https://backend-1-7zwm.onrender.com/api/trending/${editId}`
+        : 'https://backend-1-7zwm.onrender.com/api/trending';
       
       const method = isEditing ? 'PATCH' : 'POST';
       
@@ -1357,7 +1357,7 @@ const TourManager = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this tour?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/trending/${id}`, {
+        const response = await fetch(`https://backend-1-7zwm.onrender.com/api/trending/${id}`, {
           method: 'DELETE'
         });
         if (response.ok) {

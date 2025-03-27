@@ -64,7 +64,7 @@ const BlogPostManager = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/posts');
+      const response = await fetch('https://backend-1-7zwm.onrender.com/api/posts');
       const data = await response.json();
       setPosts(data);
     } catch (error) {
@@ -108,7 +108,7 @@ const BlogPostManager = () => {
       const formData = new FormData();
       formData.append("image", file);
   
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch("https://backend-1-7zwm.onrender.com/api/upload", {
         method: "POST",
         body: formData,
       });
@@ -116,7 +116,7 @@ const BlogPostManager = () => {
       const data = await response.json();
   
       if (response.ok) {
-        const fullImageUrl = `http://localhost:5000${data.imageUrl}`; // Ensure the full URL is used
+        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`; // Ensure the full URL is used
         
         if (typeof setFormData === "function") {
           setFormData((prev) => ({ ...prev, image: fullImageUrl }));
@@ -148,8 +148,8 @@ const BlogPostManager = () => {
     try {
       const method = editingPost ? 'PUT' : 'POST';
       const url = editingPost 
-        ? `http://localhost:5000/api/posts/${editingPost._id}`
-        : 'http://localhost:5000/api/posts';
+        ? `https://backend-1-7zwm.onrender.com/api/posts/${editingPost._id}`
+        : 'https://backend-1-7zwm.onrender.com/api/posts';
 
       const response = await fetch(url, {
         method,
@@ -183,7 +183,7 @@ const BlogPostManager = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/posts/${id}`, {
+      await fetch(`https://backend-1-7zwm.onrender.com/api/posts/${id}`, {
         method: 'DELETE',
       });
       fetchPosts();

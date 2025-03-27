@@ -1356,7 +1356,7 @@ const VisualCategoryCarousel = ({ featuredDestinations = [] }) => {
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-gray-800">Discover Kashmir</h2>
-          <div className="flex items-center space-x-2">
+           <div className="flex items-center space-x-2">
             <button
               onClick={prevCategory}
               className="p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
@@ -1371,7 +1371,7 @@ const VisualCategoryCarousel = ({ featuredDestinations = [] }) => {
             >
               <ChevronRight size={16} className="text-gray-700" />
             </button>
-          </div>
+          </div> 
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
   {currentCategory.options.map((option, idx) => (
@@ -1422,8 +1422,8 @@ const VisualCategoryCarousel = ({ featuredDestinations = [] }) => {
     <div className={`absolute bottom-0 left-0 w-0 h-0.5 ${currentCategory.color} group-hover:w-full transition-all duration-200`}></div>
   </button>
 ))} */}
-        <div className="flex justify-center">
-          <div className="flex space-x-2">
+        <div className="flex justify-center mt-2">
+          <div className="flex space-x-4">
             {categories.map((_, idx) => (
               <button
                 key={idx}
@@ -1437,7 +1437,7 @@ const VisualCategoryCarousel = ({ featuredDestinations = [] }) => {
               />
             ))}
           </div>
-        </div>
+        </div> 
       </div>
     </div>
   );

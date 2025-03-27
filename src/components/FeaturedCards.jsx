@@ -2593,30 +2593,6 @@ const renderOfferDetails = () => {
     }
   </div>
 </div>
-{/* Price breakdown */}
-
- {/* <div className="mt-4 bg-gray-50 p-4 rounded"> */}
-  {/* <h3 className="font-semibold mb-2">Price Breakdown</h3>  */}
- {/*  */}
-  {/* {getPriceBreakdown().adjustments.map((item, index) => (
-  
-    
-    <div key={index} className="flex justify-between text-sm mb-1">
-      <span>{item.label}</span>
-      <span>₹{item.amount.toLocaleString()}</span>
-    </div>
-  ))} */}
-  
-  {/* <div className="border-t border-gray-300 mt-2 pt-2 flex justify-between text-sm">
-    <span>Taxes and fees (10%)</span>
-    <span>₹{getPriceBreakdown().taxes.toLocaleString()}</span>
-  </div>
-  
-  <div className="border-t border-gray-300 mt-2 pt-2 flex justify-between font-semibold">
-    <span>Total</span>
-    <span>₹{getPriceBreakdown().total.toLocaleString()}</span>
-  </div> */}
-{/* </div> */}
 
         
         {/* Feature specific information */}
@@ -3263,75 +3239,6 @@ const renderAllOffers = () => {
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Explore Our Offers</h2>
 
-        {/* Feature Cards */}
-        {/* <div className="translate-y-10 flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
-          {features.slice(0, 2).map((feature) => (
-            <div
-              key={feature.id}
-              className={`${feature.bgClass} ${feature.hoverClass} px-5 py-3 rounded-lg cursor-pointer 
-                        transition duration-300 flex items-center group shadow-md
-                        ${activeFeature === feature.id ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
-              onClick={() => handleFeatureClick(feature.id)}
-            >
-              <div className={`mr-3 ${feature.iconBgClass} text-white p-2 rounded`}>
-                {feature.icon}
-              </div>
-              <div>
-                <h4 className="text-gray-800 text-sm font-semibold">{feature.title}</h4>
-                <p className="text-gray-600 text-xs">{feature.subtitle}</p>
-              </div>
-              <ChevronRight className={`w-5 h-5 text-gray-500 ml-auto transition-transform duration-300 ${activeFeature === feature.id ? 'transform rotate-90' : 'transform group-hover:translate-x-1'}`} />
-            </div>
-          ))}
-        </div> */}
-
-        {/* Additional features for mobile */}
-        {/* <div className="md:hidden mt-20 space-y-4">
-          {features.slice(2).map((feature) => (
-            <div
-              key={feature.id}
-              className={`${feature.bgClass} ${feature.hoverClass} px-5 py-3 rounded-lg cursor-pointer 
-                        transition duration-300 flex items-center group shadow-md
-                        ${activeFeature === feature.id ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
-              onClick={() => handleFeatureClick(feature.id)}
-            >
-              <div className={`mr-3 ${feature.iconBgClass} text-white p-2 rounded`}>
-                {feature.icon}
-              </div>
-              <div>
-                <h4 className="text-gray-800 text-sm font-semibold">{feature.title}</h4>
-                <p className="text-gray-600 text-xs">{feature.subtitle}</p>
-              </div>
-              <ChevronRight className={`w-5 h-5 text-gray-500 ml-auto transition-transform duration-300 
-                                    ${activeFeature === feature.id ? 'transform rotate-90' : 'transform group-hover:translate-x-1'}`} />
-            </div>
-          ))}
-        </div> */}
-        {/* Feature Cards - Visible on all devices */}
-{/* <div className="translate-y-10 flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
-  {features.map((feature) => (
-    <div
-      key={feature.id}
-      className={`${feature.bgClass} ${feature.hoverClass} px-5 py-3 rounded-lg cursor-pointer 
-                  transition duration-300 flex items-center group shadow-md
-                  ${activeFeature === feature.id ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
-      onClick={() => handleFeatureClick(feature.id)}
-    >
-      <div className={`mr-3 ${feature.iconBgClass} text-white p-2 rounded`}>
-        {feature.icon}
-      </div>
-      <div>
-        <h4 className="text-gray-800 text-sm font-semibold">{feature.title}</h4>
-        <p className="text-gray-600 text-xs">{feature.subtitle}</p>
-      </div>
-      <ChevronRight
-        className={`w-5 h-5 text-gray-500 ml-auto transition-transform duration-300 
-                    ${activeFeature === feature.id ? 'transform rotate-90' : 'transform group-hover:translate-x-1'}`} 
-      />
-    </div>
-  ))}
-</div> */}
-{/* Feature Cards - Responsive for All Devices */}
 
 <div className="translate-y-10 grid grid-cols-1 md:grid-cols-2 gap-6 px-4 mb-10 md:px-12">
   {features.map((feature) => (
