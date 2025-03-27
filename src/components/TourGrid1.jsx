@@ -4241,8 +4241,8 @@ const TourCard = ({ tour, onClick }) => (
     {/* Image Container */}
     <div className="relative h-56 overflow-hidden">
       <img
-        // src={tour.image}
-        src={`https://backend-1-7zwm.onrender.com${tour.image}`}
+        src={tour.image}
+        // src={`https://backend-1-7zwm.onrender.com${tour.image}`}
         alt={tour.title}
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />
