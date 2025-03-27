@@ -85,10 +85,12 @@ const Home = () => {
         {/* <ExpediaHeader /> */}
         <KashmirHeader/>
         <HeroSection/>
+        <FeatureCards1/>
         {/* <AgentProfile/> */}
     {/* <PackageManagement/> */}
           {/* <FeatureCards/> */}
-          <FeatureCards1/>
+          {/* {/* <FeatureCards1/> */}
+           
           {/* <TourQueryFormKashmir/> */}
         {/* <TravelSelector
         currentView={view}

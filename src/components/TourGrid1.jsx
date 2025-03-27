@@ -3565,8 +3565,8 @@ const TourModal = ({ tour, isOpen, onClose, selectedTour, handleBookNow }) => {
           {/* Image Section - Reduced height */}
           <div className="md:w-2/5 relative h-52 md:h-auto">
             <img
-                src={`https://backend-1-7zwm.onrender.com${tour.image}`}
-              // src={tour.image || "http://localhost:5000/uploads/placeholder.jpg"}
+                // src={`https://backend-1-7zwm.onrender.com${tour.image}`}
+              src={tour.image || "http://localhost:5000/uploads/placeholder.jpg"}
               alt={tour.title}
               className="h-full w-full object-cover md:rounded-l-lg"
             />

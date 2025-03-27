@@ -3713,8 +3713,8 @@ const processRentalPayment = async (rentalDetails) => {
       } border border-orange-100 hover:border-orange-200 transition-all duration-300`}>
         <div className="relative group">
           <img 
-            // src={car.image}
-            src={`https://backend-1-7zwm.onrender.com${car.image}}`}
+            src={car.image}
+            // src={`https://backend-1-7zwm.onrender.com${car.image}}`}
             alt={car.name} 
             className={`w-full object-cover ${isSlider ? 'h-72' : 'h-56'}`}
           />

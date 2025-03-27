@@ -597,20 +597,35 @@ const transformPackagesToFeatures = (packageData) => {
 //     });
 //   };
   // Helper function to get category subtitles
-  const getCategorySubtitle = (category) => {
+//   const getCategorySubtitle = (category) => {
+//     switch(category) {
+//       case 'Last Minute Deals':
+//         return 'Grab incredible discounts on spontaneous adventures';
+//       case 'Guided Tours':
+//         return 'Expertly curated travel experiences';
+//       case 'Group Discounts':
+//         return 'Save more when you travel together';
+//       case 'Seasonal Specials':
+//         return 'Unique experiences tailored to the season';
+//       default:
+//         return 'Explore our exciting packages';
+//     }
+//   };
+const getCategorySubtitle = (category) => {
     switch(category) {
       case 'Last Minute Deals':
-        return 'Grab incredible discounts on spontaneous adventures';
+        return 'Flash deals—book now!';
       case 'Guided Tours':
-        return 'Expertly curated travel experiences';
+        return 'Expert-led adventures!';
       case 'Group Discounts':
-        return 'Save more when you travel together';
+        return 'Bigger groups, bigger savings!';
       case 'Seasonal Specials':
-        return 'Unique experiences tailored to the season';
+        return 'Limited-time seasonal offers!';
       default:
-        return 'Explore our exciting packages';
+        return 'Unforgettable trips await!';
     }
   };
+  
   const [features, setFeatures] = useState([]);
   const [activeFeature, setActiveFeature] = useState(null);
   const [viewingAllOffers, setViewingAllOffers] = useState(false);
