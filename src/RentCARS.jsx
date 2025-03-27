@@ -4091,12 +4091,12 @@ return { success: true };
             </div>
           )}
     <div className="grid grid-cols-2 gap-3 mb-4 w-full">
-                    <button 
+                    {/* <button 
                         // onClick={handleRentNow}
                         className=" w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl py-3 flex items-center justify-center hover:bg-orange-600 transition"
                     >
                         <ShieldCheck className="mr-2 w-5 h-5" /> Rent Now
-                    </button>
+                    </button> */}
                     {/* <CarInquiryButton/> */}
                     {/* <button 
                         // onClick={handleBookLater}

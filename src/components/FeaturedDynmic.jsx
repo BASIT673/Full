@@ -634,7 +634,7 @@ const getCategorySubtitle = (category) => {
     const fetchPackages = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('http://localhost:5000/api/packages');
+        const response = await fetch('https://backend-1-7zwm.onrender.com/api/packages');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
