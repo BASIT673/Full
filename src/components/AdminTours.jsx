@@ -1056,7 +1056,10 @@
 
         
 import { useState, useEffect } from 'react';
-
+import axios from 'axios';
+import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbHhkb3NtZGlnc3p2eHRxYW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3NDAxMTAsImV4cCI6MjA1OTMxNjExMH0.OYvVZO6IeQpKuaxDENp8wHDpJj8ELObRn0VhK6wbF4Q"; // Use the anon key, not service role key
 const TourManager = () => {
   const initialFormState = {
     title: '',
@@ -1110,7 +1113,7 @@ const TourManager = () => {
       showAlert('Error fetching tours', 'error');
     }
   };
-
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
   const showAlert = (message, type) => {
     setAlert({ show: true, message, type });
     setTimeout(() => setAlert({ show: false, message: '', type: '' }), 3000);
@@ -1131,28 +1134,94 @@ const TourManager = () => {
     }
   
     try {
+      // Option 1: Keep using your backend
       const formData = new FormData();
       formData.append('image', file);
-  
+      
       const response = await fetch('https://backend-1-7zwm.onrender.com/api/upload', {
         method: 'POST',
         body: formData,
       });
-  
+      
       const data = await response.json();
-  
-      if (response.ok) {
-        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`; // Ensure the full URL is used
-        setFormData((prev) => ({ ...prev, image: fullImageUrl }));
-        setImagePreview(fullImageUrl); // Update preview
-        showAlert('Image uploaded successfully!', 'success');
-      } else {
+      
+      if (!response.ok) {
         showAlert(data.error || 'Failed to upload image', 'error');
+        return;
       }
+      
+      console.log('Backend response:', data);
+      
+      // Get direct URL from Supabase using the filename from the response
+      const fileName = data.imageUrl.split('/').pop();
+      
+      // Try to get a direct download URL from Supabase (frontend client)
+      const { data: directData, error } = await supabase.storage
+        .from('uploads')
+        .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+        
+      if (directData?.signedUrl) {
+        console.log('Got direct signed URL:', directData.signedUrl);
+        setFormData((prev) => ({
+          ...prev,
+          image: directData.signedUrl,
+        }));
+        setImagePreview(directData.signedUrl); // Update preview
+        showAlert('Image uploaded successfully!', 'success');
+        return;
+      }
+      
+      // Fallback to backend URL if direct access fails
+      const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
+      setFormData((prev) => ({
+        ...prev,
+        image: fullImageUrl,
+      }));
+      setImagePreview(fullImageUrl); // Update preview
+      showAlert('Image uploaded successfully!', 'success');
     } catch (error) {
+      console.error('Error uploading image:', error);
       showAlert('Something went wrong. Try again!', 'error');
     }
   };
+  // const handleImageUpload = async (file) => {
+  //   if (!file) return;
+  
+  //   // Validate file type
+  //   if (!file.type.startsWith('image/')) {
+  //     showAlert('Please upload an image file', 'error');
+  //     return;
+  //   }
+  
+  //   // Validate file size (max 5MB)
+  //   if (file.size > 5 * 1024 * 1024) {
+  //     showAlert('Image size should be less than 5MB', 'error');
+  //     return;
+  //   }
+  
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('image', file);
+  
+  //     const response = await fetch('https://backend-1-7zwm.onrender.com/api/upload', {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
+  
+  //     const data = await response.json();
+  
+  //     if (response.ok) {
+  //       const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`; // Ensure the full URL is used
+  //       setFormData((prev) => ({ ...prev, image: fullImageUrl }));
+  //       setImagePreview(fullImageUrl); // Update preview
+  //       showAlert('Image uploaded successfully!', 'success');
+  //     } else {
+  //       showAlert(data.error || 'Failed to upload image', 'error');
+  //     }
+  //   } catch (error) {
+  //     showAlert('Something went wrong. Try again!', 'error');
+  //   }
+  // };
   
   // const handleImageUpload = async (file) => {
   //   if (!file) return;
@@ -1216,7 +1285,9 @@ const TourManager = () => {
   //     reader.readAsDataURL(file);
   //   }
   // };
-
+  
+  
+   
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();

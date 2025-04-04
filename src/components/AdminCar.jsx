@@ -1563,7 +1563,9 @@ import { Pencil, Trash, Plus, X, Car, Fuel, Users } from 'lucide-react';
 
 const API_URL = 'https://backend-1-7zwm.onrender.com/api/cars';
 const UPLOAD_URL = 'https://backend-1-7zwm.onrender.com/api/upload';
-
+import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbHhkb3NtZGlnc3p2eHRxYW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3NDAxMTAsImV4cCI6MjA1OTMxNjExMH0.OYvVZO6IeQpKuaxDENp8wHDpJj8ELObRn0VhK6wbF4Q";
 const featureIcons = [Car, Fuel, Users, Car];
 
 const AdminCar = () => {
@@ -1600,7 +1602,7 @@ const AdminCar = () => {
       console.error('Error fetching cars:', error);
     }
   };
-  
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -1613,28 +1615,37 @@ const AdminCar = () => {
       return { ...prev, features: updatedFeatures };
     });
   };
-
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
       alert('Please upload an image file smaller than 5MB.');
       return;
     }
-
     setIsUploading(true);
     try {
       const uploadData = new FormData();
       uploadData.append('image', file);
-
       const response = await fetch(UPLOAD_URL, { method: 'POST', body: uploadData });
       const data = await response.json();
-
       if (response.ok) {
-        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
-        setFormData((prev) => ({ ...prev, image: fullImageUrl }));
-        setPreviewUrl(fullImageUrl);
+        // Get filename from backend response
+        const fileName = data.imageUrl.split('/').pop();
+        
+        // Get direct URL from Supabase
+        const { data: directData, error } = await supabase.storage
+          .from('uploads')
+          .createSignedUrl(fileName, 60 * 60);
+          
+        let imageUrl;
+        if (directData?.signedUrl) {
+          imageUrl = directData.signedUrl;
+        } else {
+          imageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
+        }
+        
+        setFormData((prev) => ({ ...prev, image: imageUrl }));
+        setPreviewUrl(imageUrl);
       } else {
         alert(data.error || 'Failed to upload image');
       }
@@ -1643,7 +1654,37 @@ const AdminCar = () => {
     } finally {
       setIsUploading(false);
     }
-  };
+  }
+  // const handleImageChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
+
+  //   if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
+  //     alert('Please upload an image file smaller than 5MB.');
+  //     return;
+  //   }
+
+  //   setIsUploading(true);
+  //   try {
+  //     const uploadData = new FormData();
+  //     uploadData.append('image', file);
+
+  //     const response = await fetch(UPLOAD_URL, { method: 'POST', body: uploadData });
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
+  //       setFormData((prev) => ({ ...prev, image: fullImageUrl }));
+  //       setPreviewUrl(fullImageUrl);
+  //     } else {
+  //       alert(data.error || 'Failed to upload image');
+  //     }
+  //   } catch (error) {
+  //     alert('Error uploading image');
+  //   } finally {
+  //     setIsUploading(false);
+  //   }
+  // };
   const handleDelete = async (carId) => {
     if (!window.confirm('Are you sure you want to delete this car?')) return;
     try {

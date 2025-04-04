@@ -156,7 +156,7 @@ const Home = () => {
   {/* <BlogSection /> */}
 {/* <TravelPackageCRUD/> */}
 </ErrorBoundary>
-{/* <TestimonialsCarousel/> */}
+<TestimonialsCarousel/>
 
         <Footer />
       </>

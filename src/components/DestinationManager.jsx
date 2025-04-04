@@ -3658,6 +3658,10 @@
 
 import { useState, useEffect } from 'react';
 import { PlusCircle, Edit, Trash2, Upload, X, Map, Utensils, Building, Landmark, Mountain, Camera, Hotel, Star, Calendar } from 'lucide-react';
+import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbHhkb3NtZGlnc3p2eHRxYW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3NDAxMTAsImV4cCI6MjA1OTMxNjExMH0.OYvVZO6IeQpKuaxDENp8wHDpJj8ELObRn0VhK6wbF4Q"; // Use the anon key, not service role key
+
 
 const DestinationManager = () => {
   const [categories, setCategories] = useState([]);
@@ -3724,25 +3728,69 @@ const DestinationManager = () => {
     setAlert({ show: true, message, type });
     setTimeout(() => setAlert({ show: false, message: '', type: '' }), 3000);
   };
-
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
   // Handle image upload
+  // const handleImageUpload = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append('image', file);
+
+  //   try {
+  //     const response = await fetch('https://backend-1-7zwm.onrender.com/api/upload', {
+  //       method: 'POST',
+  //       body: formData
+  //     });
+  //     const data = await response.json();
+  //     return data.imageUrl;
+  //   } catch (error) {
+  //     showAlert('Error uploading image', 'error');
+  //     return null;
+  //   }
+  // };
   const handleImageUpload = async (file) => {
     const formData = new FormData();
     formData.append('image', file);
-
     try {
       const response = await fetch('https://backend-1-7zwm.onrender.com/api/upload', {
         method: 'POST',
         body: formData
       });
       const data = await response.json();
-      return data.imageUrl;
+      
+      if (!response.ok) {
+        showAlert('Error uploading image', 'error');
+        return null;
+      }
+      
+      // Check if the backend already provides a Supabase URL
+      if (data.supabaseUrl) {
+        return data.supabaseUrl;
+      }
+      
+      // If no Supabase URL, get image path from response
+      const imagePath = data.imageUrl;
+      
+      // Try to get a direct download URL from Supabase if needed
+      try {
+        const fileName = imagePath.split('/').pop();
+        const { data: directData } = await supabase.storage
+          .from('uploads')
+          .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+          
+        if (directData?.signedUrl) {
+          return directData.signedUrl;
+        }
+      } catch (error) {
+        console.log('Error getting Supabase signed URL, using fallback');
+      }
+      
+      // Return the path as-is since this component expects just the path portion
+      return imagePath;
     } catch (error) {
+      console.error('Error uploading image:', error);
       showAlert('Error uploading image', 'error');
       return null;
     }
-  };
-
+  }
   const handleDetailsChange = (index, value) => {
     const newDetails = [...formData.details];
     newDetails[index] = value;

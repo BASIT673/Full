@@ -39,6 +39,9 @@ import { MoreVertical, Edit, Trash, Upload ,ImageIcon} from 'lucide-react';
 //     };
 //   });
 // };
+import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbHhkb3NtZGlnc3p2eHRxYW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3NDAxMTAsImV4cCI6MjA1OTMxNjExMH0.OYvVZO6IeQpKuaxDENp8wHDpJj8ELObRn0VhK6wbF4Q";
 const BlogPostManager = () => {
   const [posts, setPosts] = useState([]);
   const [editingPost, setEditingPost] = useState(null);
@@ -71,7 +74,7 @@ const BlogPostManager = () => {
       console.error('Error fetching posts:', error);
     }
   };
-
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
   // const handleImageChange = (e) => {
   //   const file = e.target.files[0];
   //   if (file) {
@@ -88,7 +91,6 @@ const BlogPostManager = () => {
   const showAlert = (message, type) => {
     console.log(`${type}: ${message}`);
   };
-  
   const handleImageChange = async (file) => {
     if (!file) return;
   
@@ -116,14 +118,27 @@ const BlogPostManager = () => {
       const data = await response.json();
   
       if (response.ok) {
-        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`; // Ensure the full URL is used
+        // Get filename from backend response
+        const fileName = data.imageUrl.split('/').pop();
+        
+        // Get direct URL from Supabase
+        const { data: directData, error } = await supabase.storage
+          .from('uploads')
+          .createSignedUrl(fileName, 60 * 60);
+          
+        let imageUrl;
+        if (directData?.signedUrl) {
+          imageUrl = directData.signedUrl;
+        } else {
+          imageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
+        }
         
         if (typeof setFormData === "function") {
-          setFormData((prev) => ({ ...prev, image: fullImageUrl }));
+          setFormData((prev) => ({ ...prev, image: imageUrl }));
         }
   
         if (typeof setImagePreview === "function") {
-          setImagePreview(fullImageUrl); // Update preview
+          setImagePreview(imageUrl);
         }
   
         showAlert("Image uploaded successfully!", "success");
@@ -134,6 +149,51 @@ const BlogPostManager = () => {
       showAlert("Something went wrong. Try again!", "error");
     }
   };
+  // const handleImageChange = async (file) => {
+  //   if (!file) return;
+  
+  //   // Validate file type
+  //   if (!file.type.startsWith("image/")) {
+  //     showAlert("Please upload an image file", "error");
+  //     return;
+  //   }
+  
+  //   // Validate file size (max 5MB)
+  //   if (file.size > 5 * 1024 * 1024) {
+  //     showAlert("Image size should be less than 5MB", "error");
+  //     return;
+  //   }
+  
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("image", file);
+  
+  //     const response = await fetch("https://backend-1-7zwm.onrender.com/api/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+  
+  //     const data = await response.json();
+  
+  //     if (response.ok) {
+  //       const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`; // Ensure the full URL is used
+        
+  //       if (typeof setFormData === "function") {
+  //         setFormData((prev) => ({ ...prev, image: fullImageUrl }));
+  //       }
+  
+  //       if (typeof setImagePreview === "function") {
+  //         setImagePreview(fullImageUrl); // Update preview
+  //       }
+  
+  //       showAlert("Image uploaded successfully!", "success");
+  //     } else {
+  //       showAlert(data.error || "Failed to upload image", "error");
+  //     }
+  //   } catch (error) {
+  //     showAlert("Something went wrong. Try again!", "error");
+  //   }
+  // };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));

@@ -1256,7 +1256,9 @@
 
 import { PlusCircle, Edit, Trash2 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
-
+import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbHhkb3NtZGlnc3p2eHRxYW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3NDAxMTAsImV4cCI6MjA1OTMxNjExMH0.OYvVZO6IeQpKuaxDENp8wHDpJj8ELObRn0VhK6wbF4Q";
 const BlogPostManager = () => {
   const [posts, setPosts] = useState([]);
   const [editingPost, setEditingPost] = useState(null);
@@ -1294,31 +1296,65 @@ const BlogPostManager = () => {
   };
 
   useEffect(() => { fetchPosts(); }, []);
-
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
   // Handle image upload
-  const handleImageUpload = async (file) => {
-    if (!file) return;
-
-    try {
-      const uploadFormData = new FormData();
-      uploadFormData.append("image", file);
-
-      const response = await fetch("https://backend-1-7zwm.onrender.com/api/upload", {
-        method: "POST",
-        body: uploadFormData,
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
-        setFormData(prev => ({ ...prev, featuredImage: fullImageUrl }));
-        setImagePreview(fullImageUrl);
+  // Function 4
+const handleImageUpload = async (file) => {
+  if (!file) return;
+  try {
+    const uploadFormData = new FormData();
+    uploadFormData.append("image", file);
+    const response = await fetch("https://backend-1-7zwm.onrender.com/api/upload", {
+      method: "POST",
+      body: uploadFormData,
+    });
+    const data = await response.json();
+    if (response.ok) {
+      // Get filename from backend response
+      const fileName = data.imageUrl.split('/').pop();
+      
+      // Get direct URL from Supabase
+      const { data: directData, error } = await supabase.storage
+        .from('uploads')
+        .createSignedUrl(fileName, 60 * 60);
+        
+      let imageUrl;
+      if (directData?.signedUrl) {
+        imageUrl = directData.signedUrl;
+      } else {
+        imageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
       }
-    } catch (error) {
-      console.error("Image upload failed:", error);
+      
+      setFormData(prev => ({ ...prev, featuredImage: imageUrl }));
+      setImagePreview(imageUrl);
     }
-  };
+  } catch (error) {
+    console.error("Image upload failed:", error);
+  }
+};
+  // const handleImageUpload = async (file) => {
+  //   if (!file) return;
+
+  //   try {
+  //     const uploadFormData = new FormData();
+  //     uploadFormData.append("image", file);
+
+  //     const response = await fetch("https://backend-1-7zwm.onrender.com/api/upload", {
+  //       method: "POST",
+  //       body: uploadFormData,
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       const fullImageUrl = `https://backend-1-7zwm.onrender.com${data.imageUrl}`;
+  //       setFormData(prev => ({ ...prev, featuredImage: fullImageUrl }));
+  //       setImagePreview(fullImageUrl);
+  //     }
+  //   } catch (error) {
+  //     console.error("Image upload failed:", error);
+  //   }
+  // };
 
   // Handle form changes
   const handleChange = (e) => {
