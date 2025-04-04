@@ -363,8 +363,8 @@ const DestinationGallery = ({ onViewAll }) => {
           {/* Image Container with overlays and badges */}
           <div className="relative h-56">
             <img 
-              // src={destination.image || "/api/placeholder/300/200"} 
-              src={`https://backend-1-7zwm.onrender.com${destination.image}`}
+              src={destination.image || "/api/placeholder/300/200"} 
+              // src={`https://backend-1-7zwm.onrender.com${destination.image}`}
               alt={destination.title} 
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
             />
@@ -3660,7 +3660,9 @@ const DestinationGallery = ({ onViewAll }) => {
                       {/* Image Section - Further reduced height on mobile */}
                       <div className="md:w-2/5 relative h-40 md:h-auto">
                         <img
-                          src={`https://backend-1-7zwm.onrender.com${destination.image}`}
+                        src={destination.image}
+
+                          // src={`https://backend-1-7zwm.onrender.com${destination.image}`}
                           alt={destination.title || "Destination"}
                           className="h-full w-full object-cover md:rounded-l-lg"
                         />
