@@ -44,8 +44,8 @@ const  EnhancedKashmirButton= () => {
                 try {
                   // Fetch packages and promos data from API
                   const [packagesResponse, promosResponse] = await Promise.all([
-                    fetch('http://localhost:5000/api/packages'),
-                    fetch('http://localhost:5000/api/promos')
+                    fetch('https://backend-1-7zwm.onrender.com/api/packages'),
+                    fetch('https://backend-1-7zwm.onrender.com/api/promos')
                   ]);
                 
                   
