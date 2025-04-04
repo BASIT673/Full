@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Map, Users,Mountain,Landmark, ChevronRight, X,Clock } from 'lucide-react';
+import { Calendar, Map, Users,Mountain,Landmark, MessageSquare, ChevronRight, X,Clock } from 'lucide-react';
 // import { Calendar, Map, Users,Mountain,Landmark, ChevronRight, X,Clock } from 'lucide-react';
 // import { Calendar, Map, Users,Mountain,Landmark, ChevronRight, X,Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -92,7 +92,512 @@ const FeatureCards1 = () => {
 
     return taxes;
 };
+const handleGetQuote = (item) => {
+  console.log("Get quote for:", item);
+  setSelectedItem(item);
+  // Create modal container if it doesn't exist
+  let modalContainer = document.getElementById('quote-modal-container');
+  if (!modalContainer) {
+    modalContainer = document.createElement('div');
+    modalContainer.id = 'quote-modal-container';
+    document.body.appendChild(modalContainer);
+  }
+  // Show loading state
 
+  // Create and populate the modal content with marketing elements
+  modalContainer.innerHTML = `
+    <div class="quote-modal-overlay">
+      <div class="quote-modal">
+        <div class="quote-modal-header">
+          <h2>Get Your Exclusive Quote for ${item.title || 'This Experience'}</h2>
+          <button class="quote-close-btn">&times;</button>
+        </div>
+        
+        <div class="quote-banner">
+          <div class="quote-banner-content">
+            <div class="quote-banner-icon">🎁</div>
+            <div class="quote-banner-text">
+              <strong>Limited Time Offer!</strong> Book within 48 hours and receive a 15% early bird discount!
+            </div>
+          </div>
+        </div>
+        
+        <div class="quote-modal-body">
+          <div class="quote-intro">
+            <p>Join thousands of satisfied travelers who have experienced this journey of a lifetime. Our expert travel advisors are ready to craft your perfect adventure.</p>
+            <div class="quote-benefits">
+              <div class="benefit-item"><span class="benefit-icon">✓</span> Best Price Guarantee</div>
+              <div class="benefit-item"><span class="benefit-icon">✓</span> Free Cancellation</div>
+              <div class="benefit-item"><span class="benefit-icon">✓</span> 24/7 Support</div>
+            </div>
+          </div>
+          
+          <form id="quote-request-form">
+            <div class="form-group">
+              <label for="quote-name">Full Name*</label>
+              <input type="text" id="quote-name" placeholder="Your Name" required />
+            </div>
+            <div class="form-group">
+              <label for="quote-email">Email Address*</label>
+              <input type="email" id="quote-email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="quote-phone">Phone Number*</label>
+              <input type="tel" id="quote-phone" placeholder="+1 (234) 567-8900" required />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="quote-travelers">Number of Travelers*</label>
+                <select id="quote-travelers" required>
+                  <option value="">Select</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3-5">3-5</option>
+                  <option value="6-10">6-10</option>
+                  <option value="10+">10+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="quote-date">Travel Date*</label>
+                <input type="date" id="quote-date" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="quote-message">Special Requirements or Customizations</label>
+              <textarea id="quote-message" placeholder="Tell us about any special requirements, preferences, or questions you have about this experience"></textarea>
+            </div>
+            
+            <div class="quote-promo">
+              <div class="promo-icon">🔥</div>
+              <p>Act fast! <strong>7 other travelers</strong> are looking at this tour right now.</p>
+            </div>
+            
+            <div class="form-checkbox">
+              <input type="checkbox" id="quote-newsletter" checked />
+              <label for="quote-newsletter">Send me exclusive deals and offers (10% off your first booking!)</label>
+            </div>
+            
+            <button type="submit" class="quote-submit-btn">
+              <span class="btn-text">Get My Personalized Quote</span>
+              <span class="btn-icon">→</span>
+            </button>
+          </form>
+          
+          <div class="quote-trust">
+            <p>Trusted by over 1M+ happy travelers worldwide</p>
+            <div class="trust-icons">
+              <div class="trust-icon">⭐⭐⭐⭐⭐</div>
+              <div class="trust-text">4.9/5 from 10,000+ reviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Add styling for the enhanced modal
+  const style = document.createElement('style');
+  style.textContent = `
+    .quote-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .quote-modal {
+      background-color: white;
+      border-radius: 10px;
+      width: 95%;
+      max-width: 650px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      animation: slideIn 0.4s ease;
+    }
+    
+    .quote-modal-header {
+      padding: 22px 25px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #FF6B00;
+      border-radius: 10px 10px 0 0;
+    }
+    
+    .quote-modal-header h2 {
+      margin: 0;
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    
+    .quote-close-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    
+    .quote-close-btn:hover {
+      opacity: 1;
+    }
+    
+    .quote-banner {
+      background: linear-gradient(90deg, #FFF3E0, #FFECB3);
+      padding: 12px 25px;
+      border-bottom: 1px solid #FFE0B2;
+    }
+    
+    .quote-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .quote-banner-icon {
+      font-size: 24px;
+    }
+    
+    .quote-banner-text {
+      font-size: 15px;
+      color: #E65100;
+    }
+    
+    .quote-modal-body {
+      padding: 25px;
+    }
+    
+    .quote-intro {
+      margin-bottom: 25px;
+    }
+    
+    .quote-intro p {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #555;
+      line-height: 1.5;
+    }
+    
+    .quote-benefits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #333;
+      margin-right: 15px;
+    }
+    
+    .benefit-icon {
+      color: #FF6B00;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 15px;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #FF6B00;
+      box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+    }
+    
+    textarea {
+      height: 110px;
+      resize: vertical;
+    }
+    
+    .quote-promo {
+      background-color: #FFF8E1;
+      border-radius: 6px;
+      padding: 12px 15px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .promo-icon {
+      font-size: 20px;
+    }
+    
+    .quote-promo p {
+      margin: 0;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .form-checkbox input {
+      width: auto;
+    }
+    
+    .form-checkbox label {
+      margin-bottom: 0;
+      font-weight: normal;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    .quote-submit-btn {
+      background-color: #FF6B00;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 16px 24px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    }
+    
+    .quote-submit-btn:hover {
+      background-color: #E55F00;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 107, 0, 0.4);
+    }
+    
+    .btn-icon {
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+    
+    .quote-submit-btn:hover .btn-icon {
+      transform: translateX(5px);
+    }
+    
+    .quote-trust {
+      margin-top: 25px;
+      text-align: center;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .quote-trust p {
+      margin-bottom: 10px;
+    }
+    
+    .trust-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .quote-success {
+      text-align: center;
+      padding: 40px 25px;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .quote-success-icon {
+      background-color: #FF6B00;
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 35px;
+      margin: 0 auto 25px;
+      box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+    }
+    
+    .quote-success h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+    
+    .quote-success p {
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .quote-close-success-btn {
+      background-color: #FF6B00;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 14px 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.25);
+    }
+    
+    .quote-close-success-btn:hover {
+      background-color: #E55F00;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255, 107, 0, 0.35);
+    }
+    
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .quote-banner-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+      }
+      
+      .quote-modal-header h2 {
+        font-size: 18px;
+      }
+      
+      .quote-benefits {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Add event listeners
+  document.querySelector('.quote-close-btn').addEventListener('click', () => {
+    modalContainer.remove();
+  });
+  
+  document.getElementById('quote-request-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = {
+      name: document.getElementById('quote-name').value,
+      email: document.getElementById('quote-email').value,
+      phone: document.getElementById('quote-phone').value,
+      travelers: document.getElementById('quote-travelers').value,
+      travelDate: document.getElementById('quote-date').value,
+      message: document.getElementById('quote-message').value,
+      newsletterSubscription: document.getElementById('quote-newsletter').checked,
+      // itemId: item.id || '',
+      // item:item.name || '',
+      requestTimestamp: new Date().toISOString(),
+      source: window.location.href,
+      utm: getUTMParams() // Function to get UTM parameters if available
+    };
+    
+    console.log("Quote form submitted:", formData);
+    
+    // Show loading state
+    // const submitBtn = document.querySelector('.quote-
+   const  submitBtn = document.querySelector('.quote-submit-btn');
+submitBtn.innerHTML = '<span>Processing...</span>';
+submitBtn.disabled = true;
+
+// Simulate API call to submit quote request
+setTimeout(() => {
+  // Replace form with success message
+  document.querySelector('.quote-modal-body').innerHTML = `
+    <div class="quote-success">
+      <div class="quote-success-icon">✓</div>
+      <h3>Your Quote Request is Confirmed!</h3>
+      <p>Thank you, ${formData.name}! Our travel experts will prepare your personalized quote for ${item.name || 'this experience'} and contact you within 24 hours at ${formData.email}.</p>
+      <p>Don't forget - book within 48 hours to claim your exclusive 15% early bird discount!</p>
+      <button class="quote-close-success-btn">Close</button>
+    </div>
+  `;
+  
+  // Add event listener to new close button
+  document.querySelector('.quote-close-success-btn').addEventListener('click', () => {
+    modalContainer.remove();
+  });
+  
+  // Actually send the form data to server
+  // sendQuoteRequestToServer(formData);
+}, 1500);
+});
+
+// Function to get UTM parameters if available
+function getUTMParams() {
+const params = {};
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+  if (urlParams.has(param)) {
+    params[param] = urlParams.get(param);
+  }
+});
+
+return params;
+}
+};
   // const calculateTaxesAndFees = () => {
   //   const adultPrice = selectedItem?.adultPrice || selectedItem?.price || 0;
   //   const childPrice = selectedItem?.childPrice || (selectedItem?.price * 0.5) || 0;
@@ -762,191 +1267,233 @@ const getCategorySubtitle = (category) => {
         exit={{ opacity: 0, y: 20 }}
         className="bg-white p-6 rounded-lg shadow-lg"
       >
-        {/* Header Section */}
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-gray-800">{item.name}</h3>
-          <button onClick={goBack} className="p-1 rounded-full hover:bg-gray-100">
-            <X className="w-5 h-5 text-gray-500" />
-          </button>
-        </div>
-        
-        {/* Category Info */}
-        <div className="mb-4">
-          <div className={`${feature.iconBgClass} text-white p-2 rounded-full inline-block mb-2`}>
-            {feature.icon}
-          </div>
-          <span className="ml-2 text-gray-700">{feature.title}</span>
-        </div>
-        
-        {/* Description */}
-        <div className="mb-4">
-          <p className="text-gray-700">{item.description}</p>
-        </div>
        
-        {/* Price Section */}
-        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-baseline mb-2">
-            <span className="text-gray-600 mr-2">Price:</span>
-            {item.originalPrice && item.originalPrice !== 'Contact for pricing' && (
-              <span className="text-gray-500 line-through text-sm mr-2">
-                {item.originalPrice}
-              </span>
-            )}
-            <span className="text-green-600 font-bold text-lg">
-              {item.discountedPrice}
-            </span>
-            {item.originalPrice && item.discountedPrice && 
-             item.originalPrice !== 'Contact for pricing' && (
-              <span className="text-green-600 text-xs ml-2">
-                Save {calculateDiscount(item.originalPrice, item.discountedPrice)}%
-              </span>
-            )}
-          </div>
-          <div className="mt-2 bg-blue-50 p-2 rounded text-sm">
-            {feature.id === 'guided-tours' ? 'Price per person' : 
-             feature.id === 'group-discounts' ? 'Group pricing available' : 
-             'Complete package price'}
-          </div>
-        </div>
-  
-        {/* Package Details */}
-        <div className="mb-4 p-4 rounded-lg bg-gray-50">
-          <h4 className="font-semibold text-gray-800 mb-3">Package Details</h4>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Duration:</span>
-              <span className="text-gray-800">{item.duration}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Valid Dates:</span>
-              <span className="text-gray-800">{item.validDates}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Difficulty:</span>
-              <span className="text-gray-800 capitalize">{item.difficulty}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Best Season:</span>
-              <span className="text-gray-800 capitalize">{item.bestSeason}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Availability:</span>
-              <span className="text-gray-800">
-                {item.spotsLeft} of {item.totalSpots} spots remaining
-              </span>
-            </div>
-            {item.bookingDeadline && (
-              <div className="flex justify-between">
-                <span className="text-gray-600">Booking Deadline:</span>
-                <span className="text-gray-800">{formatDate(item.bookingDeadline)}</span>
-              </div>
-            )}
-          </div>
-        </div>
-  
-      
-   
-   {item.fullItinerary?.length > 0 && (
-        <div className="mb-4 p-4 rounded-lg bg-gray-50">
-          <h4 className="font-semibold text-gray-800 mb-3">Complete Itinerary</h4>
-          
-          <div className="space-y-6">
-            {item.fullItinerary.map((day, index) => (
-              <div key={index} className="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
-                <h5 className="font-medium text-gray-700">
-                  Day {day.day}: {day.title}
-                </h5>
-                <p className="text-gray-600 mt-1">{day.description}</p>
-                
-                {day.activities?.length > 0 && (
-                  <div className="mt-2">
-                    <span className="text-sm font-medium text-gray-600">Activities:</span>
-                    <ul className="list-disc list-inside pl-2 text-gray-600">
-                      {day.activities.map((activity, idx) => (
-                        <li key={idx} className="text-sm">{activity}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
 
-                <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2">
-                  <div className="bg-green-50 p-2 rounded text-sm">
-                    <span className="font-medium">Breakfast:</span> {day.meals.breakfast}
-                  </div>
-                  <div className="bg-green-50 p-2 rounded text-sm">
-                    <span className="font-medium">Lunch:</span> {day.meals.lunch}
-                  </div>
-                  <div className="bg-green-50 p-2 rounded text-sm">
-                    <span className="font-medium">Dinner:</span> {day.meals.dinner}
-                  </div>
-                </div>
 
-                {day.accommodation && (
-                  <div className="mt-2">
-                    <span className="text-sm font-medium text-gray-600">Accommodation:</span>
-                    <p className="text-gray-600 text-sm">{day.accommodation}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-        {/* Recommended For */}
-        {item.recommendedFor?.length > 0 && (
-          <div className="mb-4">
-            <h4 className="font-semibold text-gray-800 mb-2">Recommended For</h4>
-            <div className="flex flex-wrap gap-2">
-              {item.recommendedFor.map((group, idx) => (
-                <span key={idx} className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">
-                  {group}
-                </span>
-              ))}
+{/* Header Section - Enhanced with marketing tagline */}
+<div className="flex justify-between items-center mb-4">
+  <div>
+    <h3 className="text-xl font-bold text-gray-800">{item.name}</h3>
+    <p className="text-sm text-orange-600 italic">Your next unforgettable adventure awaits</p>
+  </div>
+  <button onClick={goBack} className="p-1 rounded-full hover:bg-gray-100">
+    <X className="w-5 h-5 text-gray-500" />
+  </button>
+</div>
+
+{/* Category Info - Enhanced with persuasive text */}
+<div className="mb-4">
+  <div className={`${feature.iconBgClass} text-white p-2 rounded-full inline-block mb-2`}>
+    {feature.icon}
+  </div>
+  <span className="ml-2 text-gray-700 font-medium">{feature.title}</span>
+  <p className="text-sm text-gray-600 mt-1">Join the thousands who've experienced this top-rated {feature.title.toLowerCase()}</p>
+</div>
+
+{/* Description - Enhanced with emotional appeal */}
+<div className="mb-4">
+  <p className="text-gray-700">{item.description}</p>
+  <p className="text-sm text-orange-600 font-medium mt-2">Create memories that last a lifetime with this exclusive adventure package</p>
+</div>
+
+{/* Price Section - Enhanced with urgency */}
+<div className="mb-4 p-4 bg-gray-50 rounded-lg border-l-4 border-orange-500">
+  <div className="flex items-baseline mb-2">
+    <span className="text-gray-600 mr-2">Price:</span>
+    {item.originalPrice && item.originalPrice !== 'Contact for pricing' && (
+      <span className="text-gray-500 line-through text-sm mr-2">
+        {item.originalPrice}
+      </span>
+    )}
+    <span className="text-green-600 font-bold text-lg">
+      {item.discountedPrice}
+    </span>
+    {item.originalPrice && item.discountedPrice && 
+      item.originalPrice !== 'Contact for pricing' && (
+      <span className="text-green-600 text-xs ml-2">
+        Save {calculateDiscount(item.originalPrice, item.discountedPrice)}%
+      </span>
+    )}
+  </div>
+  <div className="mt-2 bg-blue-50 p-2 rounded text-sm">
+    {feature.id === 'guided-tours' ? 'Price per person' : 
+      feature.id === 'group-discounts' ? 'Group pricing available' : 
+      'Complete package price'}
+  </div>
+  <p className="text-orange-600 text-sm mt-2 font-medium">
+    Limited-time offer! Book now to secure these exclusive rates
+  </p>
+</div>
+
+{/* Package Details - Enhanced with benefit-focused headers */}
+<div className="mb-4 p-4 rounded-lg bg-gray-50">
+  <h4 className="font-semibold text-gray-800 mb-1">Adventure Details</h4>
+  <p className="text-sm text-gray-600 mb-3">Everything you need to know about your perfect getaway</p>
+  
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="flex justify-between">
+      <span className="text-gray-600">Experience Duration:</span>
+      <span className="text-gray-800 font-medium">{item.duration}</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="text-gray-600">Available Dates:</span>
+      <span className="text-gray-800 font-medium">{item.validDates}</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="text-gray-600">Adventure Level:</span>
+      <span className="text-gray-800 capitalize font-medium">{item.difficulty}</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="text-gray-600">Prime Season:</span>
+      <span className="text-gray-800 capitalize font-medium">{item.bestSeason}</span>
+    </div>
+    <div className="flex justify-between">
+      <span className="text-gray-600">Availability:</span>
+      <span className={`font-medium ${item.spotsLeft < 5 ? 'text-orange-600' : 'text-gray-800'}`}>
+        {item.spotsLeft} of {item.totalSpots} spots remaining
+        {item.spotsLeft < 5 && ' - Almost sold out!'}
+      </span>
+    </div>
+    {item.bookingDeadline && (
+      <div className="flex justify-between">
+        <span className="text-gray-600">Booking Deadline:</span>
+        <span className="text-gray-800 font-medium">{formatDate(item.bookingDeadline)}</span>
+      </div>
+    )}
+  </div>
+</div>
+
+{/* Itinerary Section - Enhanced with descriptive language */}
+{item.fullItinerary?.length > 0 && (
+  <div className="mb-4 p-4 rounded-lg bg-gray-50">
+    <h4 className="font-semibold text-gray-800 mb-1">Your Day-by-Day Adventure</h4>
+    <p className="text-sm text-gray-600 mb-3">Experience the perfect balance of exploration, relaxation, and unforgettable moments</p>
+    
+    <div className="space-y-6">
+      {item.fullItinerary.map((day, index) => (
+        <div key={index} className="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
+          <h5 className="font-medium text-gray-700">
+            Day {day.day}: {day.title}
+          </h5>
+          <p className="text-gray-600 mt-1">{day.description}</p>
+          
+          {day.activities?.length > 0 && (
+            <div className="mt-2">
+              <span className="text-sm font-medium text-gray-600">Today's Highlights:</span>
+              <ul className="list-disc list-inside pl-2 text-gray-600">
+                {day.activities.map((activity, idx) => (
+                  <li key={idx} className="text-sm">{activity}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div className="bg-green-50 p-2 rounded text-sm">
+              <span className="font-medium">Breakfast:</span> {day.meals.breakfast}
+            </div>
+            <div className="bg-green-50 p-2 rounded text-sm">
+              <span className="font-medium">Lunch:</span> {day.meals.lunch}
+            </div>
+            <div className="bg-green-50 p-2 rounded text-sm">
+              <span className="font-medium">Dinner:</span> {day.meals.dinner}
             </div>
           </div>
-        )}
-  
-        {/* Inclusions & Exclusions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <h4 className="font-semibold text-gray-800 mb-2">Includes</h4>
-            <ul className="list-disc list-inside text-gray-700">
-              {item.includes.map((inclusion, idx) => (
-                <li key={idx}>{inclusion}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-gray-800 mb-2">Excludes</h4>
-            <ul className="list-disc list-inside text-gray-700">
-              {item.excludes.map((exclusion, idx) => (
-                <li key={idx}>{exclusion}</li>
-              ))}
-            </ul>
-          </div>
+
+          {day.accommodation && (
+            <div className="mt-2">
+              <span className="text-sm font-medium text-gray-600">Tonight's Rest:</span>
+              <p className="text-gray-600 text-sm">{day.accommodation}</p>
+            </div>
+          )}
         </div>
-  
-        {/* Action Buttons */}
-        <div className="mt-6">
-          <div className="flex flex-col md:flex-row justify-end space-y-4 md:space-y-0 md:space-x-3">
-            <button 
-              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition flex items-center justify-center"
-              onClick={goBack}
-            >
-              <X className="w-4 h-4 mr-2" />
-              Go Back
-            </button>
-            <button 
-              className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg transform hover:-translate-y-1"
-              // onClick={() => setIsBookingModalOpen(true)}
-              onClick={() => openBookingModal(item)}
->
-            {/* > */}
-              <Calendar className="w-4 h-4 mr-2" />
-              Book Now
-            </button>
-          </div>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* Recommended For - Enhanced with personalization */}
+{item.recommendedFor?.length > 0 && (
+  <div className="mb-4">
+    <h4 className="font-semibold text-gray-800 mb-1">Perfect For</h4>
+    <p className="text-sm text-gray-600 mb-2">This adventure is specially curated for:</p>
+    <div className="flex flex-wrap gap-2">
+      {item.recommendedFor.map((group, idx) => (
+        <span key={idx} className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">
+          {group}
+        </span>
+      ))}
+    </div>
+  </div>
+)}
+
+{/* Inclusions & Exclusions - Enhanced with value proposition */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+  <div>
+    <h4 className="font-semibold text-gray-800 mb-1">What's Included</h4>
+    <p className="text-sm text-gray-600 mb-2">Everything to ensure your adventure is hassle-free:</p>
+    <ul className="list-disc list-inside text-gray-700">
+      {item.includes.map((inclusion, idx) => (
+        <li key={idx}>{inclusion}</li>
+      ))}
+    </ul>
+  </div>
+  <div>
+    <h4 className="font-semibold text-gray-800 mb-1">What's Not Included</h4>
+    <p className="text-sm text-gray-600 mb-2">Items you may want to prepare for:</p>
+    <ul className="list-disc list-inside text-gray-700">
+      {item.excludes.map((exclusion, idx) => (
+        <li key={idx}>{exclusion}</li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+{/* Testimonial Section - New addition */}
+<div className="mb-4 p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+  <div className="flex items-center mb-2">
+    <div className="flex text-orange-500">
+      {[...Array(5)].map((_, i) => (
+        <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+        </svg>
+      ))}
+    </div>
+    <span className="ml-2 text-gray-700 font-medium">5.0 (43 reviews)</span>
+  </div>
+  <p className="italic text-gray-700">"This was absolutely the highlight of our trip! The guides were knowledgeable, the views were breathtaking, and every detail was perfectly planned. Worth every penny!"</p>
+  <p className="text-right text-sm text-gray-600 mt-1">- Sarah T., traveled {item.bestSeason}</p>
+</div>
+
+{/* Action Buttons - Enhanced with clear CTAs and added Get Quote button */}
+<div className="mt-6">
+  <div className="flex flex-col md:flex-row justify-end space-y-4 md:space-y-0 md:space-x-3">
+    <button 
+      className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition flex items-center justify-center"
+      onClick={goBack}
+    >
+      <X className="w-4 h-4 mr-2" />
+      Go Back
+    </button>
+    <button 
+      className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition flex items-center justify-center"
+      onClick={() => handleGetQuote(item)}
+    >
+      <MessageSquare className="w-4 h-4 mr-2" />
+      Get Quote
+    </button>
+    <button 
+      className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg transform hover:-translate-y-1"
+      onClick={() => openBookingModal(item)}
+    >
+      <Calendar className="w-4 h-4 mr-2" />
+      Book Now
+    </button>
+  </div>
+  <p className="text-center text-sm text-gray-500 mt-4">
+    100% satisfaction guaranteed • Flexible cancellation policy • Secure payment
+  </p>
+</div>
           {isBookingModalOpen && (
   <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 overflow-y-auto">
     <div className="min-h-[200px] max-h-[90vh] w-full max-w-2xl">
@@ -1162,13 +1709,14 @@ const getCategorySubtitle = (category) => {
       </motion.div>
     </div>
   </div>
+  
 )}
         
-        </div>
+         {/* </div> */}
       </motion.div>
     );
   };
-
+// }
 
 
  
@@ -1260,8 +1808,11 @@ const getCategorySubtitle = (category) => {
   return (
     <div className="relative bg-gray-50 p-4">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Explore Our Offers</h2>
-  
+        <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">✨ Discover the Paradise on Earth: Kashmir Awaits ✨</h2>
+       
+ 
+  <div/> 
+
         <div className="translate-y-10 grid grid-cols-1 md:grid-cols-2 gap-6 px-4 mb-10 md:px-12">
           {features.map((feature) => (
             <div

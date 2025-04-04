@@ -452,6 +452,7 @@
 // export default DestinationManager;
 
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { PlusCircle, Edit, Trash2, Upload, X, Map, Utensils, Building, Landmark, Mountain, Camera, Hotel, Star, Calendar } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
@@ -523,38 +524,38 @@ const DestinationManager = () => {
     setTimeout(() => setAlert({ show: false, message: '', type: '' }), 3000);
   };
   const supabase = createClient(supabaseUrl, supabaseAnonKey);
-  const  handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // const  handleImageUpload = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
   
-    try {
-      // Generate unique filename
-      const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+  //   try {
+  //     // Generate unique filename
+  //     const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
       
-      // Upload directly to Supabase
-      const { data, error } = await supabase.storage
-        .from('uploads')
-        .upload(fileName, file);
+  //     // Upload directly to Supabase
+  //     const { data, error } = await supabase.storage
+  //       .from('uploads')
+  //       .upload(fileName, file);
         
-      if (error) {
-        throw error;
-      }
+  //     if (error) {
+  //       throw error;
+  //     }
       
-      // Get a signed URL that will work for sure
-      const { data: urlData } = await supabase.storage
-        .from('uploads')
-        .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+  //     // Get a signed URL that will work for sure
+  //     const { data: urlData } = await supabase.storage
+  //       .from('uploads')
+  //       .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
         
-      if (urlData?.signedUrl) {
-        setFormData((prev) => ({
-          ...prev,
-          image: urlData.signedUrl,
-        }));
-      }
-    } catch (error) {
-      console.error('Direct upload error:', error);
-    }
-  }
+  //     if (urlData?.signedUrl) {
+  //       setFormData((prev) => ({
+  //         ...prev,
+  //         image: urlData.signedUrl,
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.error('Direct upload error:', error);
+  //   }
+  // }
   // const handleImageUpload = async (file) => {
   //   const formData = new FormData();
   //   formData.append('image', file);
@@ -600,6 +601,55 @@ const DestinationManager = () => {
   //     return null;
   //   }
   // }
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    console.log('Selected file:', {
+      name: file.name,
+      type: file.type,
+      size: file.size
+    });
+    try {
+      // Option 1: Keep using your backend
+      const formData = new FormData();
+      formData.append('image', file);
+     
+      const response = await axios.post('https://backend-1-7zwm.onrender.com/api/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+     
+      console.log('Backend response:', response.data);
+     
+      // Get direct URL from Supabase using the filename from the response
+      const fileName = response.data.imageUrl.split('/').pop();
+     
+      // Try to get a direct download URL from Supabase (frontend client)
+      // Changed from 1 hour to 1 year (365 days)
+      const { data: directData } = await supabase.storage
+        .from('uploads')
+        .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry
+       
+      if (directData?.signedUrl) {
+        console.log('Got direct signed URL:', directData.signedUrl);
+        setFormData((prev) => ({
+          ...prev,
+          image: directData.signedUrl,
+        }));
+        return;
+      }
+     
+      // Fallback to backend URL if direct access fails
+      setFormData((prev) => ({
+        ...prev,
+        image: `https://backend-1-7zwm.onrender.com${response.data.imageUrl}`,
+      }));
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      console.error('Error details:', error.response?.data || error.message);
+      showAlert('Error uploading image', 'error');
+    }
+  }
   // const handleImageUpload = async (file) => {
   //   const formData = new FormData();
   //   formData.append('image', file);
@@ -1181,8 +1231,8 @@ const DestinationManager = () => {
           ))}
         </div>
 
-        {/* Image Upload */}
-        <div className="border-2 border-dashed p-4 rounded">
+        {/* Image Upload destinaton*/}
+        {/* <div className="border-2 border-dashed p-4 rounded">
           <input
             type="file"
             accept="image/*"
@@ -1202,8 +1252,36 @@ const DestinationManager = () => {
               Current image: {formData.image.split('/').pop()}
             </div>
           )}
-        </div>
-
+        </div> */}
+{/* Image Upload Destination */}
+<div className="border-2 border-dashed p-4 rounded">
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+    className="hidden"
+    id="imageUpload"
+  />
+  <label
+    htmlFor="imageUpload"
+    className="flex items-center justify-center space-x-2 cursor-pointer"
+  >
+    <Upload className="w-6 h-6" />
+    <span>{imageFile ? imageFile.name : (formData.image ? 'Change Image' : 'Upload Image')}</span>
+  </label>
+  {formData.image && (
+    <div className="mt-2 flex flex-col items-center">
+      <img
+        src={formData.image}
+        alt="Preview"
+        className="w-24 h-24 object-cover rounded"
+      />
+      <span className="text-sm text-gray-500">
+        {formData.image.split('/').pop()}
+      </span>
+    </div>
+  )}
+</div>
         {/* Tour Details */}
         <div className="space-y-2">
           <h3 className="font-semibold">Tour Details</h3>
@@ -1488,7 +1566,8 @@ const DestinationManager = () => {
               {category.items.map(item => (
                 <div key={item._id} className="border rounded p-4">
                   <img 
-                    src={`https://backend-1-7zwm.onrender.com${item.image}` }
+                  src={item.image}
+                    // src={`https://backend-1-7zwm.onrender.com${item.image}` }
                     alt={item.title} 
                     // onError={(e) => { e.target.src = "https://via.placeholder.com/300x200?text=Image+Not+Found"; }}
                     className="w-full h-48 object-cover mb-2 rounded"

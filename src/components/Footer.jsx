@@ -2210,9 +2210,21 @@ const Footer = () => {
       <div className="bg-orange-50 py-6">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-600 mb-4 md:mb-0">
+            {/* <p className="text-sm text-gray-600 mb-4 md:mb-0">
               © {currentYear} Kashmir Travels. All rights reserved.
-            </p>
+            </p> */}
+            <p className="text-sm text-gray-600 mb-4 md:mb-0">
+  © {currentYear} Kashmir Travels. All rights reserved. | Developed by{" "}
+  <a
+    href="https://wa.me/919541515012"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-orange-600 hover:underline"
+  >
+    Basit Yaqoob
+  </a>
+</p>
+
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
               <a 
                 href="#" 
