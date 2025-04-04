@@ -1158,7 +1158,8 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
       // Try to get a direct download URL from Supabase (frontend client)
       const { data: directData, error } = await supabase.storage
         .from('uploads')
-        .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+        // .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+        .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry
         
       if (directData?.signedUrl) {
         console.log('Got direct signed URL:', directData.signedUrl);

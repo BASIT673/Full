@@ -523,51 +523,83 @@ const DestinationManager = () => {
     setTimeout(() => setAlert({ show: false, message: '', type: '' }), 3000);
   };
   const supabase = createClient(supabaseUrl, supabaseAnonKey);
-  const handleImageUpload = async (file) => {
-    const formData = new FormData();
-    formData.append('image', file);
+  const  handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+  
     try {
-      const response = await fetch('https://backend-1-7zwm.onrender.com/api/upload', {
-        method: 'POST',
-        body: formData
-      });
-      const data = await response.json();
+      // Generate unique filename
+      const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
       
-      if (!response.ok) {
-        showAlert('Error uploading image', 'error');
-        return null;
+      // Upload directly to Supabase
+      const { data, error } = await supabase.storage
+        .from('uploads')
+        .upload(fileName, file);
+        
+      if (error) {
+        throw error;
       }
       
-      // Check if the backend already provides a Supabase URL
-      if (data.supabaseUrl) {
-        return data.supabaseUrl;
+      // Get a signed URL that will work for sure
+      const { data: urlData } = await supabase.storage
+        .from('uploads')
+        .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+        
+      if (urlData?.signedUrl) {
+        setFormData((prev) => ({
+          ...prev,
+          image: urlData.signedUrl,
+        }));
       }
-      
-      // If no Supabase URL, get image path from response
-      const imagePath = data.imageUrl;
-      
-      // Try to get a direct download URL from Supabase if needed
-      try {
-        const fileName = imagePath.split('/').pop();
-        const { data: directData } = await supabase.storage
-          .from('uploads')
-          .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
-          
-        if (directData?.signedUrl) {
-          return directData.signedUrl;
-        }
-      } catch (error) {
-        console.log('Error getting Supabase signed URL, using fallback');
-      }
-      
-      // Return the path as-is since this component expects just the path portion
-      return imagePath;
     } catch (error) {
-      console.error('Error uploading image:', error);
-      showAlert('Error uploading image', 'error');
-      return null;
+      console.error('Direct upload error:', error);
     }
   }
+  // const handleImageUpload = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append('image', file);
+  //   try {
+  //     const response = await fetch('https://backend-1-7zwm.onrender.com/api/upload', {
+  //       method: 'POST',
+  //       body: formData
+  //     });
+  //     const data = await response.json();
+      
+  //     if (!response.ok) {
+  //       showAlert('Error uploading image', 'error');
+  //       return null;
+  //     }
+      
+  //     // Check if the backend already provides a Supabase URL
+  //     if (data.supabaseUrl) {
+  //       return data.supabaseUrl;
+  //     }
+      
+  //     // If no Supabase URL, get image path from response
+  //     const imagePath = data.imageUrl;
+      
+  //     // Try to get a direct download URL from Supabase if needed
+  //     try {
+  //       const fileName = imagePath.split('/').pop();
+  //       const { data: directData } = await supabase.storage
+  //         .from('uploads')
+  //         .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+          
+  //       if (directData?.signedUrl) {
+  //         return directData.signedUrl;
+  //       }
+  //     } catch (error) {
+  //       console.log('Error getting Supabase signed URL, using fallback');
+  //     }
+      
+  //     // Return the path as-is since this component expects just the path portion
+  //     return imagePath;
+  //   } catch (error) {
+  //     console.error('Error uploading image:', error);
+  //     showAlert('Error uploading image', 'error');
+  //     return null;
+  //   }
+  // }
   // const handleImageUpload = async (file) => {
   //   const formData = new FormData();
   //   formData.append('image', file);

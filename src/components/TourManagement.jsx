@@ -316,7 +316,7 @@ import { createClient } from '@supabase/supabase-js';
 // import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client (placed outside your component)
-const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
+// const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
 const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbHhkb3NtZGlnc3p2eHRxYW5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3NDAxMTAsImV4cCI6MjA1OTMxNjExMH0.OYvVZO6IeQpKuaxDENp8wHDpJj8ELObRn0VhK6wbF4Q"; // Use the anon key, not service role key
 
 
@@ -347,7 +347,7 @@ const TourManagement = () => {
     notIncluded: [''],
   });
 //   const supabase = createClient(supabaseUrl, supabaseKey);
-//   const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
+  const supabaseUrl = "https://iflxdosmdigszvxtqani.supabase.co";
 // const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbHhkb3NtZGlnc3p2eHRxYW5pIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Mzc0MDExMCwiZXhwIjoyMDU5MzE2MTEwfQ.PvGyU3V6XwaCrsnxQ0RsInGcv6FdCY_UJDokeCobo5Y"; 
   // Fetch all tours
   // const fetchTours = async () => {
@@ -794,6 +794,55 @@ const TourManagement = () => {
 //   }
 // }
 
+// const handleImageUpload = async (e) => {
+//   const file = e.target.files[0];
+//   if (!file) return;
+
+//   console.log('Selected file:', {
+//     name: file.name,
+//     type: file.type,
+//     size: file.size
+//   });
+
+//   try {
+//     // Option 1: Keep using your backend
+//     const formData = new FormData();
+//     formData.append('image', file);
+    
+//     const response = await axios.post('https://backend-1-7zwm.onrender.com/api/upload', formData, {
+//       headers: { 'Content-Type': 'multipart/form-data' },
+//     });
+    
+//     console.log('Backend response:', response.data);
+    
+//     // Get direct URL from Supabase using the filename from the response
+//     const fileName = response.data.imageUrl.split('/').pop();
+    
+//     // Try to get a direct download URL from Supabase (frontend client)
+//     const { data: directData } = await supabase.storage
+//       .from('uploads')
+//       .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+      
+//     if (directData?.signedUrl) {
+//       console.log('Got direct signed URL:', directData.signedUrl);
+//       setFormData((prev) => ({
+//         ...prev,
+//         image: directData.signedUrl,
+//       }));
+//       return;
+//     }
+    
+//     // Fallback to backend URL if direct access fails
+//     setFormData((prev) => ({
+//       ...prev,
+//       image: `https://backend-1-7zwm.onrender.com${response.data.imageUrl}`,
+//     }));
+//   } catch (error) {
+//     console.error('Error uploading image:', error);
+//     console.error('Error details:', error.response?.data || error.message);
+//   }
+// }
+
 const handleImageUpload = async (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -819,9 +868,10 @@ const handleImageUpload = async (e) => {
     const fileName = response.data.imageUrl.split('/').pop();
     
     // Try to get a direct download URL from Supabase (frontend client)
+    // Changed from 1 hour to 1 year (365 days)
     const { data: directData } = await supabase.storage
       .from('uploads')
-      .createSignedUrl(fileName, 60 * 60); // 1 hour expiry
+      .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry
       
     if (directData?.signedUrl) {
       console.log('Got direct signed URL:', directData.signedUrl);

@@ -1635,7 +1635,8 @@ const AdminCar = () => {
         // Get direct URL from Supabase
         const { data: directData, error } = await supabase.storage
           .from('uploads')
-          .createSignedUrl(fileName, 60 * 60);
+          // .createSignedUrl(fileName, 60 * 60);
+          .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry
           
         let imageUrl;
         if (directData?.signedUrl) {
