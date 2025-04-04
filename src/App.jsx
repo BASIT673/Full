@@ -244,6 +244,12 @@ import VisualCategoryCarousel from './components/VisualCategoryCarousel;';
 // import { AuthContext } from "./AuthContext";
 // import { AuthProvider } from "./components/AuthContext";
 import AuthProvider from "./components/AuthContext";
+import { AuthProviderAgent } from './components/agentauth/AuthProvider';
+import DiscoverPackageList from './components/DiscoverPackageList';
+import DiscoverPackageDetails from './components/DiscoverPackageDetails';
+
+import AdminLogin from './components/AdminLogin';
+import DiscoverPackageForm from './components/DiscoverPackageForm';
 
 // import AuthModal from "./components/auth"
 import AuthModal from "./components/auth/AuthModal"
@@ -261,33 +267,21 @@ const App = () => {
   ];
   const [authModalOpen, setAuthModalOpen] = useState(false);
   return (
-//     <AuthProvider>
-//     <BrowserRouter>
-//       <div className="min-h-screen bg-gray-100">
-//         <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/admin-dashboard" element={<AdminDashboard />} /> {/* Fixed here */}
-//           <Route path="/login" element={<Login />} 
-//           //  <Route path="/signup" element={<SignupForm />} 
-//           //  <Route path="/login" element={<LoginForm />} 
-//           // <Route path="/register" element={<Register />} 
-      
 
 
-//                {/* <Route path="/login" element={<Login />} /> */}
-//                <Route path="/query-form" element={<TourQueryForm />} />
-//                <Route path="/profile" element={<Profile />} />
-//           <Route path="*" element={<Navigate to="/login" />} />
-//           // In your React Router setup
-// <Route path="/verify-email" element={<VerifyEmail />} /> {/* Updated for fallback routing */}
-//         </Routes>
-//       </div>
-//     </BrowserRouter>
-//     </AuthProvider>
+
+
+ <AuthProviderAgent> 
+
+
 <AuthProvider>
 <BrowserRouter>
   <div className="min-h-screen bg-gray-100">
     <Routes>
+    <Route path="/packages" element={<  DiscoverPackageList/>} />
+         <Route path="/packages/new" element={<DiscoverPackageForm />} />
+         <Route path="/packages/:id" element={<DiscoverPackageDetails />} />
+        <Route path="/packages/edit/:id" element={<  DiscoverPackageForm/>} />
       <Route path="/" element={<Home />} />
       <Route path="/admin-dashboard" element={<AdminDashboard />} />
       <Route path="/login" element={<Login />} />
@@ -303,40 +297,18 @@ const App = () => {
       <Route path="/PopularGroupDestinations" element={<TourQueryFormGroup />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
       {/* <Route path="*" element={<Navigate to="/Profile" />} /> */}
     </Routes>
   </div>
 </BrowserRouter>
 </AuthProvider>
-  );
+</AuthProviderAgent>
+
+  )
 };
 
-// const App = () => {
-//   return (
-//     <BrowserRouter>
-//       <div className="min-h-screen bg-gray-100">
-//         <Routes>
-          
-//         <Route path="/" element={<Home />} />
-//         <Route path="/admin-dashboard" element={<AdminDashboard />}
 
-//           <Route path="/signup" element={<SignupForm />} />
-//           <Route path="/login" element={<LoginForm />} />
-//           <Route 
-//             path="/profile" 
-//             element={
-//               <ProtectedRoute>
-//                 <ProfileAgent />
-//               </ProtectedRoute>
-//             } 
-//           />
-//           <Route path="/" element={<Navigate to="/login" />} />
-
-//         </Routes>
-//       </div>
-//     </BrowserRouter>
-//   );
-// };
 
 
 export default App;  

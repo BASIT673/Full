@@ -3547,8 +3547,7 @@ const SortButton = ({ label, icon: Icon, active, onClick }) => (
   </button>
 );
 
-
-const TourModal = ({ tour, isOpen, onClose, selectedTour, handleBookNow }) => {
+const TourModal = ({ tour, isOpen, onClose, selectedTour, handleBookNow, handleGetQuote }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -3560,12 +3559,11 @@ const TourModal = ({ tour, isOpen, onClose, selectedTour, handleBookNow }) => {
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-4xl rounded-lg bg-white shadow-xl max-h-[90vh] overflow-y-auto">
-        <div className="flex flex-col md:flex-row">
-          {/* Image Section - Reduced height */}
-          <div className="md:w-2/5 relative h-52 md:h-auto">
+      <div className="relative w-full max-w-4xl rounded-lg bg-white shadow-xl max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="flex flex-col md:flex-row overflow-hidden">
+          {/* Image Section - Further reduced height on mobile */}
+          <div className="md:w-2/5 relative h-40 md:h-auto">
             <img
-                // src={`https://backend-1-7zwm.onrender.com${tour.image}`}
               src={tour.image || "http://localhost:5000/uploads/placeholder.jpg"}
               alt={tour.title}
               className="h-full w-full object-cover md:rounded-l-lg"
@@ -3589,175 +3587,381 @@ const TourModal = ({ tour, isOpen, onClose, selectedTour, handleBookNow }) => {
             </div>
           </div>
 
-          {/* Content Section */}
-          <div className="md:w-3/5 p-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-800">{tour.title}</h2>
-              <div className="flex items-center space-x-1">
-                <Star className="h-4 w-4 fill-current text-yellow-500" />
-                <span className="font-semibold">{tour.rating}</span>
-                <span className="text-xs text-gray-500">({tour.reviews})</span>
-              </div>
-            </div>
-
-            {/* Location and Price */}
-            <div className="mt-2 flex items-center justify-between">
-              <div className="flex items-center text-sm text-gray-600">
-                <MapPin className="mr-1 h-4 w-4 text-orange-500" />
-                <span>{tour.location}</span>
-              </div>
-              <div className="text-lg font-bold text-orange-500">
-                ${tour.price}
-                <span className="text-xs text-gray-500">/person</span>
-              </div>
-            </div>
-
-            {/* Tour Details Row */}
-            <div className="mt-3 flex space-x-4 text-xs text-gray-600 border-y border-gray-100 py-2">
-              <div className="flex items-center">
-                <Calendar className="mr-1 h-3.5 w-3.5 text-gray-500" />
-                {tour.duration} Days
-              </div>
-              <div className="flex items-center">
-                <Users className="mr-1 h-3.5 w-3.5 text-gray-500" />
-                Max {tour.groupSize}
-              </div>
-              <div className="flex items-center">
-                <Globe className="mr-1 h-3.5 w-3.5 text-gray-500" />
-                English
-              </div>
-            </div>
-
-            {/* Simplified Tabs - Horizontal Pills */}
-            <div className="mt-3">
-              <div className="flex space-x-2 overflow-x-auto pb-1 text-sm">
-                <button
-                  onClick={() => setActiveTab('overview')}
-                  className={`px-3 py-1 rounded-full whitespace-nowrap ${
-                    activeTab === 'overview'
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Overview
-                </button>
-                <button
-                  onClick={() => setActiveTab('itinerary')}
-                  className={`px-3 py-1 rounded-full whitespace-nowrap ${
-                    activeTab === 'itinerary'
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  Itinerary
-                </button>
-                <button
-                  onClick={() => setActiveTab('included')}
-                  className={`px-3 py-1 rounded-full whitespace-nowrap ${
-                    activeTab === 'included'
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  What's Included
-                </button>
+          {/* Content Section - With scrollable area and fixed buttons */}
+          <div className="md:w-3/5 flex flex-col overflow-hidden">
+            {/* Scrollable Content Area */}
+            <div className="p-4 overflow-y-auto flex-grow pb-20">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-gray-800">{tour.title}</h2>
+                <div className="flex items-center space-x-1">
+                  <Star className="h-4 w-4 fill-current text-yellow-500" />
+                  <span className="font-semibold">{tour.rating}</span>
+                  <span className="text-xs text-gray-500">({tour.reviews})</span>
+                </div>
               </div>
 
-              {/* Tab Content - Scrollable container */}
-              <div className="mt-3 overflow-y-auto max-h-56">
-                {activeTab === 'overview' && (
-                  <div className="space-y-3">
-                    <p className="text-sm text-gray-600 leading-relaxed">{tour.description}</p>
-                    
-                    <div className="mt-2">
-                      <h3 className="text-sm font-semibold text-gray-800">Tour Highlights</h3>
-                      <ul className="mt-1 space-y-1">
-                        {tour.highlights?.map((highlight, index) => (
-                          <li key={index} className="flex items-start text-xs text-gray-600">
-                            <span className="mr-1.5 mt-0.5 h-3 w-3 flex-shrink-0 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center">
-                              <Check className="h-2 w-2" />
-                            </span>
-                            {highlight}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
+              {/* Location and Price */}
+              <div className="mt-2 flex items-center justify-between">
+                <div className="flex items-center text-sm text-gray-600">
+                  <MapPin className="mr-1 h-4 w-4 text-orange-500" />
+                  <span>{tour.location}</span>
+                </div>
+                <div className="text-lg font-bold text-orange-500">
+                  ${tour.price}
+                  <span className="text-xs text-gray-500">/person</span>
+                </div>
+              </div>
 
-                {activeTab === 'itinerary' && (
-                  <div className="space-y-3">
-                    {tour.itinerary?.map((day, index) => (
-                      <div key={index} className="border-b border-gray-100 pb-2 last:border-0">
-                        <h3 className="text-sm font-semibold text-gray-800">Day {index + 1}</h3>
-                        <p className="mt-1 text-xs text-gray-600">{day}</p>
+              {/* Tour Details Row */}
+              <div className="mt-3 flex space-x-4 text-xs text-gray-600 border-y border-gray-100 py-2">
+                <div className="flex items-center">
+                  <Calendar className="mr-1 h-3.5 w-3.5 text-gray-500" />
+                  {tour.duration} Days
+                </div>
+                <div className="flex items-center">
+                  <Users className="mr-1 h-3.5 w-3.5 text-gray-500" />
+                  Max {tour.groupSize}
+                </div>
+                <div className="flex items-center">
+                  <Globe className="mr-1 h-3.5 w-3.5 text-gray-500" />
+                  English
+                </div>
+              </div>
+
+              {/* Simplified Tabs - Horizontal Pills */}
+              <div className="mt-3">
+                <div className="flex space-x-2 overflow-x-auto pb-1 text-sm">
+                  <button
+                    onClick={() => setActiveTab('overview')}
+                    className={`px-3 py-1 rounded-full whitespace-nowrap ${
+                      activeTab === 'overview'
+                        ? 'bg-orange-500 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    Overview
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('itinerary')}
+                    className={`px-3 py-1 rounded-full whitespace-nowrap ${
+                      activeTab === 'itinerary'
+                        ? 'bg-orange-500 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    Itinerary
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('included')}
+                    className={`px-3 py-1 rounded-full whitespace-nowrap ${
+                      activeTab === 'included'
+                        ? 'bg-orange-500 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    What's Included
+                  </button>
+                </div>
+
+                {/* Tab Content */}
+                <div className="mt-3">
+                  {activeTab === 'overview' && (
+                    <div className="space-y-3">
+                      <p className="text-sm text-gray-600 leading-relaxed">{tour.description}</p>
+                      
+                      <div className="mt-2">
+                        <h3 className="text-sm font-semibold text-gray-800">Tour Highlights</h3>
+                        <ul className="mt-1 space-y-1">
+                          {tour.highlights?.map((highlight, index) => (
+                            <li key={index} className="flex items-start text-xs text-gray-600">
+                              <span className="mr-1.5 mt-0.5 h-3 w-3 flex-shrink-0 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center">
+                                <Check className="h-2 w-2" />
+                              </span>
+                              {highlight}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    ))}
-                  </div>
-                )}
+                    </div>
+                  )}
 
-                {activeTab === 'included' && (
-                  <div className="grid grid-cols-1 gap-3">
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-800">Included</h3>
-                      <ul className="mt-1 space-y-1">
-                        {tour.included?.map((item, index) => (
-                          <li key={index} className="flex items-start text-xs text-gray-600">
-                            <Check className="mr-1.5 h-3 w-3 text-green-500 mt-0.5 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
+                  {activeTab === 'itinerary' && (
+                    <div className="space-y-3">
+                      {tour.itinerary?.map((day, index) => (
+                        <div key={index} className="border-b border-gray-100 pb-2 last:border-0">
+                          <h3 className="text-sm font-semibold text-gray-800">Day {index + 1}</h3>
+                          <p className="mt-1 text-xs text-gray-600">{day}</p>
+                        </div>
+                      ))}
                     </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-800">Not Included</h3>
-                      <ul className="mt-1 space-y-1">
-                        {tour.notIncluded?.map((item, index) => (
-                          <li key={index} className="flex items-start text-xs text-gray-600">
-                            <X className="mr-1.5 h-3 w-3 text-red-500 mt-0.5 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
+                  )}
+
+                  {activeTab === 'included' && (
+                    <div className="grid grid-cols-1 gap-3">
+                      <div>
+                        <h3 className="text-sm font-semibold text-gray-800">Included</h3>
+                        <ul className="mt-1 space-y-1">
+                          {tour.included?.map((item, index) => (
+                            <li key={index} className="flex items-start text-xs text-gray-600">
+                              <Check className="mr-1.5 h-3 w-3 text-green-500 mt-0.5 flex-shrink-0" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold text-gray-800">Not Included</h3>
+                        <ul className="mt-1 space-y-1">
+                          {tour.notIncluded?.map((item, index) => (
+                            <li key={index} className="flex items-start text-xs text-gray-600">
+                              <X className="mr-1.5 h-3 w-3 text-red-500 mt-0.5 flex-shrink-0" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Book Now Button */}
-            {/* <div className="mt-4">
-              <button 
-                onClick={() => handleBookNow(tour)} 
-                className="w-full rounded-lg bg-orange-500 py-2 font-medium text-white transition-colors hover:bg-orange-600"
-              >
-                Book Now
-              </button>
-            </div> */}
-            <div className="mt-4 flex gap-x-4">
-  {/* Book Now Button */}
-  <button 
-    onClick={() => handleBookNow1(tour)} 
-    className="w-1/2 rounded-lg bg-orange-500 py-2 font-medium text-white transition-colors hover:bg-orange-600"
-  >
-    Book Now
-  </button>
-
-  {/* Get Quote Button (Outlined) */}
-  <button 
-    onClick={() => handleGetQuote(tour)} 
-    className="w-1/2 rounded-lg border border-orange-500 text-orange-500 py-2 font-medium transition-colors hover:bg-orange-500 hover:text-white"
-  >
-    Get Quote
-  </button>
-</div>
-
+            {/* Fixed Buttons at Bottom */}
+            <div className="absolute bottom-0 left-0 right-0 px-4 py-3 bg-white border-t border-gray-100 shadow-md">
+              <div className="flex gap-x-4">
+                <button
+                  onClick={() => handleBookNow(tour)}
+                  className="w-1/2 rounded-lg bg-orange-500 py-2 font-medium text-white transition-colors hover:bg-orange-600"
+                >
+                  Book Now
+                </button>
+                <button
+                  onClick={() => handleGetQuote(tour)}
+                  className="w-1/2 rounded-lg border border-orange-500 text-orange-500 py-2 font-medium transition-colors hover:bg-orange-500 hover:text-white"
+                >
+                  Get Quote
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
+// const TourModal = ({ tour, isOpen, onClose, selectedTour, handleBookNow }) => {
+//   const [activeTab, setActiveTab] = useState('overview');
+//   const [isFavorite, setIsFavorite] = useState(false);
+
+//   if (!tour || !isOpen) return null;
+
+//   return (
+//     <div className="z-50 fixed inset-0 flex items-center justify-center p-4">
+//       {/* Backdrop */}
+//       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
+
+//       {/* Modal Container */}
+//       <div className="relative w-full max-w-4xl rounded-lg bg-white shadow-xl max-h-[90vh] overflow-y-auto">
+//         <div className="flex flex-col md:flex-row">
+//           {/* Image Section - Reduced height */}
+//           <div className="md:w-2/5 relative h-52 md:h-auto">
+//             <img
+//                 // src={`https://backend-1-7zwm.onrender.com${tour.image}`}
+//               src={tour.image || "http://localhost:5000/uploads/placeholder.jpg"}
+//               alt={tour.title}
+//               className="h-full w-full object-cover md:rounded-l-lg"
+//             />
+//             <button
+//               onClick={onClose}
+//               className="absolute right-3 top-3 rounded-full bg-white/90 p-1.5 text-gray-800 hover:bg-white"
+//             >
+//               <X className="h-4 w-4" />
+//             </button>
+//             <div className="absolute bottom-3 right-3 flex space-x-1.5">
+//               <button 
+//                 onClick={() => setIsFavorite(!isFavorite)}
+//                 className="rounded-full bg-white/90 p-1.5 hover:bg-white"
+//               >
+//                 <Heart className={`h-4 w-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-700'}`} />
+//               </button>
+//               <button className="rounded-full bg-white/90 p-1.5 hover:bg-white">
+//                 <Share2 className="h-4 w-4 text-gray-700" />
+//               </button>
+//             </div>
+//           </div>
+
+//           {/* Content Section */}
+//           <div className="md:w-3/5 p-4">
+//             <div className="flex items-center justify-between">
+//               <h2 className="text-xl font-bold text-gray-800">{tour.title}</h2>
+//               <div className="flex items-center space-x-1">
+//                 <Star className="h-4 w-4 fill-current text-yellow-500" />
+//                 <span className="font-semibold">{tour.rating}</span>
+//                 <span className="text-xs text-gray-500">({tour.reviews})</span>
+//               </div>
+//             </div>
+
+//             {/* Location and Price */}
+//             <div className="mt-2 flex items-center justify-between">
+//               <div className="flex items-center text-sm text-gray-600">
+//                 <MapPin className="mr-1 h-4 w-4 text-orange-500" />
+//                 <span>{tour.location}</span>
+//               </div>
+//               <div className="text-lg font-bold text-orange-500">
+//                 ${tour.price}
+//                 <span className="text-xs text-gray-500">/person</span>
+//               </div>
+//             </div>
+
+//             {/* Tour Details Row */}
+//             <div className="mt-3 flex space-x-4 text-xs text-gray-600 border-y border-gray-100 py-2">
+//               <div className="flex items-center">
+//                 <Calendar className="mr-1 h-3.5 w-3.5 text-gray-500" />
+//                 {tour.duration} Days
+//               </div>
+//               <div className="flex items-center">
+//                 <Users className="mr-1 h-3.5 w-3.5 text-gray-500" />
+//                 Max {tour.groupSize}
+//               </div>
+//               <div className="flex items-center">
+//                 <Globe className="mr-1 h-3.5 w-3.5 text-gray-500" />
+//                 English
+//               </div>
+//             </div>
+
+//             {/* Simplified Tabs - Horizontal Pills */}
+//             <div className="mt-3">
+//               <div className="flex space-x-2 overflow-x-auto pb-1 text-sm">
+//                 <button
+//                   onClick={() => setActiveTab('overview')}
+//                   className={`px-3 py-1 rounded-full whitespace-nowrap ${
+//                     activeTab === 'overview'
+//                       ? 'bg-orange-500 text-white'
+//                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+//                   }`}
+//                 >
+//                   Overview
+//                 </button>
+//                 <button
+//                   onClick={() => setActiveTab('itinerary')}
+//                   className={`px-3 py-1 rounded-full whitespace-nowrap ${
+//                     activeTab === 'itinerary'
+//                       ? 'bg-orange-500 text-white'
+//                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+//                   }`}
+//                 >
+//                   Itinerary
+//                 </button>
+//                 <button
+//                   onClick={() => setActiveTab('included')}
+//                   className={`px-3 py-1 rounded-full whitespace-nowrap ${
+//                     activeTab === 'included'
+//                       ? 'bg-orange-500 text-white'
+//                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+//                   }`}
+//                 >
+//                   What's Included
+//                 </button>
+//               </div>
+
+//               {/* Tab Content - Scrollable container */}
+//               <div className="mt-3 overflow-y-auto max-h-56">
+//                 {activeTab === 'overview' && (
+//                   <div className="space-y-3">
+//                     <p className="text-sm text-gray-600 leading-relaxed">{tour.description}</p>
+                    
+//                     <div className="mt-2">
+//                       <h3 className="text-sm font-semibold text-gray-800">Tour Highlights</h3>
+//                       <ul className="mt-1 space-y-1">
+//                         {tour.highlights?.map((highlight, index) => (
+//                           <li key={index} className="flex items-start text-xs text-gray-600">
+//                             <span className="mr-1.5 mt-0.5 h-3 w-3 flex-shrink-0 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center">
+//                               <Check className="h-2 w-2" />
+//                             </span>
+//                             {highlight}
+//                           </li>
+//                         ))}
+//                       </ul>
+//                     </div>
+//                   </div>
+//                 )}
+
+//                 {activeTab === 'itinerary' && (
+//                   <div className="space-y-3">
+//                     {tour.itinerary?.map((day, index) => (
+//                       <div key={index} className="border-b border-gray-100 pb-2 last:border-0">
+//                         <h3 className="text-sm font-semibold text-gray-800">Day {index + 1}</h3>
+//                         <p className="mt-1 text-xs text-gray-600">{day}</p>
+//                       </div>
+//                     ))}
+//                   </div>
+//                 )}
+
+//                 {activeTab === 'included' && (
+//                   <div className="grid grid-cols-1 gap-3">
+//                     <div>
+//                       <h3 className="text-sm font-semibold text-gray-800">Included</h3>
+//                       <ul className="mt-1 space-y-1">
+//                         {tour.included?.map((item, index) => (
+//                           <li key={index} className="flex items-start text-xs text-gray-600">
+//                             <Check className="mr-1.5 h-3 w-3 text-green-500 mt-0.5 flex-shrink-0" />
+//                             {item}
+//                           </li>
+//                         ))}
+//                       </ul>
+//                     </div>
+//                     <div>
+//                       <h3 className="text-sm font-semibold text-gray-800">Not Included</h3>
+//                       <ul className="mt-1 space-y-1">
+//                         {tour.notIncluded?.map((item, index) => (
+//                           <li key={index} className="flex items-start text-xs text-gray-600">
+//                             <X className="mr-1.5 h-3 w-3 text-red-500 mt-0.5 flex-shrink-0" />
+//                             {item}
+//                           </li>
+//                         ))}
+//                       </ul>
+//                     </div>
+//                   </div>
+//                 )}
+//               </div>
+//             </div>
+
+//             {/* Book Now Button */}
+//             {/* <div className="mt-4">
+//               <button 
+//                 onClick={() => handleBookNow(tour)} 
+//                 className="w-full rounded-lg bg-orange-500 py-2 font-medium text-white transition-colors hover:bg-orange-600"
+//               >
+//                 Book Now
+//               </button>
+//             </div> */}
+            
+//             {/* <div className=" mt-4 flex gap-x-4">
+
+//   {/* <button 
+//     onClick={() => handleBookNow1(tour)} 
+//     className="w-1/2 rounded-lg bg-orange-500 py-2 font-medium text-white transition-colors hover:bg-orange-600"
+//   >
+//     Book Now
+//   </button> */}
+
+  
+//   {/* <button 
+//     onClick={() => handleGetQuote(tour)} 
+//     className="w-1/2 rounded-lg border border-orange-500 text-orange-500 py-2 font-medium transition-colors hover:bg-orange-500 hover:text-white"
+//   >
+//     Get Quote
+//   </button>
+// </div> */} 
+
+
+
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // const TourCard = ({ tour, onClick }) => (
 //   <div 

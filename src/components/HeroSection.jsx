@@ -830,9 +830,570 @@ import VisualCategoryCarousel from './VisualCategoryCarousel;';
 import  TourQueryForm from './querfrom';
 
 import FeatureCards from './FeaturedCards';
+import EnhancedKashmirButton from './EnhancedKashmirButton';
 // import TripPlanner from './TripPlanner';
 // const HeroSection = () => {
-
+  const handleDiscoverPackages = () => {
+    // Create popup element
+    const popup = document.createElement('div');
+    popup.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 transition-opacity duration-300 overflow-y-auto py-6';
+    
+    // Create popup content
+    popup.innerHTML = `
+      <div class="bg-white rounded-lg p-4 sm:p-6 max-w-md w-full mx-4 shadow-2xl transform transition-all scale-95 my-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg sm:text-xl font-bold text-gray-900">Exclusive Kashmir Offers</h3>
+          <button id="closePopup" class="text-gray-500 hover:text-gray-700">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="space-y-3 sm:space-y-4">
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-md">
+            <p class="font-bold text-amber-800">Limited Time Offer!</p>
+            <p class="text-amber-700">Save 20% on all Kashmir packages when you book this week.</p>
+          </div>
+          
+          <div class="border-t border-b py-3">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="font-medium">Srinagar Explorer</p>
+                <p class="text-xs text-gray-500">5 days, 4 nights</p>
+              </div>
+              <p><span class="line-through text-gray-500">₹15,999</span> <span class="font-bold text-orange-600">₹12,799</span></p>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+              <div>
+                <p class="font-medium">Gulmarg Adventure</p>
+                <p class="text-xs text-gray-500">7 days, 6 nights</p>
+              </div>
+              <p><span class="line-through text-gray-500">₹18,499</span> <span class="font-bold text-orange-600">₹14,799</span></p>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+              <div>
+                <p class="font-medium">Complete Kashmir</p>
+                <p class="text-xs text-gray-500">10 days, 9 nights</p>
+              </div>
+              <p><span class="line-through text-gray-500">₹24,999</span> <span class="font-bold text-orange-600">₹19,999</span></p>
+            </div>
+          </div>
+          
+          <button id="bookNowBtn" class="w-full py-3 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-bold rounded-lg shadow-lg transition-transform duration-300 hover:scale-105">
+            Book Now & Save
+          </button>
+          
+          <div class="mt-2 text-center">
+            <p class="text-sm text-gray-500">Offer valid until March 21, 2025</p>
+            <p class="text-xs text-gray-400 mt-1">Terms and conditions apply</p>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Add popup to body
+    document.body.appendChild(popup);
+    
+    // Trigger animation after a small delay
+    setTimeout(() => {
+      popup.classList.add('opacity-100');
+      const popupContent = popup.querySelector('div');
+      popupContent.classList.remove('scale-95');
+      popupContent.classList.add('scale-100');
+    }, 10);
+    
+    // Add close functionality
+    document.getElementById('closePopup').addEventListener('click', () => {
+      closePopup(popup);
+    });
+    
+    // Close when clicking outside
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        closePopup(popup);
+      }
+    });
+    
+    // Book Now button functionality
+    document.getElementById('bookNowBtn').addEventListener('click', () => {
+      // Close current popup
+      closePopup(popup);
+      
+      // Create booking form popup
+      setTimeout(() => {
+        showBookingForm();
+      }, 300);
+    });
+    
+    // Helper function to close popup with animation
+    function closePopup(popupElement) {
+      const popupContent = popupElement.querySelector('div');
+      popupElement.classList.remove('opacity-100');
+      popupElement.classList.add('opacity-0');
+      popupContent.classList.remove('scale-100');
+      popupContent.classList.add('scale-95');
+      
+      setTimeout(() => {
+        document.body.removeChild(popupElement);
+      }, 300);
+    }
+    
+    // Function to show booking form
+    function showBookingForm() {
+      // Create booking form popup
+      const bookingForm = document.createElement('div');
+      bookingForm.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 opacity-0 transition-opacity duration-300 overflow-y-auto py-6';
+      
+      // Package details for dynamic population and pricing
+      const packages = {
+        'srinagar': { 
+          name: 'Srinagar Explorer', 
+          price: 15999, 
+          discountedPrice: 12799, 
+        
+          duration: '5 days, 4 nights' ,
+         
+        },
+        'gulmarg': { 
+          name: 'Gulmarg Adventure', 
+          price: 18499, 
+          discountedPrice: 14799, 
+          duration: '7 days, 6 nights' 
+        },
+        'complete': { 
+          name: 'Complete Kashmir', 
+          price: 24999, 
+          discountedPrice: 19999, 
+          duration: '10 days, 9 nights' 
+        }
+      };
+      
+      // Valid promo codes with discount percentages
+      const promoCodes = {
+        'KASHMIR2025': 10,
+        'SPRING25': 15,
+        'FAMILY20': 20
+      };
+      
+      // Create form content with advanced design
+      bookingForm.innerHTML = `
+        <div class="bg-white rounded-xl p-0  max-w-lg w-full mx-4 shadow-2xl transform transition-all scale-95 overflow-hidden my-auto">
+          <!-- Header with gradient background -->
+          <div class="bg-gradient-to-r from-orange-600 to-amber-600 p-4 sm:p-6 text-white relative">
+            <h3 class="text-xl sm:text-2xl font-bold">Book Your Kashmir Adventure</h3>
+            <p class="mt-1 opacity-90">Exclusive 20% off for limited time</p>
+            <button id="closeBookingForm" class="absolute top-4 right-4 text-white hover:text-orange-200 transition-colors">
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+            
+            <!-- Decorative elements -->
+            <div class="absolute -bottom-6 left-0 w-full flex justify-between px-8">
+              <div class="h-12 w-12 bg-white rounded-full transform -translate-y-6 flex items-center justify-center">
+                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div class="h-12 w-12 bg-white rounded-full transform -translate-y-6 flex items-center justify-center">
+                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Form content -->
+          <div class="p-4 sm:p-6 pt-8 sm:pt-10 max-h-[calc(100vh-200px)] overflow-y-auto">
+            <form id="kashmirBookingForm" class="space-y-4">
+              <!-- Package selection -->
+              <div class="mb-4 sm:mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Select Package</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div class="package-option">
+                    <input type="radio" id="package1" name="package" value="srinagar" class="hidden peer" checked>
+                    <label for="package1" class="block p-3 border-2 border-gray-200 rounded-lg text-center cursor-pointer transition-all peer-checked:border-orange-500 peer-checked:bg-orange-50 hover:border-orange-300">
+                      <span class="block font-medium">Srinagar</span>
+                      <span class="block text-orange-600 font-bold mt-1">₹<span id="srinagar-price">12,799</span></span>
+                      <span class="block text-xs text-gray-500 mt-1">5 days, 4 nights</span>
+                    </label>
+                  </div>
+                  <div class="package-option">
+                    <input type="radio" id="package2" name="package" value="gulmarg" class="hidden peer">
+                    <label for="package2" class="block p-3 border-2 border-gray-200 rounded-lg text-center cursor-pointer transition-all peer-checked:border-orange-500 peer-checked:bg-orange-50 hover:border-orange-300">
+                      <span class="block font-medium">Gulmarg</span>
+                      <span class="block text-orange-600 font-bold mt-1">₹<span id="gulmarg-price">14,799</span></span>
+                      <span class="block text-xs text-gray-500 mt-1">7 days, 6 nights</span>
+                    </label>
+                  </div>
+                  <div class="package-option">
+                    <input type="radio" id="package3" name="package" value="complete" class="hidden peer">
+                    <label for="package3" class="block p-3 border-2 border-gray-200 rounded-lg text-center cursor-pointer transition-all peer-checked:border-orange-500 peer-checked:bg-orange-50 hover:border-orange-300">
+                      <span class="block font-medium">Complete</span>
+                      <span class="block text-orange-600 font-bold mt-1">₹<span id="complete-price">19,999</span></span>
+                      <span class="block text-xs text-gray-500 mt-1">10 days, 9 nights</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Order summary -->
+              <div id="orderSummary" class="bg-gray-50 p-4 rounded-lg mb-4">
+                <h4 class="font-medium mb-2">Order Summary</h4>
+                <div class="flex justify-between text-sm mb-1">
+                  <span>Package: <span id="selectedPackageName">Srinagar Explorer</span></span>
+                  <span id="packageBasePrice">₹15,999</span>
+                </div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span>Duration:</span>
+                  <span id="packageDuration">5 days, 4 nights</span>
+                </div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span>Special offer discount (20%):</span>
+                  <span class="text-green-600">-₹<span id="specialDiscount">3,200</span></span>
+                </div>
+                <div id="promoDiscountRow" class="justify-between text-sm mb-1 hidden">
+                  <span>Promo code discount: <span id="promoCodeLabel"></span></span>
+                  <span class="text-green-600">-₹<span id="promoDiscount">0</span></span>
+                </div>
+                <div class="flex justify-between font-bold pt-2 border-t mt-2">
+                  <span>Total:</span>
+                  <span>₹<span id="totalPrice">12,799</span></span>
+                </div>
+              </div>
+              
+              <!-- Two columns layout -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Personal information -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" required>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" required>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                  <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" required>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Travelers</label>
+                  <div class="flex">
+                    <button type="button" id="decreaseTravelers" class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-l-md hover:bg-gray-200">-</button>
+                    <input type="number" id="travelers" min="1" max="10" value="2" class="w-16 px-3 py-2 border-y border-gray-300 text-center focus:outline-none" readonly>
+                    <button type="button" id="increaseTravelers" class="px-3 py-2 bg-gray-100 border border-gray-300 rounded-r-md hover:bg-gray-200">+</button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Date selection -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Travel Date</label>
+                <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" min="${new Date().toISOString().split('T')[0]}" required>
+              </div>
+              
+              <!-- Special requests -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 h-20 sm:h-24 resize-none"></textarea>
+              </div>
+              
+              <!-- Promo code -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Promo Code</label>
+                <div class="flex items-center space-x-2">
+                  <input type="text" id="promoCode" placeholder="Enter promo code" class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                  <button type="button" id="applyPromo" class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400">Apply</button>
+                </div>
+                <div id="promoMessage" class="mt-1 text-sm hidden"></div>
+              </div>
+              
+              <!-- Submit button -->
+              <div class="pt-2">
+                <button type="submit" id="submitBooking" class="w-full py-3 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center justify-center">
+                  <span>Secure Your Booking</span>
+                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <!-- Terms and conditions -->
+              <div class="text-center text-sm text-gray-500">
+                <p>By booking, you agree to our <a href="#" class="text-orange-600 hover:underline">Terms & Conditions</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+      
+      // Add form to body
+      document.body.appendChild(bookingForm);
+      
+      // Trigger animation
+      setTimeout(() => {
+        bookingForm.classList.add('opacity-100');
+        const formContent = bookingForm.querySelector('div');
+        formContent.classList.remove('scale-95');
+        formContent.classList.add('scale-100');
+      }, 10);
+      
+      // Tracking variables for promo code 
+      let currentPackage = 'srinagar';
+      let currentPromoCode = null;
+      let promoDiscountPercent = 0;
+      
+      // Initial order summary setup
+      updateOrderSummary();
+      
+      // Function to update the order summary
+      function updateOrderSummary() {
+        const packageData = packages[currentPackage];
+        const basePrice = packageData.price;
+        const specialDiscountAmount = Math.round(basePrice * 0.2); // 20% off
+        let promoDiscountAmount = 0;
+        
+        // Calculate promo discount if applicable
+        if (promoDiscountPercent > 0) {
+          promoDiscountAmount = Math.round((basePrice - specialDiscountAmount) * (promoDiscountPercent / 100));
+          document.getElementById('promoDiscountRow').classList.remove('hidden');
+          document.getElementById('promoDiscount').textContent = promoDiscountAmount.toLocaleString();
+          document.getElementById('promoCodeLabel').textContent = `(${promoDiscountPercent}%)`;
+        } else {
+          document.getElementById('promoDiscountRow').classList.add('hidden');
+        }
+        
+        // Calculate total price
+        const totalPrice = basePrice - specialDiscountAmount - promoDiscountAmount;
+        
+        // Update display
+        document.getElementById('selectedPackageName').textContent = packageData.name;
+        document.getElementById('packageBasePrice').textContent = `₹${basePrice.toLocaleString()}`;
+        document.getElementById('packageDuration').textContent = packageData.duration;
+        document.getElementById('specialDiscount').textContent = specialDiscountAmount.toLocaleString();
+        document.getElementById('totalPrice').textContent = totalPrice.toLocaleString();
+        
+        // Update package price display
+        document.getElementById('srinagar-price').textContent = packages.srinagar.discountedPrice.toLocaleString();
+        document.getElementById('gulmarg-price').textContent = packages.gulmarg.discountedPrice.toLocaleString();
+        document.getElementById('complete-price').textContent = packages.complete.discountedPrice.toLocaleString();
+      }
+      
+      // Listen for package selection changes
+      document.querySelectorAll('input[name="package"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          currentPackage = this.value;
+          updateOrderSummary();
+        });
+      });
+      
+      // Handle promo code application
+      document.getElementById('applyPromo').addEventListener('click', function() {
+        const promoInput = document.getElementById('promoCode');
+        const enteredCode = promoInput.value.trim().toUpperCase();
+        const messageDiv = document.getElementById('promoMessage');
+        
+        // Reset message styling
+        messageDiv.className = 'mt-1 text-sm';
+        
+        if (!enteredCode) {
+          messageDiv.textContent = 'Please enter a promo code.';
+          messageDiv.classList.add('text-orange-600');
+          messageDiv.classList.remove('hidden');
+          return;
+        }
+        
+        if (promoCodes[enteredCode]) {
+          // Valid promo code
+          promoDiscountPercent = promoCodes[enteredCode];
+          currentPromoCode = enteredCode;
+          
+          messageDiv.textContent = `Success! ${promoDiscountPercent}% additional discount applied.`;
+          messageDiv.classList.add('text-green-600');
+          messageDiv.classList.remove('hidden');
+          
+          updateOrderSummary();
+        } else {
+          // Invalid promo code
+          promoDiscountPercent = 0;
+          currentPromoCode = null;
+          
+          messageDiv.textContent = 'Invalid promo code. Please try again.';
+          messageDiv.classList.add('text-red-600');
+          messageDiv.classList.remove('hidden');
+          
+          document.getElementById('promoDiscountRow').classList.add('hidden');
+          updateOrderSummary();
+        }
+      });
+      
+      // Add close functionality
+      document.getElementById('closeBookingForm').addEventListener('click', () => {
+        closeBookingForm(bookingForm);
+      });
+      
+      // Close when clicking outside
+      bookingForm.addEventListener('click', (e) => {
+        if (e.target === bookingForm) {
+          closeBookingForm(bookingForm);
+        }
+      });
+      
+      // Handle travelers count
+      document.getElementById('decreaseTravelers').addEventListener('click', () => {
+        const travelersInput = document.getElementById('travelers');
+        if (parseInt(travelersInput.value) > 1) {
+          travelersInput.value = parseInt(travelersInput.value) - 1;
+        }
+      });
+      
+      document.getElementById('increaseTravelers').addEventListener('click', () => {
+        const travelersInput = document.getElementById('travelers');
+        if (parseInt(travelersInput.value) < 10) {
+          travelersInput.value = parseInt(travelersInput.value) + 1;
+        }
+      });
+      
+      // Form submission
+      document.getElementById('kashmirBookingForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Show loading state
+        const submitButton = document.getElementById('submitBooking');
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        `;
+        
+        // Simulate form processing
+        setTimeout(() => {
+          // Close the form
+          closeBookingForm(bookingForm);
+          
+          // Show success message
+          setTimeout(() => {
+            showSuccessMessage(currentPackage, currentPromoCode);
+          }, 300);
+        }, 1500);
+      });
+      
+      // Helper function to close booking form with animation
+      function closeBookingForm(formElement) {
+        const formContent = formElement.querySelector('div');
+        formElement.classList.remove('opacity-100');
+        formElement.classList.add('opacity-0');
+        formContent.classList.remove('scale-100');
+        formContent.classList.add('scale-95');
+        
+        setTimeout(() => {
+          document.body.removeChild(formElement);
+        }, 300);
+      }
+      
+      // Add ESC key to close form
+      const handleEscKey = (e) => {
+        if (e.key === 'Escape') {
+          closeBookingForm(bookingForm);
+          document.removeEventListener('keydown', handleEscKey);
+        }
+      };
+      
+      document.addEventListener('keydown', handleEscKey);
+    }
+    
+    // Function to show success message
+    function showSuccessMessage(packageType, promoCode) {
+      const successMessage = document.createElement('div');
+      successMessage.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 opacity-0 transition-opacity duration-300';
+      
+      // Get package data
+      const packageData = {
+        'srinagar': { name: 'Srinagar Explorer', duration: '5 days, 4 nights' },
+        'gulmarg': { name: 'Gulmarg Adventure', duration: '7 days, 6 nights' },
+        'complete': { name: 'Complete Kashmir', duration: '10 days, 9 nights' }
+      }[packageType || 'srinagar'];
+      
+      // Generate a random booking reference
+      const bookingRef = 'KASH-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+      
+      // Create promo text if applicable
+      const promoText = promoCode ? `<p class="mt-1 text-gray-600">Promo code applied: <span class="font-medium">${promoCode}</span></p>` : '';
+      
+      successMessage.innerHTML = `
+        <div class="bg-white rounded-xl p-6 sm:p-8 max-w-md w-full mx-4 shadow-2xl transform transition-all scale-95 text-center">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center">
+            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-bold mt-4">Booking Successful!</h3>
+          <p class="mt-2 text-gray-600">Your ${packageData.name} (${packageData.duration}) is confirmed. We've sent the details to your email.</p>
+          <p class="mt-1 text-gray-600">Booking reference: <span class="font-medium">${bookingRef}</span></p>
+          ${promoText}
+          <button id="closeSuccess" class="mt-6 w-full py-3 bg-gradient-to-r from-green-600 to-green-500 text-white font-bold rounded-lg shadow-lg transition-all duration-300 hover:scale-105">
+            Continue
+          </button>
+        </div>
+      `;
+      
+      document.body.appendChild(successMessage);
+      setTimeout(() => {
+        successMessage.classList.add('opacity-100');
+        const messageContent = successMessage.querySelector('div');
+        messageContent.classList.remove('scale-95');
+        messageContent.classList.add('scale-100');
+      }, 10);
+      
+      // Close success message when the continue button is clicked
+      document.getElementById('closeSuccess').addEventListener('click', () => {
+        successMessage.classList.remove('opacity-100');
+        successMessage.classList.add('opacity-0');
+        const messageContent = successMessage.querySelector('div');
+        messageContent.classList.remove('scale-100');
+        messageContent.classList.add('scale-95');
+        
+        setTimeout(() => {
+          document.body.removeChild(successMessage);
+        }, 300);
+      });
+      
+      // Close when clicking outside
+      successMessage.addEventListener('click', (e) => {
+        if (e.target === successMessage) {
+          successMessage.classList.remove('opacity-100');
+          successMessage.classList.add('opacity-0');
+          const messageContent = successMessage.querySelector('div');
+          messageContent.classList.remove('scale-100');
+          messageContent.classList.add('scale-95');
+          
+          setTimeout(() => {
+            document.body.removeChild(successMessage);
+          }, 300);
+        }
+      });
+      
+      // Add ESC key to close success message
+      // const handleEscKey = (e) => {
+      //   if (e.key === 'Escape') {
+      //     successMessage.classList.remove('opacity-100');
+      //     successMessage.classList.add('opacity-0');
+      //     const messageContent = successMessage.querySelector('div');
+      //     messageContent.classList.remove('scale
+      const handleEscKey = (e) => {
+        if (e.key === 'Escape') {
+          closeBookingForm(bookingForm);
+          document.removeEventListener('keydown', handleEscKey);
+        }
+      };
+      
+      document.addEventListener('keydown', handleEscKey);
+    }};
   
   const handleOptionSelect = (option, categoryType, categoryTitle) => {
     setQueryParams({
@@ -890,9 +1451,13 @@ const HeroSection = ({ featuredDestinations, handleOptionSelect }) => {
     <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-0 mt-0 md:mt-20">
       Explore the <span className="text-orange-600">World</span> Like Never Before
     </h1>
-    <p className="text-base sm:text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden">
+    {/* <p className="text-base sm:text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 hidden sm:block">
+  Discover breathtaking destinations and unforgettable experiences curated by travel experts
+</p> */}
+
+    {/* <p className="text-base sm:text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto mt-5 sm:mb-0 md:hidden">
       Discover breathtaking destinations and unforgettable experiences curated by travel experts
-    </p>
+    </p> */}
   </div>
 {/* </div> */}
 
@@ -909,21 +1474,23 @@ const HeroSection = ({ featuredDestinations, handleOptionSelect }) => {
   featuredDestinations={featuredDestinations}
  onOptionSelect={handleOptionSelect}
  />
- <div className="mt-2 bg-gray-50 rounded-lg p-4 shadow-sm relative z-20">
+ <div className="mt-10 bg-gray-50 rounded-lg p-4 shadow-sm relative z-20">
  <div className="flex flex-col md:flex-row items-center justify-between">
  {/* Heading & Trip Planner */}
- <div className="flex items-center mb-3 md:mb-0 relative">
-  <h3 className="text-sm sm:text-base font-semibold text-gray-800 mr-2 sm:mr-4 whitespace-nowrap">
+ <div className="flex  items-center mb-3 md:mb-0 relative">
+  {/* <h3 className="text-sm  md:hidden sm:text-base font-semibold text-gray-800 mr-2 sm:mr-4 whitespace-nowrap">
  Need inspiration?
- </h3>
+ </h3> */}
   <div className="relative z-20">
   <TripPlanner />
  </div>
  </div>
+ 
+
  {/* Feature Cards */}
- <div className="flex flex-wrap justify-center gap-2">
-  {/* Feature Item */}
-  {[
+  <div className=" md:hidden flex flex-wrap justify-center gap-2">
+
+   {[
   {
  bgColor: "bg-blue-100",
   iconColor: "text-blue-600",
@@ -971,12 +1538,24 @@ d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0
   </div>
   <span className="text-xs sm:text-sm font-medium">{item.text}</span>
  </div>
-  ))}
-  </div>
- </div>
- </div>
- </div>
+  ))} 
+   </div> 
+   <EnhancedKashmirButton/>
+   {/* <button
+  onClick={handleDiscoverPackages}
+  className="px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-gradient-to-r from-orange-600 to-amber-600 text-white font-bold rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 focus:ring-4 focus:ring-orange-200"
+  aria-label="Explore our popular Kashmir tour packages"
+>
+  <span className="block sm:hidden">Discover Kashmir Packages</span>  
+  <span className="hidden sm:block">Discover Kashmir Packages</span>
+</button> */}
  
+ </div>
+ </div>
+
+
+ </div>
+
  </div>
   );
  }

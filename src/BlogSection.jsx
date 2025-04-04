@@ -1658,7 +1658,21 @@ const BlogSection = () => {
       setLoading(false);
     }
   };
-  
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    
+    const date = new Date(dateString);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) return dateString;
+    
+    // Format date as "Month DD, YYYY"
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
   // const fetchPosts = async () => {
   //   try {
   //     setLoading(true);
@@ -1932,8 +1946,75 @@ const BlogSection = () => {
             </div>
           )}
         </div>
-
         <div className="p-6">
+  <div className="flex justify-between items-start mb-4">
+    <div className="flex-1 pr-4">
+      <h2 className={`${isSlider ? 'text-2xl' : 'text-xl'} font-bold text-gray-800 font-serif tracking-tight leading-tight mb-2`}>
+        {post.title}
+      </h2>
+      <div className="flex flex-wrap items-center mt-1">
+        <User className="w-4 h-4 text-orange-500 flex-shrink-0" />
+        <span className="ml-1 text-sm text-gray-600 font-medium truncate max-w-[150px]">{post.author}</span>
+        <span className="mx-2 text-gray-400">•</span>
+        <Calendar className="w-4 h-4 text-orange-500 flex-shrink-0" />
+        <span className="ml-1 text-sm text-gray-600">
+          {formatDate(post.date)}
+        </span>
+      </div>
+    </div>
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowDetails(!showDetails);
+      }}
+      className="text-orange-500 hover:text-orange-600 flex-shrink-0"
+    >
+      <ChevronDown className={`w-6 h-6 transition-transform duration-300 ${
+        showDetails ? 'rotate-180' : ''
+      }`} />
+    </button>
+  </div>
+  
+  {showDetails && (
+    <div className="overflow-hidden">
+      <p className="text-gray-600 mb-4 font-light leading-relaxed">{post.excerpt}</p>
+      <div className="flex items-center justify-start space-x-2 text-sm text-gray-500 mb-6">
+        <Info className="w-4 h-4" />
+        <span>Published on {formatDate(post.date)}</span>
+      </div>
+    </div>
+  )}
+  
+   <button
+    onClick={() => handleCardClick(post.id || post._id)}
+    className={`w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl font-medium
+      shadow-lg hover:shadow-orange-300 ${isSlider ? 'py-3.5 text-lg' : 'py-3 text-base'}
+      flex items-center justify-center gap-2 transition-all hover:translate-y-px`}
+  >
+    <Book className="w-5 h-5" />
+    Read Full Story
+  </button> 
+</div>
+
+{/* Add this function to your component */}
+{/* 
+const formatDate = (dateString) => {
+  if (!dateString) return "";
+  
+  const date = new Date(dateString);
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) return dateString;
+  
+  // Format date as "Month DD, YYYY"
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+};
+*/}
+        {/* <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
               <h2 className={`${isSlider ? 'text-2xl' : 'text-xl'} font-bold text-gray-800`}>
@@ -1976,7 +2057,7 @@ const BlogSection = () => {
             <Book className="w-5 h-5" />
             Read Full Story
           </button> */}
-          <button 
+          {/* <button 
             onClick={() => handleCardClick(post.id || post._id)}
             className={`w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl font-medium
               shadow-lg hover:shadow-orange-300 ${isSlider ? 'py-3.5 text-lg' : 'py-3 text-base'}
@@ -1984,9 +2065,9 @@ const BlogSection = () => {
           >
             <Book className="w-5 h-5" />
             Read Full Story
-          </button>
+          </button> */}
            
-        </div>
+        {/* </div> */} 
       </div>
     );
   };

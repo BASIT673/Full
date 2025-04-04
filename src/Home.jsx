@@ -34,11 +34,21 @@ import ItineraryBuilder from "./components/Itenary";
 import TripPlanner from "./components/TripPlanner";
 import TravelPackageCRUD from "./components/TravelPackageCRUD";
 import PackageManagement from "./components/PackageMangement";
+import SpecialRatesSection from "./components/SpecialRateSection";
+import AgentAdmin from "./components/AgentAdmin";
+import DestinationGallery from "./components/DestinationGallery";
+import FeaturedTours from "./components/FeaturedTours";
+import DiscoverPackages from "./components/DiscoverPackageParent";
+import DiscoverPackageCRUD from "./components/DiscoverPackageCRUD";
+import PromoCodeManager from "./components/PromodCodeManger";
+import BookingManager from "./components/BookingManger";
+import TourQueriesManagement from "./components/TourQueriesManagement";
+import TourQueriesManagementGetQuote from "./components/TourGetQuoteMangement";
 const Home = () => {
   const [category, setCategory] = useState('trending');
   const [view, setView] = useState("home");
   const[currentSelection,setCurrentSelection]=useState()
- 
+  const [activeTab, setActiveTab] = useState('special-rates');
   const featuredDestinations = [
     { id: 1, name: "Srinagar", location: "Kashmir", imageUrl: "/images/srinagar.jpg" },
     { id: 2, name: "Gulmarg", location: "Kashmir", imageUrl: "/images/gulmarg.jpg" },
@@ -85,7 +95,26 @@ const Home = () => {
         {/* <ExpediaHeader /> */}
         <KashmirHeader/>
         <HeroSection/>
+        {/* <BookingManager/> */}
+        {/* <PromoCodeManager/> */}
+        {/* <TourQueriesManagement/> */}
+        {/* <AgentAdmin/> */}
         <FeatureCards1/>
+        {/* <SpecialRatesSection/>
+        <SpecialRatesSection 
+        activeTab="special-rates" 
+        setActiveTab={() => {}} 
+      /> */}
+        {/* <button
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  activeTab === 'special-rates'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+                onClick={() => setActiveTab('special-rates')}
+              >
+                Special Rates
+              </button> */}
         {/* <AgentProfile/> */}
     {/* <PackageManagement/> */}
           {/* <FeatureCards/> */}
@@ -99,11 +128,15 @@ const Home = () => {
         trending={trendingDestinations} */}
 
      {/* <BestKashmir/> */}
-
+     {/* <DiscoverPackageCRUD/> */}
+{/* <DiscoverPackages/> */}
       {/* /> */}
-        <ToursGrid1/>
+      {/* <TourQueriesManagementGetQuote/> */}
+      <FeaturedTours/>
+        {/* <ToursGrid1/> */}
         <FinalTours1/>
-        <KashmirDestinations2/>
+        {/* <KashmirDestinations2/> */}
+        <DestinationGallery/>
         {/* <TrekkingSection/> */}
         {/* <TourQueryForm/> */}
         
@@ -123,7 +156,7 @@ const Home = () => {
   {/* <BlogSection /> */}
 {/* <TravelPackageCRUD/> */}
 </ErrorBoundary>
-<TestimonialsCarousel/>
+{/* <TestimonialsCarousel/> */}
 
         <Footer />
       </>

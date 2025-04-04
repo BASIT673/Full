@@ -1855,7 +1855,10 @@ import TourQueryForm from './querfrom';
 
 import  { useState, useEffect } from 'react';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Send, Phone, Mail, MapPin, CreditCard, Globe, ArrowUp, Check, AlertCircle } from 'lucide-react';
-
+// import setupI18n from '../setupI18n'
+// import LanguageSelector from '../LanguageSelector';
+import LanguageSelector from '../LanguageSelector';
+import { useTranslation } from 'react-i18next';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState('');
@@ -1868,7 +1871,7 @@ const Footer = () => {
   const handleFormToggle = () => {
     setShowForm(!showForm); // Toggle form visibility
   };
-  
+   const { t } = useTranslation();
   // Show back to top button when scrolled down
   useEffect(() => {
     const handleScroll = () => {
@@ -2023,7 +2026,22 @@ const Footer = () => {
           </div>
         </div>
       </div>
-        
+           {/* <div className="border-b border-gray-200">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex justify-end">
+            <LanguageSelector />
+          </div>
+        </div>
+      </div> */}
+
+      {/* Translation example section */}
+      {/* <div className="container mx-auto px-4 py-8 bg-gray-50">
+        <h1 className="text-3xl font-bold mb-6">{t('welcome', 'Welcome to our Travel Website')}</h1>
+        <h2 className="text-xl font-semibold mb-4">{t('popular', 'Popular Destinations')}</h2>
+        <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+          {t('bookNow', 'Book Now')}
+        </button>
+      </div> */}
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 pt-12 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">

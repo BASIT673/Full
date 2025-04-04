@@ -330,7 +330,7 @@ import {
   Shield,
   RefreshCw
 } from 'lucide-react';
-
+import AuthModal from './auth/AuthModal'
 const Profile = () => {
   const { user: authUser, token } = useContext(AuthContext);
   const [user, setUser] = useState(null);
@@ -338,6 +338,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('profile');
+   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   // const navigate = useNavigate();
   const { isAuthenticated, loading: authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -352,6 +353,7 @@ const Profile = () => {
     if (!isAuthenticated) {
       console.error("🚨 Not authenticated! Redirecting to login.");
       navigate('/login');
+      // {openAuthModal}
       return;
     }
     

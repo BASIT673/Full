@@ -424,7 +424,512 @@ const DestinationGallery = ({ onViewAll }) => {
       </div>
     </div>
   );
- 
+  const handleGetQuote1 = () => {
+    // console.log("Get quote for:", destination.title);
+    
+    // Create modal container if it doesn't exist
+    let modalContainer = document.getElementById('quote-modal-container');
+    if (!modalContainer) {
+      modalContainer = document.createElement('div');
+      modalContainer.id = 'quote-modal-container';
+      document.body.appendChild(modalContainer);
+    }
+    // Show loading state
+  
+    // Create and populate the modal content with marketing elements
+    modalContainer.innerHTML = `
+      <div class="quote-modal-overlay">
+        <div class="quote-modal">
+          <div class="quote-modal-header">
+            <h2>Get Your Exclusive Quote for || 'This Experience'}</h2>
+            <button class="quote-close-btn">&times;</button>
+          </div>
+          
+          <div class="quote-banner">
+            <div class="quote-banner-content">
+              <div class="quote-banner-icon">🎁</div>
+              <div class="quote-banner-text">
+                <strong>Limited Time Offer!</strong> Book within 48 hours and receive a 15% early bird discount!
+              </div>
+            </div>
+          </div>
+          
+          <div class="quote-modal-body">
+            <div class="quote-intro">
+              <p>Join thousands of satisfied travelers who have experienced this journey of a lifetime. Our expert travel advisors are ready to craft your perfect adventure.</p>
+              <div class="quote-benefits">
+                <div class="benefit-item"><span class="benefit-icon">✓</span> Best Price Guarantee</div>
+                <div class="benefit-item"><span class="benefit-icon">✓</span> Free Cancellation</div>
+                <div class="benefit-item"><span class="benefit-icon">✓</span> 24/7 Support</div>
+              </div>
+            </div>
+            
+            <form id="quote-request-form">
+              <div class="form-group">
+                <label for="quote-name">Full Name*</label>
+                <input type="text" id="quote-name" placeholder="Your Name" required />
+              </div>
+              <div class="form-group">
+                <label for="quote-email">Email Address*</label>
+                <input type="email" id="quote-email" placeholder="your@email.com" required />
+              </div>
+              <div class="form-group">
+                <label for="quote-phone">Phone Number*</label>
+                <input type="tel" id="quote-phone" placeholder="+1 (234) 567-8900" required />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="quote-travelers">Number of Travelers*</label>
+                  <select id="quote-travelers" required>
+                    <option value="">Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3-5">3-5</option>
+                    <option value="6-10">6-10</option>
+                    <option value="10+">10+</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="quote-date">Travel Date*</label>
+                  <input type="date" id="quote-date" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="quote-message">Special Requirements or Customizations</label>
+                <textarea id="quote-message" placeholder="Tell us about any special requirements, preferences, or questions you have about this experience"></textarea>
+              </div>
+              
+              <div class="quote-promo">
+                <div class="promo-icon">🔥</div>
+                <p>Act fast! <strong>7 other travelers</strong> are looking at this tour right now.</p>
+              </div>
+              
+              <div class="form-checkbox">
+                <input type="checkbox" id="quote-newsletter" checked />
+                <label for="quote-newsletter">Send me exclusive deals and offers (10% off your first booking!)</label>
+              </div>
+              
+              <button type="submit" class="quote-submit-btn">
+                <span class="btn-text">Get My Personalized Quote</span>
+                <span class="btn-icon">→</span>
+              </button>
+            </form>
+            
+            <div class="quote-trust">
+              <p>Trusted by over 1M+ happy travelers worldwide</p>
+              <div class="trust-icons">
+                <div class="trust-icon">⭐⭐⭐⭐⭐</div>
+                <div class="trust-text">4.9/5 from 10,000+ reviews</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Add styling for the enhanced modal
+    const style = document.createElement('style');
+    style.textContent = `
+      .quote-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideIn {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      
+      .quote-modal {
+        background-color: white;
+        border-radius: 10px;
+        width: 95%;
+        max-width: 650px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.4s ease;
+      }
+      
+      .quote-modal-header {
+        padding: 22px 25px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #FF6B00;
+        border-radius: 10px 10px 0 0;
+      }
+      
+      .quote-modal-header h2 {
+        margin: 0;
+        color: white;
+        font-size: 22px;
+        font-weight: 700;
+      }
+      
+      .quote-close-btn {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: white;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+      }
+      
+      .quote-close-btn:hover {
+        opacity: 1;
+      }
+      
+      .quote-banner {
+        background: linear-gradient(90deg, #FFF3E0, #FFECB3);
+        padding: 12px 25px;
+        border-bottom: 1px solid #FFE0B2;
+      }
+      
+      .quote-banner-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .quote-banner-icon {
+        font-size: 24px;
+      }
+      
+      .quote-banner-text {
+        font-size: 15px;
+        color: #E65100;
+      }
+      
+      .quote-modal-body {
+        padding: 25px;
+      }
+      
+      .quote-intro {
+        margin-bottom: 25px;
+      }
+      
+      .quote-intro p {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #555;
+        line-height: 1.5;
+      }
+      
+      .quote-benefits {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      
+      .benefit-item {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: #333;
+        margin-right: 15px;
+      }
+      
+      .benefit-icon {
+        color: #FF6B00;
+        font-weight: bold;
+        margin-right: 5px;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      .form-row {
+        display: flex;
+        gap: 20px;
+      }
+      
+      .form-row .form-group {
+        flex: 1;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 15px;
+      }
+      
+      input, select, textarea {
+        width: 100%;
+        padding: 14px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 15px;
+        transition: border-color 0.3s;
+      }
+      
+      input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #FF6B00;
+        box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+      }
+      
+      textarea {
+        height: 110px;
+        resize: vertical;
+      }
+      
+      .quote-promo {
+        background-color: #FFF8E1;
+        border-radius: 6px;
+        padding: 12px 15px;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .promo-icon {
+        font-size: 20px;
+      }
+      
+      .quote-promo p {
+        margin: 0;
+        color: #333;
+        font-size: 14px;
+      }
+      
+      .form-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      
+      .form-checkbox input {
+        width: auto;
+      }
+      
+      .form-checkbox label {
+        margin-bottom: 0;
+        font-weight: normal;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      
+      .quote-submit-btn {
+        background-color: #FF6B00;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 16px 24px;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+      }
+      
+      .quote-submit-btn:hover {
+        background-color: #E55F00;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(255, 107, 0, 0.4);
+      }
+      
+      .btn-icon {
+        font-size: 18px;
+        transition: transform 0.3s;
+      }
+      
+      .quote-submit-btn:hover .btn-icon {
+        transform: translateX(5px);
+      }
+      
+      .quote-trust {
+        margin-top: 25px;
+        text-align: center;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+        color: #666;
+        font-size: 14px;
+      }
+      
+      .quote-trust p {
+        margin-bottom: 10px;
+      }
+      
+      .trust-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .quote-success {
+        text-align: center;
+        padding: 40px 25px;
+        animation: fadeIn 0.5s ease;
+      }
+      
+      .quote-success-icon {
+        background-color: #FF6B00;
+        color: white;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 35px;
+        margin: 0 auto 25px;
+        box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+      }
+      
+      .quote-success h3 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 24px;
+      }
+      
+      .quote-success p {
+        color: #555;
+        margin-bottom: 25px;
+        line-height: 1.6;
+      }
+      
+      .quote-close-success-btn {
+        background-color: #FF6B00;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 14px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 12px rgba(255, 107, 0, 0.25);
+      }
+      
+      .quote-close-success-btn:hover {
+        background-color: #E55F00;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(255, 107, 0, 0.35);
+      }
+      
+      @media (max-width: 600px) {
+        .form-row {
+          flex-direction: column;
+          gap: 15px;
+        }
+        
+        .quote-banner-content {
+          flex-direction: column;
+          text-align: center;
+          gap: 8px;
+        }
+        
+        .quote-modal-header h2 {
+          font-size: 18px;
+        }
+        
+        .quote-benefits {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Add event listeners
+    document.querySelector('.quote-close-btn').addEventListener('click', () => {
+      modalContainer.remove();
+    });
+    
+    document.getElementById('quote-request-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = {
+        name: document.getElementById('quote-name').value,
+        email: document.getElementById('quote-email').value,
+        phone: document.getElementById('quote-phone').value,
+        travelers: document.getElementById('quote-travelers').value,
+        travelDate: document.getElementById('quote-date').value,
+        message: document.getElementById('quote-message').value,
+        newsletterSubscription: document.getElementById('quote-newsletter').checked,
+        tourId: tour.id || '',
+        tourName: tour.name || '',
+        requestTimestamp: new Date().toISOString(),
+        source: window.location.href,
+        utm: getUTMParams() // Function to get UTM parameters if available
+      };
+      
+      console.log("Quote form submitted:", formData);
+      
+      // Show loading state
+      // const submitBtn = document.querySelector('.quote-
+     const  submitBtn = document.querySelector('.quote-submit-btn');
+  submitBtn.innerHTML = '<span>Processing...</span>';
+  submitBtn.disabled = true;
+  
+  // Simulate API call to submit quote request
+  setTimeout(() => {
+    // Replace form with success message
+    document.querySelector('.quote-modal-body').innerHTML = `
+      <div class="quote-success">
+        <div class="quote-success-icon">✓</div>
+        <h3>Your Quote Request is Confirmed!</h3>
+        <p>Thank you, ${formData.name}! Our travel experts will prepare your personalized quote for ${tour.name || 'this experience'} and contact you within 24 hours at ${formData.email}.</p>
+        <p>Don't forget - book within 48 hours to claim your exclusive 15% early bird discount!</p>
+        <button class="quote-close-success-btn">Close</button>
+      </div>
+    `;
+    
+    // Add event listener to new close button
+    document.querySelector('.quote-close-success-btn').addEventListener('click', () => {
+      modalContainer.remove();
+    });
+    
+    // Actually send the form data to server
+    // sendQuoteRequestToServer(formData);
+  }, 1500);
+  });
+  
+  // Function to get UTM parameters if available
+  function getUTMParams() {
+  const params = {};
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+    if (urlParams.has(param)) {
+      params[param] = urlParams.get(param);
+    }
+  });
+  
+  return params;
+  }
+  };
   const DestinationCard = ({ destination, onViewMore }) => {
     const [isLiked, setIsLiked] = useState(false);
     
@@ -656,6 +1161,8 @@ const DestinationGallery = ({ onViewAll }) => {
             
             {/* View button */}
             <button
+            // onClick={() => handleGetQuote1}
+            // onClick={handleGetQuote1} 
               onClick={() => handleViewMore(destination)}
               className="w-full flex items-center justify-center bg-gradient-to-r from-orange-500 to-amber-500 text-white font-medium py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
             >
@@ -677,9 +1184,27 @@ const DestinationGallery = ({ onViewAll }) => {
 
   const DestinationModal = ({ isOpen, destination, onClose,  activeTab, setActiveTab   }) => {
     // const [activeTab, setActiveTab] = useState('overview');
+   
+    
+     
     const [isFavorite, setIsFavorite] = useState(false);
     
     if (!isOpen || !destination) return null;
+
+   
+
+  useEffect(() => {
+    // Prevent body scroll when modal is open
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
+  
     
     // Format price with comma separators and handle invalid values
     const formatPrice = (price) => {
@@ -699,645 +1224,8 @@ const DestinationGallery = ({ onViewAll }) => {
       return destination.tourDetails?.discount || 0;
     };
   
-    // Check if price data exists and is valid
-    const hasValidPriceData = () => {
-      return destination.tourDetails?.price && !isNaN(Number(destination.tourDetails.price));
-    };
-  
-  
-
-
-
-        const showDestinationQueryForm = (selectedDestination,selectedTour, userData, token, isLoggedIn) => {
-          // Create modal container
-          console.log(destination.price)
-          // const price = destinatio
-          // n.tourDetails.price || selectedDestination.basePrice; // Define price
-          const modalOverlay = document.createElement('div');
-          modalOverlay.className = 'query-form-overlay';
-          modalOverlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-          `;
-        
-          // Create modal content with responsive design
-          const modalContent = document.createElement('div');
-          modalContent.className = 'query-form-content';
-          modalContent.style.cssText = `
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            width: 90%;
-            max-width: 450px;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-          `;
-        
-          // Pre-fill form data if user is logged in
-          const name = userData?.username || '';
-          const email = userData?.email || '';
-          const phone = userData?.phone || '';
-        
-          // Form with responsive design for both desktop and mobile
-          modalContent.innerHTML = `
-            <style>
-              /* Base styles */
-              .query-form-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 12px;
-              }
-              .query-form-title {
-                margin: 0;
-                color: #FF6B00;
-                font-size: 1.4rem;
-                font-weight: 600;
-              }
-              .close-button {
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                cursor: pointer;
-              }
-              .highlight-box {
-                background: linear-gradient(to right, #FFF3E0, #FFE0B2);
-                padding: 12px;
-                border-radius: 6px;
-                margin-bottom: 15px;
-              }
-              .price-box {
-                margin: 0 0 15px;
-                background-color: #F5F5F5;
-                padding: 12px;
-                border-radius: 6px;
-                text-align: center;
-              }
-              .form-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-gap: 10px;
-              }
-              .form-full-width {
-                grid-column: span 2;
-              }
-              .form-label {
-                display: block;
-                margin-bottom: 3px;
-                font-weight: 500;
-                font-size: 0.85rem;
-                color: #555;
-              }
-              .form-input {
-                width: 100%;
-                padding: 8px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 0.9rem;
-              }
-              .form-checkbox {
-                display: flex;
-                align-items: flex-start;
-                cursor: pointer;
-              }
-              .submit-container {
-                grid-column: span 2;
-                text-align: center;
-                margin-top: 5px;
-              }
-              .submit-button {
-                background: linear-gradient(to right, #FF6B00, #FF9800);
-                color: white;
-                border: none;
-                padding: 10px 0;
-                width: 80%;
-                border-radius: 25px;
-                font-size: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-                box-shadow: 0 2px 5px rgba(255, 107, 0, 0.3);
-                transition: all 0.3s;
-              }
-              .promotional-text {
-                grid-column: span 2;
-                text-align: center;
-                margin-top: 8px;
-                font-size: 0.75rem;
-                color: #888;
-              }
-              
-              /* Mobile optimizations */
-              @media (max-width: 480px) {
-                .form-grid {
-                  grid-template-columns: 1fr;
-                }
-                .form-half-width {
-                  grid-column: span 1;
-                }
-                .submit-button {
-                  width: 100%;
-                }
-                .query-form-title {
-                  font-size: 1.2rem;
-                }
-                .price-box {
-                  padding: 8px;
-                }
-              }
-            </style>
-            
-            <div class="query-form-header">
-              <h2 class="query-form-title">Almost There! 🎯</h2>
-              <button id="closeQueryForm" class="close-button">&times;</button>
-            </div>
-            
-            <div class="highlight-box">
-              <p style="margin: 0; color: #E65100; font-weight: 500; font-size: 0.9rem;">
-                <span style="font-size: 1.1rem;">🏆</span> Just one step away from an unforgettable journey to ${selectedDestination.title}!
-              </p>
-            </div>
-            
-            <!-- Price Display Box -->
-           <div class="price-box">
-               <p style="margin: 0; font-size: 0.9rem; color: #333;">
-                 <span style="font-weight: 600;">Package Price:</span> 
-                 <span id="totalPriceDisplay" style="color: #FF6B00; font-weight: 700; font-size: 1.2rem;">₹${destination.price}</span>
-                 <span style="font-size: 0.75rem; color: #666; display: block; margin-top: 3px;">
-                   Base price: ₹${destination.price} per person | Group discounts available
-                 </span>
-              </p>
-             </div>
-            
-            <form id="destinationQueryForm" class="form-grid">
-              <div class="form-full-width">
-                <label for="queryName" class="form-label">Full Name*</label>
-                <input type="text" id="queryName" required value="${name}" class="form-input">
-              </div>
-              
-              <div class="form-full-width">
-                <label for="queryEmail" class="form-label">Email Address*</label>
-                <input type="email" id="queryEmail" required value="${email}" class="form-input">
-              </div>
-              
-              <div class="form-full-width">
-                <label for="queryPhone" class="form-label">Phone Number*</label>
-                <input type="tel" id="queryPhone" required value="${phone}" class="form-input">
-              </div>
-              
-              <div class="form-half-width">
-                <label for="queryTravelDate" class="form-label">Travel Date*</label>
-                <input type="date" id="queryTravelDate" required class="form-input">
-              </div>
-              
-              <div class="form-half-width">
-                <label for="queryDuration" class="form-label">Duration (Days)*</label>
-                <select id="queryDuration" required class="form-input">
-                  <option value="3">3 Days</option>
-                  <option value="5">5 Days</option>
-                  <option value="7">7 Days</option>
-                  <option value="10">10 Days</option>
-                  <option value="custom">Custom</option>
-                </select>
-              </div>
-              
-              <div class="form-half-width">
-                <label for="queryAdults" class="form-label">Adults*</label>
-                <select id="queryAdults" required class="form-input">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6+">6+</option>
-                </select>
-              </div>
-              
-              <div class="form-half-width">
-                <label for="queryChildren" class="form-label">Children (Under 12)</label>
-                <select id="queryChildren" class="form-input">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4+">4+</option>
-                </select>
-              </div>
-              
-              <div class="form-full-width">
-                <label for="queryBudget" class="form-label">Budget Range</label>
-                <select id="queryBudget" class="form-input">
-                  <option value="economy">Economy</option>
-                  <option value="standard" selected>Standard</option>
-                  <option value="premium">Premium</option>
-                  <option value="luxury">Luxury</option>
-                </select>
-              </div>
-              
-              <div class="form-full-width">
-                <label for="queryMessage" class="form-label">Special Requirements</label>
-                <textarea id="queryMessage" rows="2" class="form-input" style="resize: none;"></textarea>
-              </div>
-              
-              <div class="form-full-width" style="margin: 5px 0 10px;">
-                <label class="form-checkbox">
-                  <input type="checkbox" id="queryTerms" required style="margin-right: 8px; margin-top: 2px;">
-                  <span style="font-size: 0.8rem; color: #666;">I agree to receive updates via WhatsApp and accept the <a href="/terms" style="color: #FF6B00; text-decoration: none;">Terms & Conditions</a>*</span>
-                </label>
-              </div>
-              
-              <div class="submit-container">
-                <button type="submit" id="proceedBtn" class="submit-button">
-                  Send Query & Continue to Booking
-                </button>
-                <!-- Loading state message -->
-                <p id="loadingMessage" style="display: none; margin-top: 8px; font-size: 0.9rem; color: #FF6B00; font-weight: 500;">
-                  Taking you to checkout page...
-                </p>
-              </div>
-              
-              <div class="promotional-text">
-                <p style="margin: 0;">
-                  <span style="color: #FF6B00; font-weight: 600;">⚡ Limited Time Offer:</span> Book today for best prices!
-                </p>
-              </div>
-            </form>
-          `;
-        
-          // Append modal to body
-          modalOverlay.appendChild(modalContent);
-          document.body.appendChild(modalOverlay);
-        
-          // Close modal functionality
-          document.getElementById('closeQueryForm').addEventListener('click', () => {
-            document.body.removeChild(modalOverlay);
-          });
-        
-          // Price calculation function for destinations
-          const updateDestinationPrice = () => {
-            const basePrice =destination.price;
-            const adults = document.getElementById('queryAdults').value;
-            const adultsCount = adults === '6+' ? 6 : parseInt(adults || 1);
-            const children = document.getElementById('queryChildren').value;
-            const childrenCount = children === '4+' ? 4 : parseInt(children || 0);
-            const duration = document.getElementById('queryDuration').value;
-            const durationDays = duration === 'custom' ? 7 : parseInt(duration);
-            const budget = document.getElementById('queryBudget').value;
-            
-            // Budget multipliers
-            const budgetMultipliers = {
-              'economy': 0.8,
-              'standard': 1.0,
-              'premium': 1.3,
-              'luxury': 1.8
-            };
-            
-            // Calculate package price based on people, duration and budget preference
-            let totalPrice = basePrice * adultsCount;
-            totalPrice += basePrice * 0.6 * childrenCount; // Children at 60% of adult price
-            totalPrice = totalPrice * (durationDays / 5); // Adjust for duration (normalized to 5 days)
-            totalPrice = totalPrice * budgetMultipliers[budget]; // Adjust for budget preference
-            
-            // Round to nearest hundred
-            totalPrice = Math.round(totalPrice / 100) * 100;
-            
-            document.getElementById('totalPriceDisplay').textContent = '₹' + totalPrice.toLocaleString();
-            
-            // Store the calculated price to use in the booking process
-            window.calculatedDestinationPrice = totalPrice;
-            
-            console.log("Destination Price Updated:", totalPrice);
-          };
-        
-          // Add event listeners for live price updates
-          setTimeout(() => {
-            document.getElementById('queryAdults').addEventListener('change', updateDestinationPrice);
-            document.getElementById('queryChildren').addEventListener('change', updateDestinationPrice);
-            document.getElementById('queryDuration').addEventListener('change', updateDestinationPrice);
-            document.getElementById('queryBudget').addEventListener('change', updateDestinationPrice);
-            
-            // Initialize price calculation
-            updateDestinationPrice();
-          }, 100);
-        
-          // Form submission handler
-          document.getElementById('destinationQueryForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Show loading message
-            const proceedBtn = document.getElementById('proceedBtn');
-            const loadingMessage = document.getElementById('loadingMessage');
-            proceedBtn.disabled = true;
-            proceedBtn.style.opacity = '0.7';
-            proceedBtn.textContent = 'Processing...';
-            loadingMessage.style.display = 'block';
-            
-            // Get values from form
-            const adults = document.getElementById('queryAdults').value;
-            const children = document.getElementById('queryChildren').value;
-            const duration = document.getElementById('queryDuration').value;
-            const budget = document.getElementById('queryBudget').value;
-            
-            // Make sure to get the most up-to-date calculated price
-            updateDestinationPrice();
-            
-            const formData = {
-              name: document.getElementById('queryName').value,
-              email: document.getElementById('queryEmail').value,
-              phone: document.getElementById('queryPhone').value,
-              travelDate: document.getElementById('queryTravelDate').value,
-              duration: duration,
-              adults: adults,
-              children: children,
-              budget: budget,
-              totalTravelers: (adults === '6+' ? 6 : parseInt(adults)) + (children === '4+' ? 4 : parseInt(children)),
-              message: document.getElementById('queryMessage').value,
-              destinationTitle: selectedDestination.title,
-              basePrice: selectedDestination.price,
-              // basePrice:destination.tourDetails.price,
-              calculatedPrice: window.calculatedDestinationPrice || selectedDestination.price,
-              termsAccepted: document.getElementById('queryTerms').checked
-            };
-            
-            // Validate form
-            if (!formData.name || !formData.email || !formData.phone || !formData.travelDate || !formData.termsAccepted) {
-              alert('Please fill in all required fields');
-              // Reset button state
-              proceedBtn.disabled = false;
-              proceedBtn.style.opacity = '1';
-              proceedBtn.textContent = 'Send Query & Continue to Booking';
-              loadingMessage.style.display = 'none';
-              return;
-            }
-            
-            try {
-              // 1. Send to backend API
-              try {
-                await axios.post('http://localhost:5000/api/destination-queries', formData);
-                console.log('✅ Destination query saved to database');
-              } catch (error) {
-                console.error('❌ Error saving destination query:', error);
-              }
-            
-              // 2. Send to WhatsApp in the background
-              sendDestinationWhatsAppInBackground(formData);
-              
-              // Create/update userData object with form data
-              const updatedUserData = {
-                username: formData.name,
-                email: formData.email,
-                phone: formData.phone
-              };
-              
-              // Short delay to show the "taking you to checkout" message
-              setTimeout(() => {
-                // Close the modal
-                document.body.removeChild(modalOverlay);
-                
-                // Proceed with payment - using either existing userData (if logged in) or form data
-                // Pass the calculated total price to the payment function
-                proceedWithDestinationPayment(selectedDestination, isLoggedIn ? userData : updatedUserData, token, formData.calculatedPrice);
-              }, 1500);
-              
-            } catch (error) {
-              console.error('🚨 Error processing destination query:', error);
-              alert('Failed to submit query. Please try again.');
-              
-              // Reset button state
-              proceedBtn.disabled = false;
-              proceedBtn.style.opacity = '1';
-              proceedBtn.textContent = 'Send Query & Continue to Booking';
-              loadingMessage.style.display = 'none';
-            }
-          });
-        };
-        
-        // Function to send WhatsApp message for destination bookings
-        const sendDestinationWhatsAppInBackground = (formData) => {
-          // Format message for WhatsApp
-          const message = `
-        *New Destination Query*
-        ------------------
-        *Destination:* ${formData.destinationTitle}
-        *Base Price:* ₹${formData.basePrice}
-        *Total Price:* ₹${formData.calculatedPrice}
-        
-        *Customer Details*
-        ------------------
-        *Name:* ${formData.name}
-        *Email:* ${formData.email}
-        *Phone:* ${formData.phone}
-        *Travel Date:* ${formData.travelDate}
-        
-        *Booking Details*
-        ------------------
-        *Duration:* ${formData.duration} days
-        *Adults:* ${formData.adults}
-        *Children:* ${formData.children}
-        *Budget Preference:* ${formData.budget}
-        *Total Travelers:* ${formData.totalTravelers}
-        
-        *Message:* ${formData.message || 'N/A'}
-        ------------------
-        Sent on: ${new Date().toLocaleString()}
-          `.trim();
-        
-          // Use your backend API to send WhatsApp message
-          try {
-            // Send via your own backend API
-            axios.post('http://localhost:5000/api/send-whatsapp', {
-              phone: "9541515012",
-              message: message
-            }).then(() => {
-              console.log('✅ WhatsApp destination notification sent successfully');
-            }).catch(error => {
-              console.error('❌ Error sending WhatsApp destination notification:', error);
-              // Fallback option if needed
-            });
-          } catch (error) {
-            console.error('❌ Error sending WhatsApp destination notification:', error);
-          }
-        };
-        
-        // Function to proceed with payment for destinations
-        const proceedWithDestinationPayment = async (selectedDestination, userData, token, calculatedPrice) => {
-          const userEmail = userData?.email?.trim();
-          
-          if (!userEmail) {
-            alert("❌ Email is required for booking.");
-            return;
-          }
-        
-          console.log("✅ Final User Email:", userEmail);
-          console.log("✅ Calculated Destination Price:", calculatedPrice);
-        
-          const packageDetails = {
-            id: `destination-${Date.now()}`,
-            name: selectedDestination.title,
-            description: `Destination package for ${selectedDestination.title}`,
-          };
-        
-          const loadRazorpay = () => {
-            return new Promise((resolve) => {
-              const script = document.createElement('script');
-              script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-              script.onload = () => resolve(true);
-              script.onerror = () => {
-                console.error("❌ Razorpay SDK failed to load");
-                resolve(false);
-              };
-              document.body.appendChild(script);
-            });
-          };
-        
-          const initiatePayment = async () => {
-            try {
-              const res = await loadRazorpay();
-              if (!res) {
-                alert('❌ Razorpay SDK failed to load');
-                return;
-              }
-        
-              // Use the calculated price
-              const finalAmount = calculatedPrice || selectedDestination.price;
-        
-              const payload = {
-                amount: finalAmount,
-                packageDetails,
-                email: userEmail,
-                name: userData?.username || 'Guest',
-                phone: userData?.phone || '',
-              };
-        
-              console.log("Request Payload:", payload);
-        
-              console.log("🟢 Sending Create Order API Call...");
-              const orderResponse = await fetch('https://backend-1-7zwm.onrender.com/api/create-order', {
-                method: 'POST',
-                headers: { 
-                  'Content-Type': 'application/json',
-                  'Authorization': token ? `Bearer ${token}` : ''
-                },
-                body: JSON.stringify(payload),
-              });
-        
-              if (!orderResponse.ok) {
-                const errorData = await orderResponse.json();
-                console.error("❌ Create Order API failed:", errorData);
-                alert(`Order creation failed: ${errorData.error || "Unknown error"}`);
-                return;
-              }
-        
-              const { order } = await orderResponse.json();
-        
-              if (!order || !order.id) {
-                console.error("❌ Invalid order response:", order);
-                alert("Order creation failed. Please try again.");
-                return;
-              }
-        
-              console.log("✅ Order Created Successfully:", order);
-        
-              const options = {
-                key: "rzp_live_VQS2zWKwCIE5ON",
-                amount: finalAmount * 100,
-                currency: 'INR',
-                name: "Your Travel Company",
-                description: packageDetails.description,
-                order_id: order.id,
-                handler: async function (response) {
-                  try {
-                    console.log("🟢 Payment Successful! Sending verification request...");
-                    const verifyResponse = await fetch('https://backend-1-7zwm.onrender.com/api/verify-payment', {
-                      method: 'POST',
-                      headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': token ? `Bearer ${token}` : ''
-                      },
-                      body: JSON.stringify({
-                        razorpay_order_id: response.razorpay_order_id,
-                        razorpay_payment_id: response.razorpay_payment_id,
-                        razorpay_signature: response.razorpay_signature,
-                        customerDetails: { 
-                          name: userData?.username || 'Guest', 
-                          email: userEmail,
-                          phone: userData?.phone || ''
-                        }
-                      }),
-                    });
-        
-                    const data = await verifyResponse.json();
-                    if (data.success) {
-                      alert('🎉 Destination booking successful!');
-                    } else {
-                      alert('❌ Payment verification failed');
-                    }
-                  } catch (error) {
-                    console.error("🚨 Payment verification error:", error);
-                    alert('❌ Payment verification failed');
-                  }
-                },
-                prefill: {
-                  name: userData?.username || 'Guest',
-                  email: userEmail,
-                  contact: userData?.phone || ''
-                },
-                theme: { color: '#FF6B00' }
-              };
-        
-              const paymentObject = new window.Razorpay(options);
-              paymentObject.open();
-            } catch (error) {
-              console.error('🚨 Payment error:', error);
-              alert('❌ Payment initiation failed');
-            }
-          };
-        
-          initiatePayment();
-        };
-        const handleBookNow = async (selectedDestination) => {
-          const title = selectedDestination?.title || selectedDestination?.destinationName;
-          const price = selectedDestination?.price || selectedDestination?.basePrice;
-        
-          // Validate selectedDestination
-          // if (!selectedDestination || !title || !price) {
-          //   alert("❌ Invalid destination selected. Please select a valid destination.");
-          //   return;
-          // }
-        
-          console.log("✅ Final Destination Title:", title);
-          console.log("✅ Final Price:", price);
-        
-          const token = localStorage.getItem('token');
-          let userData = null;
-          let isLoggedIn = false;
-        
-          // ✅ Fetch user details if logged in
-          if (token) {
-            try {
-              console.log("🟢 Fetching user details...");
-              const userRes = await axios.get('http://localhost:5000/api/auth/me', {
-                headers: { Authorization: `Bearer ${token}` },
-              });
-              userData = userRes.data;
-              isLoggedIn = true;
-              console.log("✅ User Data Retrieved:", userData);
-            } catch (error) {
-              console.error('🚨 Error fetching user data:', error);
-            }
-          }
-        
-          // Show query form for BOTH logged-in and guest users
-          showDestinationQueryForm(selectedDestination, userData, token, isLoggedIn);
-        };
+   
+      
 
 
         const handleGetQuote = () => {
@@ -1851,182 +1739,7 @@ const DestinationGallery = ({ onViewAll }) => {
           setActiveTab(tab);
         };
 
-        const handleBookNow2 = async () => {
-            if (!destination || !destination.tourDetails) {
-              alert("❌ Invalid destination selected. Please try again.");
-              return;
-            }
-          
-            const selectedTour = destination.tourDetails; // Ensure we get the correct tour details
-            const title = selectedTour.title || destination.title;
-            const price = selectedTour.price;
-            const description = selectedTour.description || destination.description;
-          
-            console.log("✅ Final Title:", title);
-            console.log("✅ Final Price:", price);
-            console.log("✅ Description:", description);
-          
-            if (!title || !price) {
-              alert("❌ Missing tour information. Please check the destination data.");
-              return;
-            }
-          
-            // Fetch the user token
-            const token = localStorage.getItem('token');
-            console.log("🔵 Token Retrieved:", token);
-          
-            let userData = null;
-          
-            // Fetch user details if logged in
-            if (token) {
-              try {
-                console.log("🟢 Fetching user details...");
-                const userRes = await axios.get('http://localhost:5000/api/auth/me', {
-                  headers: { Authorization: `Bearer ${token}` },
-                });
-                userData = userRes.data;
-                console.log("✅ User Data Retrieved:", userData);
-              } catch (error) {
-                console.error('🚨 Error fetching user data:', error);
-              }
-            }
-          
-            // Ask for email if not found
-            let userEmail = userData?.email?.trim() || '';
-            if (!userEmail) {
-              console.warn("⚠️ No email found! Asking user...");
-              userEmail = prompt("Please enter your email for booking confirmation:");
-              if (!userEmail) {
-                alert("❌ Email is required for booking.");
-                return;
-              }
-            }
-          
-            console.log("✅ Final User Email:", userEmail);
-          
-            // Package Details
-            const packageDetails = {
-              id: `tour-${Date.now()}`,
-              name: title,
-              description: `Tour package for ${title}`,
-            };
-          
-            console.log("Package Details:", packageDetails);
-          
-            // Payment Process
-            const loadRazorpay = () => {
-              return new Promise((resolve) => {
-                const script = document.createElement('script');
-                script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-                script.onload = () => resolve(true);
-                script.onerror = () => {
-                  console.error("❌ Razorpay SDK failed to load");
-                  resolve(false);
-                };
-                document.body.appendChild(script);
-              });
-            };
-          
-            const initiatePayment = async () => {
-              try {
-                const res = await loadRazorpay();
-                if (!res) {
-                  alert('❌ Razorpay SDK failed to load');
-                  return;
-                }
-                const amountInPaise = parseInt(price.replace(/\D/g, '')) * 100; // Convert to paise
-          
-                const payload = {
-                  amount: amountInPaise,
-                  packageDetails,
-                  email: userEmail,
-                  name: userData?.username || 'Guest',
-                };
-                
-                console.log("✅ Corrected Request Payload:", payload);
-                
-                const orderResponse = await fetch('http://localhost:5000/api/create-order', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                  },
-                  body: JSON.stringify(payload),
-                });
-                
-               
-          
-                if (!orderResponse.ok) {
-                  const errorData = await orderResponse.json();
-                  console.error("❌ Create Order API failed:", errorData);
-                  alert(`Order creation failed: ${errorData.error || "Unknown error"}`);
-                  return;
-                }
-          
-                const { order } = await orderResponse.json();
-          
-                if (!order || !order.id) {
-                  console.error("❌ Invalid order response:", order);
-                  alert("Order creation failed. Please try again.");
-                  return;
-                }
-          
-                console.log("✅ Order Created Successfully:", order);
-          
-                const options = {
-                  key: "rzp_live_VQS2zWKwCIE5ON",
-                  amount: price * 100,
-                  currency: 'INR',
-                  name: "Your Travel Company",
-                  description: packageDetails.description,
-                  order_id: order.id,
-                  handler: async function (response) {
-                    try {
-                      console.log("🟢 Payment Successful! Sending verification request...");
-                      const verifyResponse = await fetch('http://localhost:5000/api/verify-payment', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
-                          razorpay_order_id: response.razorpay_order_id,
-                          razorpay_payment_id: response.razorpay_payment_id,
-                          razorpay_signature: response.razorpay_signature,
-                          customerDetails: {
-                            name: userData?.username || 'Guest',
-                            email: userEmail
-                          }
-                        }),
-                      });
-          
-                      console.log("✅ Sent Token in API Call:", token);
-          
-                      const data = await verifyResponse.json();
-                      if (data.success) {
-                        alert('🎉 Booking successful!');
-                      } else {
-                        alert('❌ Payment verification failed');
-                      }
-                    } catch (error) {
-                      console.error("🚨 Payment verification error:", error);
-                      alert('❌ Payment verification failed');
-                    }
-                  },
-                  prefill: {
-                    name: userData?.username || 'Guest',
-                    email: userEmail,
-                  },
-                  theme: { color: '#3399cc' }
-                };
-          
-                const paymentObject = new window.Razorpay(options);
-                paymentObject.open();
-              } catch (error) {
-                console.error('🚨 Payment error:', error);
-                alert('❌ Payment initiation failed');
-              }
-            };}
+      
             const handleBookNow3 = async () => {
               if (!destination || !destination.tourDetails) {
                 alert("❌ Invalid destination selected. Please try again.");
@@ -2602,676 +2315,7 @@ const DestinationGallery = ({ onViewAll }) => {
             }
           };
         };
-            // Function to show the query form modal
-//             const showQueryForm = (selectedTour, userData, token, isLoggedIn) => {
-//               // Create modal container
-//               const modalOverlay = document.createElement('div');
-//               modalOverlay.className = 'query-form-overlay';
-//               modalOverlay.style.cssText = `
-//                 position: fixed;
-//                 top: 0;
-//                 left: 0;
-//                 width: 100%;
-//                 height: 100%;
-//                 background-color: rgba(0, 0, 0, 0.7);
-//                 display: flex;
-//                 justify-content: center;
-//                 align-items: center;
-//                 z-index: 1000;
-//               `;
-            
-//               // Create modal content - responsive design
-//               const modalContent = document.createElement('div');
-//               modalContent.className = 'query-form-content';
-//               modalContent.style.cssText = `
-//                 background-color: white;
-//                 border-radius: 8px;
-//                 padding: 25px;
-//                 width: 90%;
-//                 max-width: 450px;
-//                 max-height: 85vh;
-//                 overflow-y: auto;
-//                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-//               `;
-            
-//               // Pre-fill form data if user is logged in
-//               const name = userData?.username || '';
-//               const email = userData?.email || '';
-//               const phone = userData?.phone || '';
-            
-//               // Form with responsive design
-//               modalContent.innerHTML = `
-//                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-//                   <h2 style="margin: 0; color: #3399cc; font-size: 1.4rem; font-weight: 600;">Almost There! 🎯</h2>
-//                   <button id="closeQueryForm" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
-//                 </div>
-                
-//                 <div style="background: linear-gradient(to right, #E3F2FD, #BBDEFB); padding: 12px; border-radius: 6px; margin-bottom: 15px;">
-//                   <p style="margin: 0; color: #0D47A1; font-weight: 500; font-size: 0.9rem;">
-//                     <span style="font-size: 1.1rem;">🏆</span> Just one step away from an unforgettable adventure at ${selectedTour.title || destination.title}!
-//                   </p>
-//                 </div>
-                
-//                 <!-- Price Display Box -->
-//                 <div style="margin: 0 0 15px; background-color: #F5F5F5; padding: 12px; border-radius: 6px; text-align: center;">
-//                   <p style="margin: 0; font-size: 0.9rem; color: #333;">
-//                     <span style="font-weight: 600;">Total Price:</span> 
-//                     <span id="totalPriceDisplay" style="color: #3399cc; font-weight: 700; font-size: 1.2rem;">₹${selectedTour.price}</span>
-//                     <span style="font-size: 0.75rem; color: #666; display: block; margin-top: 3px;">
-//                       Base price: ₹${selectedTour.price} per adult | Children (5-12): 50% off | Under 5: Free
-//                     </span>
-//                   </p>
-//                 </div>
-                
-//                 <form id="tourQueryForm" style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px;">
-//                   <div style="grid-column: span 2;">
-//                     <label for="queryName" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Full Name*</label>
-//                     <input type="text" id="queryName" required value="${name}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//                   </div>
-                  
-//                   <div style="grid-column: span 2;">
-//                     <label for="queryEmail" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Email Address*</label>
-//                     <input type="email" id="queryEmail" required value="${email}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//                   </div>
-                  
-//                   <div style="grid-column: span 2;">
-//                     <label for="queryPhone" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Phone Number*</label>
-//                     <input type="tel" id="queryPhone" required value="${phone}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//                   </div>
-                  
-//                   <div>
-//                     <label for="queryTravelDate" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Travel Date*</label>
-//                     <input type="date" id="queryTravelDate" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//                   </div>
-                  
-//                   <div>
-//                     <label for="queryAdults" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Adults*</label>
-//                     <select id="queryAdults" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//                       <option value="1">1</option>
-//                       <option value="2">2</option>
-//                       <option value="3">3</option>
-//                       <option value="4">4</option>
-//                       <option value="5">5</option>
-//                       <option value="6">6</option>
-//                       <option value="7">7</option>
-//                       <option value="8">8</option>
-//                     </select>
-//                   </div>
-                  
-//                   <div>
-//                     <label for="queryChildren" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Children (5-12 yrs)</label>
-//                     <select id="queryChildren" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//                       <option value="0">0</option>
-//                       <option value="1">1</option>
-//                       <option value="2">2</option>
-//                       <option value="3">3</option>
-//                       <option value="4">4</option>
-//                       <option value="5">5</option>
-//                     </select>
-//                   </div>
-                  
-//                   <div>
-//                     <label for="queryInfants" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Infants (0-4 yrs)</label>
-//                     <select id="queryInfants" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//                       <option value="0">0</option>
-//                       <option value="1">1</option>
-//                       <option value="2">2</option>
-//                       <option value="3">3</option>
-//                     </select>
-//                   </div>
-                  
-//                   <div style="grid-column: span 2;">
-//                     <label for="queryMessage" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Special Requirements</label>
-//                     <textarea id="queryMessage" rows="2" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; resize: none;"></textarea>
-//                   </div>
-                  
-//                   <div style="grid-column: span 2; margin: 5px 0 10px;">
-//                     <label style="display: flex; align-items: flex-start; cursor: pointer;">
-//                       <input type="checkbox" id="queryTerms" required style="margin-right: 8px; margin-top: 2px;">
-//                       <span style="font-size: 0.8rem; color: #666;">I agree to receive updates via WhatsApp and accept the <a href="/terms" style="color: #3399cc; text-decoration: none;">Terms & Conditions</a>*</span>
-//                     </label>
-//                   </div>
-                  
-//                   <div style="grid-column: span 2; text-align: center; margin-top: 5px;">
-//                     <button type="submit" id="proceedBtn" style="background: linear-gradient(to right, #3399cc, #64B5F6); color: white; border: none; padding: 10px 0; width: 80%; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 5px rgba(51, 153, 204, 0.3); transition: all 0.3s;">
-//                       Send Query & Continue to Booking
-//                     </button>
-//                     <!-- Loading state message -->
-//                     <p id="loadingMessage" style="display: none; margin-top: 8px; font-size: 0.9rem; color: #3399cc; font-weight: 500;">
-//                       Taking you to checkout page...
-//                     </p>
-//                   </div>
-                  
-//                   <div style="grid-column: span 2; text-align: center; margin-top: 8px;">
-//                     <p style="font-size: 0.75rem; color: #888; margin: 0;">
-//                       <span style="color: #3399cc; font-weight: 600;">⚡ Limited Time Offer:</span> Book today for best prices!
-//                     </p>
-//                   </div>
-//                 </form>
-//               `;
-            
-//               // Append modal to body
-//               modalOverlay.appendChild(modalContent);
-//               document.body.appendChild(modalOverlay);
-            
-//               // Close modal functionality
-//               document.getElementById('closeQueryForm').addEventListener('click', () => {
-//                 document.body.removeChild(modalOverlay);
-//               });
-            
-//               // Price calculation function
-//               const updateTotalPrice = () => {
-//                 // const basePrice = selectedTour.price;
-//                 const basePrice = parseFloat(selectedTour.price.replace(/[^\d.]/g, '')) || 0;
-//                 // console.log("Price Value:", price);
-
-//                 console.log("Price Value:", selectedTour.price);
-// console.log("baseprice",basePrice)
-
-
-
-//                 const adults = parseInt(document.getElementById('queryAdults').value || 1);
-//                 const children = parseInt(document.getElementById('queryChildren').value || 0);
-                
-//                 // Adults pay full price, children pay half price
-//                 const childrenPrice = basePrice * 0.5 * children;
-//                 const adultsPrice = basePrice * adults;
-                
-//                 const totalPrice = adultsPrice + childrenPrice;
-                
-//                 document.getElementById('totalPriceDisplay').textContent = '₹' + totalPrice.toLocaleString();
-                
-//                 // Store the calculated price to use in the booking process
-//                 window.calculatedTotalPrice = totalPrice;
-                
-//                 console.log("Price Updated:", totalPrice);
-//               };
-            
-//               // Add event listeners AFTER the modal is added to the DOM
-//               document.getElementById('queryAdults').addEventListener('change', updateTotalPrice);
-//               document.getElementById('queryChildren').addEventListener('change', updateTotalPrice);
-              
-//               // Initialize price calculation
-//               updateTotalPrice();
-            
-//               // Form submission handler
-//               document.getElementById('tourQueryForm').addEventListener('submit', async (e) => {
-//                 e.preventDefault();
-                
-//                 // Show loading message
-//                 const proceedBtn = document.getElementById('proceedBtn');
-//                 const loadingMessage = document.getElementById('loadingMessage');
-//                 proceedBtn.disabled = true;
-//                 proceedBtn.style.opacity = '0.7';
-//                 proceedBtn.textContent = 'Processing...';
-//                 loadingMessage.style.display = 'block';
-                
-//                 // Get values from form
-//                 const adults = document.getElementById('queryAdults').value;
-//                 const children = document.getElementById('queryChildren').value;
-//                 const infants = document.getElementById('queryInfants').value;
-                
-//                 // Make sure to get the most up-to-date calculated price
-//                 updateTotalPrice();
-                
-//                 const formData = {
-//                   name: document.getElementById('queryName').value,
-//                   email: document.getElementById('queryEmail').value,
-//                   phone: document.getElementById('queryPhone').value,
-//                   travelDate: document.getElementById('queryTravelDate').value,
-//                   adults: adults,
-//                   children: children,
-//                   infants: infants,
-//                   totalTravelers: parseInt(adults) + parseInt(children) + parseInt(infants),
-//                   message: document.getElementById('queryMessage').value,
-//                   tourTitle: selectedTour.title || destination.title,
-//                   tourPrice: selectedTour.price,
-//                   calculatedPrice: window.calculatedTotalPrice || selectedTour.price,
-//                   termsAccepted: document.getElementById('queryTerms').checked
-//                 };
-            
-//                 // Validate form
-//                 if (!formData.name || !formData.email || !formData.phone || !formData.travelDate || !formData.termsAccepted) {
-//                   alert('Please fill in all required fields');
-//                   // Reset button state
-//                   proceedBtn.disabled = false;
-//                   proceedBtn.style.opacity = '1';
-//                   proceedBtn.textContent = 'Send Query & Continue to Booking';
-//                   loadingMessage.style.display = 'none';
-//                   return;
-//                 }
-            
-//                 try {
-                 
-              
-//                   // 1. Send to backend API
-//                   try {
-//                     await axios.post('http://localhost:5000/api/tour-queries', formData);
-//                     console.log('✅ Query saved to database');
-//                   } catch (error) {
-//                     console.error('❌ Error saving query:', error);
-//                   }
-            
-//                   // 2. Send to WhatsApp in the background
-//                   sendWhatsAppInBackground(formData);
-                  
-//                   // Create/update userData object with form data
-//                   const updatedUserData = {
-//                     username: formData.name,
-//                     email: formData.email,
-//                     phone: formData.phone
-//                   };
-                  
-//                   // Short delay to show the "taking you to checkout" message
-//                   setTimeout(() => {
-//                     // Close the modal
-//                     document.body.removeChild(modalOverlay);
-                    
-//                     // Proceed with payment - using either existing userData (if logged in) or form data
-//                     // Pass the calculated total price to the payment function
-//                     proceedWithPayment(selectedTour, isLoggedIn ? userData : updatedUserData, token, formData.calculatedPrice);
-//                   }, 1500);
-                  
-//                 } catch (error) {
-//                   console.error('🚨 Error processing query:', error);
-//                   alert('Failed to submit query. Please try again.');
-                  
-//                   // Reset button state
-//                   proceedBtn.disabled = false;
-//                   proceedBtn.style.opacity = '1';
-//                   proceedBtn.textContent = 'Send Query & Continue to Booking';
-//                   loadingMessage.style.display = 'none';
-//                 }
-//               });
-//             };
-// const showQueryForm = (selectedTour, userData, token, isLoggedIn) => {
-//   // Create modal container
-//   const modalOverlay = document.createElement('div');
-//   modalOverlay.className = 'query-form-overlay';
-//   modalOverlay.style.cssText = `
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgba(0, 0, 0, 0.7);
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     z-index: 1000;
-//   `;
-
-//   // Create modal content with responsive design
-//   const modalContent = document.createElement('div');
-//   modalContent.className = 'query-form-content';
-//   modalContent.style.cssText = `
-//     background-color: white;
-//     border-radius: 8px;
-//     padding: 25px;
-//     width: 90%;
-//     max-width: 650px; /* Increased for desktop */
-//     max-height: 85vh;
-//     overflow-y: auto;
-//     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-//   `;
-
-//   // Pre-fill form data if user is logged in
-//   const name = userData?.username || '';
-//   const email = userData?.email || '';
-//   const phone = userData?.phone || '';
-
-//   // Form with marketing text and responsive design
-//   modalContent.innerHTML = `
-//     <style>
-//       /* Responsive CSS */
-//       @media (min-width: 768px) {
-//         .form-grid {
-//           grid-template-columns: 1fr 1fr 1fr !important;
-//         }
-//         .modal-header {
-//           margin-bottom: 15px !important;
-//         }
-//         .title-text {
-//           font-size: 1.6rem !important;
-//         }
-//         .promo-box {
-//           padding: 15px !important;
-//           margin-bottom: 20px !important;
-//         }
-//         .promo-text {
-//           font-size: 1rem !important;
-//         }
-//         .price-box {
-//           margin-bottom: 20px !important;
-//           padding: 15px !important;
-//         }
-//         .price-amount {
-//           font-size: 1.4rem !important;
-//         }
-//         .price-details {
-//           font-size: 0.85rem !important;
-//         }
-//         .form-input {
-//           padding: 10px !important;
-//           font-size: 1rem !important;
-//         }
-//         .form-label {
-//           font-size: 0.9rem !important;
-//           margin-bottom: 5px !important;
-//         }
-//         .submit-btn {
-//           width: 60% !important;
-//           padding: 12px 0 !important;
-//         }
-//         .full-span {
-//           grid-column: span 3 !important;
-//         }
-//         .half-span {
-//           grid-column: span 1 !important;
-//         }
-//       }
-//     </style>
-
-//     <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-//       <h2 class="title-text" style="margin: 0; color: #FF6B00; font-size: 1.4rem; font-weight: 600;">Almost There! 🎯</h2>
-//       <button id="closeQueryForm" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
-//     </div>
-    
-//     <div class="promo-box" style="background: linear-gradient(to right, #FFF3E0, #FFE0B2); padding: 12px; border-radius: 6px; margin-bottom: 15px;">
-//       <p class="promo-text" style="margin: 0; color: #E65100; font-weight: 500; font-size: 0.9rem;">
-//         <span style="font-size: 1.1rem;">🏆</span> Just one step away from an unforgettable adventure at ${destination.title}!
-//       </p>
-//     </div>
-    
-//     <!-- Price Display Box - Moved to the top -->
-//     <div class="price-box" style="margin: 0 0 15px; background-color: #F5F5F5; padding: 12px; border-radius: 6px; text-align: center;">
-//       <p style="margin: 0; font-size: 0.9rem; color: #333;">
-//         <span style="font-weight: 600;">Total Price:</span> 
-//         <span id="totalPriceDisplay" class="price-amount" style="color: #FF6B00; font-weight: 700; font-size: 1.2rem;">₹${selectedTour.price}</span>
-//         <span class="price-details" style="font-size: 0.75rem; color: #666; display: block; margin-top: 3px;">
-//           Base price: ₹${selectedTour.price} per adult | Children (5-12): 50% off | Under 5: Free
-//         </span>
-//       </p>
-//     </div>
-    
-//     <form id="tourQueryForm" class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 12px;">
-//       <div class="full-span" style="grid-column: span 2;">
-//         <label for="queryName" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Full Name*</label>
-//         <input type="text" id="queryName" required value="${name}" class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//       </div>
-      
-//       <div class="full-span" style="grid-column: span 2;">
-//         <label for="queryEmail" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Email Address*</label>
-//         <input type="email" id="queryEmail" required value="${email}" class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//       </div>
-      
-//       <div class="full-span" style="grid-column: span 2;">
-//         <label for="queryPhone" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Phone Number*</label>
-//         <input type="tel" id="queryPhone" required value="${phone}" class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//       </div>
-      
-//       <div class="half-span">
-//         <label for="queryTravelDate" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Travel Date*</label>
-//         <input type="date" id="queryTravelDate" required class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//       </div>
-      
-//       <div class="half-span">
-//         <label for="queryAdults" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Adults*</label>
-//         <select id="queryAdults" required class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//           <option value="1">1</option>
-//           <option value="2">2</option>
-//           <option value="3">3</option>
-//           <option value="4">4</option>
-//           <option value="5">5</option>
-//           <option value="6">6</option>
-//           <option value="7">7</option>
-//           <option value="8">8</option>
-//         </select>
-//       </div>
-      
-//       <div class="half-span">
-//         <label for="queryChildren" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Children (5-12 yrs)</label>
-//         <select id="queryChildren" class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//           <option value="0">0</option>
-//           <option value="1">1</option>
-//           <option value="2">2</option>
-//           <option value="3">3</option>
-//           <option value="4">4</option>
-//           <option value="5">5</option>
-//         </select>
-//       </div>
-      
-//       <div class="half-span">
-//         <label for="queryInfants" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Infants (0-4 yrs)</label>
-//         <select id="queryInfants" class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-//           <option value="0">0</option>
-//           <option value="1">1</option>
-//           <option value="2">2</option>
-//           <option value="3">3</option>
-//         </select>
-//       </div>
-      
-//       <div class="full-span" style="grid-column: span 2;">
-//         <label for="queryMessage" class="form-label" style="display: block; margin-bottom: 3px; font-weight: 500; font-size: 0.85rem; color: #555;">Special Requirements</label>
-//         <textarea id="queryMessage" rows="2" class="form-input" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; resize: none;"></textarea>
-//       </div>
-      
-//       <div class="full-span" style="grid-column: span 2; margin: 5px 0 10px;">
-//         <label style="display: flex; align-items: flex-start; cursor: pointer;">
-//           <input type="checkbox" id="queryTerms" required style="margin-right: 8px; margin-top: 2px;">
-//           <span style="font-size: 0.8rem; color: #666;">I agree to receive updates via WhatsApp and accept the <a href="/terms" style="color: #FF6B00; text-decoration: none;">Terms & Conditions</a>*</span>
-//         </label>
-//       </div>
-      
-//       <div class="full-span" style="grid-column: span 2; text-align: center; margin-top: 5px;">
-//         <button type="submit" id="proceedBtn" class="submit-btn" style="background: linear-gradient(to right, #FF6B00, #FF9800); color: white; border: none; padding: 10px 0; width: 80%; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 5px rgba(255, 107, 0, 0.3); transition: all 0.3s;">
-//           Send Query & Continue to Booking
-//         </button>
-//         <!-- Loading state message -->
-//         <p id="loadingMessage" style="display: none; margin-top: 8px; font-size: 0.9rem; color: #FF6B00; font-weight: 500;">
-//           Taking you to checkout page...
-//         </p>
-//       </div>
-      
-//       <div class="full-span" style="grid-column: span 2; text-align: center; margin-top: 8px;">
-//         <p style="font-size: 0.75rem; color: #888; margin: 0;">
-//           <span style="color: #FF6B00; font-weight: 600;">⚡ Limited Time Offer:</span> Book today for best prices!
-//         </p>
-//       </div>
-//     </form>
-//   `;
-
-//   // Append modal to body
-//   modalOverlay.appendChild(modalContent);
-//   document.body.appendChild(modalOverlay);
-
-//   // Close modal functionality
-//   document.getElementById('closeQueryForm').addEventListener('click', () => {
-//     document.body.removeChild(modalOverlay);
-//   });
-
-//   // Price calculation function
-//   const updateTotalPrice = () => {
-//     const basePrice = selectedTour.price;
-//     const adults = parseInt(document.getElementById('queryAdults').value || 1);
-//     const children = parseInt(document.getElementById('queryChildren').value || 0);
-    
-//     // Adults pay full price, children pay half price
-//     const childrenPrice = basePrice * 0.5 * children;
-//     const adultsPrice = basePrice * adults;
-    
-//     const totalPrice = adultsPrice + childrenPrice;
-    
-//     document.getElementById('totalPriceDisplay').textContent = '₹' + totalPrice.toLocaleString();
-    
-//     // Store the calculated price to use in the booking process
-//     window.calculatedTotalPrice = totalPrice;
-    
-//     console.log("Price Updated:", totalPrice);
-//   };
-
-//   // Important: Add event listeners AFTER the modal is added to the DOM
-//   document.getElementById('queryAdults').addEventListener('change', updateTotalPrice);
-//   document.getElementById('queryChildren').addEventListener('change', updateTotalPrice);
   
-//   // Initialize price calculation
-//   updateTotalPrice();
-
-//   // Form submission handler
-//   document.getElementById('tourQueryForm').addEventListener('submit', async (e) => {
-//     e.preventDefault();
-    
-//     // Show loading message
-//     const proceedBtn = document.getElementById('proceedBtn');
-//     const loadingMessage = document.getElementById('loadingMessage');
-//     proceedBtn.disabled = true;
-//     proceedBtn.style.opacity = '0.7';
-//     proceedBtn.textContent = 'Processing...';
-//     loadingMessage.style.display = 'block';
-    
-//     // Get values from form
-//     const adults = document.getElementById('queryAdults').value;
-//     const children = document.getElementById('queryChildren').value;
-//     const infants = document.getElementById('queryInfants').value;
-    
-//     // Make sure to get the most up-to-date calculated price
-//     updateTotalPrice();
-    
-//     const formData = {
-//       name: document.getElementById('queryName').value,
-//       email: document.getElementById('queryEmail').value,
-//       phone: document.getElementById('queryPhone').value,
-//       travelDate: document.getElementById('queryTravelDate').value,
-//       adults: adults,
-//       children: children,
-//       infants: infants,
-//       totalTravelers: parseInt(adults) + parseInt(children) + parseInt(infants),
-//       message: document.getElementById('queryMessage').value,
-//       tourTitle: selectedTour.title,
-//       tourPrice: selectedTour.price,
-//       calculatedPrice: window.calculatedTotalPrice || selectedTour.price,
-//       termsAccepted: document.getElementById('queryTerms').checked
-//     };
-
-//     // Validate form
-//     if (!formData.name || !formData.email || !formData.phone || !formData.travelDate || !formData.termsAccepted) {
-//       alert('Please fill in all required fields');
-//       // Reset button state
-//       proceedBtn.disabled = false;
-//       proceedBtn.style.opacity = '1';
-//       proceedBtn.textContent = 'Send Query & Continue to Booking';
-//       loadingMessage.style.display = 'none';
-//       return;
-//     }
-
-//     try {
-//       // 1. Send to backend API
-//       try {
-//         await axios.post('http://localhost:5000/api/tour-queries', formData);
-//         console.log('✅ Query saved to database');
-//       } catch (error) {
-//         console.error('❌ Error saving query:', error);
-//       }
-
-//       // 2. Send to WhatsApp in the background
-//       sendWhatsAppInBackground(formData);
-      
-//       // Create/update userData object with form data
-//       const updatedUserData = {
-//         username: formData.name,
-//         email: formData.email,
-//         phone: formData.phone
-//       };
-      
-//       // Short delay to show the "taking you to checkout" message
-//       setTimeout(() => {
-//         // Close the modal
-//         document.body.removeChild(modalOverlay);
-        
-//         // Proceed with payment - using either existing userData (if logged in) or form data
-//         // Pass the calculated total price to the payment function
-//         proceedWithPayment(selectedTour, isLoggedIn ? userData : updatedUserData, token, formData.calculatedPrice);
-//       }, 1500);
-      
-//     } catch (error) {
-//       console.error('🚨 Error processing query:', error);
-//       alert('Failed to submit query. Please try again.');
-      
-//       // Reset button state
-//       proceedBtn.disabled = false;
-//       proceedBtn.style.opacity = '1';
-//       proceedBtn.textContent = 'Send Query & Continue to Booking';
-//       loadingMessage.style.display = 'none';
-//     }
-//   });
-// };
-            // Function to send WhatsApp message in the background
-            const sendWhatsAppInBackground = (formData) => {
-              // Format message for WhatsApp
-              const message = `
-            *New Tour Query*
-            ------------------
-            *Tour:* ${formData.tourTitle}
-            *Base Price:* ₹${formData.tourPrice}
-            *Total Price:* ₹${formData.calculatedPrice}
-            
-            *Customer Details*
-            ------------------
-            *Name:* ${formData.name}
-            *Email:* ${formData.email}
-            *Phone:* ${formData.phone}
-            *Travel Date:* ${formData.travelDate}
-            
-            *Booking Details*
-            ------------------
-            *Adults:* ${formData.adults}
-            *Children (5-12):* ${formData.children}
-            *Infants (0-4):* ${formData.infants}
-            *Total Travelers:* ${formData.totalTravelers}
-            
-            *Message:* ${formData.message || 'N/A'}
-            ------------------
-            Sent on: ${new Date().toLocaleString()}
-              `.trim();
-            
-              // Use your backend API to send WhatsApp message
-              try {
-                // Option 1: Send via your own backend API
-                axios.post('http://localhost:5000/api/send-whatsapp', {
-                  phone: "9541515012",
-                  message: message
-                }).then(() => {
-                  console.log('✅ WhatsApp notification sent successfully');
-                }).catch(error => {
-                  console.error('❌ Error sending WhatsApp notification:', error);
-                  // Fallback option - try alternate WhatsApp sending method
-                  sendViaWhatsAppAPI(message);
-                });
-              } catch (error) {
-                console.error('❌ Error sending WhatsApp notification:', error);
-              }
-            };
-            
-            // Fallback method to send WhatsApp message via third-party service if direct API fails
-            const sendViaWhatsAppAPI = (message) => {
-              // You could use a third-party service API here as a backup
-              console.log('Using fallback WhatsApp service');
-              
-              // Example using a hypothetical third-party API - replace with your actual implementation
-              try {
-                fetch('https://api.whatsapp-service.com/send', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    apiKey: 'your-api-key',
-                    phone: '9541515012',
-                    message: message
-                  })
-                });
-              } catch (error) {
-                console.error('❌ Fallback WhatsApp service also failed:', error);
-              }
-            };
             
             // Function to proceed with payment
             const proceedWithPayment = async (selectedTour, userData, token, calculatedPrice) => {
@@ -3517,15 +2561,14 @@ const DestinationGallery = ({ onViewAll }) => {
                 }
               }, 10000);
             };
-            useEffect(() => {
-              console.log('Tab changed to:', activeTab);
-            }, [activeTab]);
+           
     return (
       <div  id="destinations" className=" z-50 fixed inset-0 flex items-center justify-center p-4">
         {/* Backdrop */}
         <div className="absolute inset-0 bg-black/70" onClick={onClose} />
   
         {/* Modal Container */}
+        
         <div className="relative w-full max-w-4xl rounded-lg bg-white shadow-xl max-h-[90vh] overflow-y-auto">
           <div className="flex flex-col md:flex-row">
             {/* Image Section */}
@@ -3604,8 +2647,9 @@ const DestinationGallery = ({ onViewAll }) => {
               <div className="mt-3">
                 <div className="flex space-x-2 overflow-x-auto pb-1 text-sm">
                   <button
-                    // onClick={() => setActiveTab('overview')}
-                    onClick={() => handleTabClick('overview')}
+                  //  onClick={() => handleTabChange('overview')}
+                    onClick={() => setActiveTab('overview')}
+                    // onClick={() => handleTabClick('overview')}
                     className={`px-3 py-1 rounded-full whitespace-nowrap ${
                       activeTab === 'overview'
                         ? 'bg-orange-500 text-white'
@@ -4117,20 +3161,20 @@ const visibleDestinations = calculateVisibleDestinations();
   //   };
   // }, []);
  
-// console.log("About to render with:", {
-//   filteredDestinations: filteredDestinations?.length || 0,
-//   visibleDestinations: visibleDestinations?.length || 0,
-//   currentIndex,
-//   isMobile
-// });
-// useEffect(() => {
-//   console.log("About to render with:", {
-//     filteredDestinations: filteredDestinations.length, 
-//     visibleDestinations: visibleDestinations.length,
-//     currentIndex, 
-//     isMobile
-//   });
-// }, [filteredDestinations, visibleDestinations, currentIndex, isMobile]);
+console.log("About to render with:", {
+  filteredDestinations: filteredDestinations?.length || 0,
+  visibleDestinations: visibleDestinations?.length || 0,
+  currentIndex,
+  isMobile
+});
+useEffect(() => {
+  console.log("About to render with:", {
+    filteredDestinations: filteredDestinations.length, 
+    visibleDestinations: visibleDestinations.length,
+    currentIndex, 
+    isMobile
+  });
+}, [filteredDestinations, visibleDestinations, currentIndex, isMobile]);
 // return (
 //   <div id="destinations" className="container mx-auto p-4 w-full max-w-7xl">
 //     {/* Header Section */}
@@ -4291,13 +3335,7 @@ return (
         {isAllDestinationsPage ? 'All Destinations' : 'Popular Destinations'}
       </h2>
       {filteredDestinations.length > (isMobile ? 1 : 3) && (
-        // <button
-        //   onClick={() => setIsAllDestinationsPage(!isAllDestinationsPage)}
-        //   className="flex items-center text-orange-600 hover:text-orange-700 font-medium text-sm transition-colors duration-300"
-        // >
-        //   {isAllDestinationsPage ? 'Back to Featured' : 'View All'}
-        //   {/* <ArrowRight className="ml-2 w-4 h-4" /> */}
-        // </button>
+      
         <button
         className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-3 py-2 rounded-lg shadow-md
                    hover:from-orange-600 hover:to-amber-600 transition-all duration-300 flex items-center gap-2"

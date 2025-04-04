@@ -57,3 +57,25 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #9ca3af; /* Hover effect */
 }
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+.animate-ripple {
+  animation: ripple 0.7s linear;
+}
+.bg-size-200 {
+  background-size: 200% 200%;
+}
+.bg-pos-0 {
+  background-position: 0% 0%;
+}
+.bg-pos-100 {
+  background-position: 100% 100%;
+}
+@keyframes ripple {
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+

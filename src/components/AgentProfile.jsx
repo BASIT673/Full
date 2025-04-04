@@ -1153,21 +1153,386 @@
 // };
 
 // export default TravelAgentProfile;
-import React, { useState } from 'react';
-import { User, Settings, Calendar, DollarSign, Tag, Briefcase, BarChart2, Mail, Phone, MapPin, LogOut } from 'lucide-react';
+// import React,  from 'react';
+import SpecialRatesSection from './SpecialRateSection';
+// import {Map, MapIcon,Menu , User, Settings, Calendar, DollarSign, Tag, Briefcase, BarChart2, Mail, Phone, MapPin, LogOut } from 'lucide-react';
+import ItineraryBuilder from './Itenary';
+import { AuthContext } from './agentauth/AuthProvider';
+// import { useState, useEffect } from 'react';
+// import { 
+//   User, Calendar, DollarSign, Tag, Map as MapIcon, 
+//   Briefcase, Settings, LogOut, Menu, X 
+// } from 'react-feather';
+
+// const AgentProfileDashboard = () => {
+//   const [activeTab, setActiveTab] = useState('overview');
+//   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+//   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setWindowWidth(window.innerWidth);
+//       if (window.innerWidth > 768) {
+//         setIsMobileMenuOpen(false); // Close mobile menu on desktop
+//       }
+//     };
+
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
+  
+//     const agent = {
+//       name: "",
+//       agentId: "KT-4872",
+//       agency: "",
+//       email: "",
+//       phone: "",
+//       location: "",
+//       joinDate: "",
+//       profileImg: "/api/placeholder/150/150",
+//       stats: {
+//         totalBookings: 0,
+//         activeBookings: 0,
+//         monthlyRevenue: 0,
+//         totalCommission: 0,
+//         conversionRate: 0
+//       }
+//     } 
+//   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+//   const recentBookings = [
+//         { id: "BK-9872", client: "Raj Sharma", package: "Gulmarg Winter Retreat", date: "15 Mar 2025", value: 45000, status: "Confirmed" },
+//         { id: "BK-9871", client: "Priya Patel", package: "Dal Lake Houseboat Experience", date: "12 Mar 2025", value: 28000, status: "Pending" },
+//         { id: "BK-9868", client: "John Williams", package: "Pahalgam Adventure Trek", date: "10 Mar 2025", value: 35000, status: "Confirmed" },
+//         { id: "BK-9865", client: "Meera Singh", package: "Kashmir Cultural Tour", date: "05 Mar 2025", value: 42000, status: "Completed" }
+//       ];
+      
+//   const navItems = [
+//     { id: 'overview', icon: <User size={18} />, label: 'Overview' },
+//     { id: 'bookings', icon: <Calendar size={18} />, label: 'Bookings' },
+//     { id: 'commission', icon: <DollarSign size={18} />, label: 'Commission' },
+//     { id: 'special-rates', icon: <Tag size={18} />, label: 'Special Rates' },
+//     { id: 'itinerary-builder', icon: <MapIcon size={18} />, label: 'Itinerary Builder' },
+//     { id: 'marketing', icon: <Briefcase size={18} />, label: 'Marketing' },
+//     { id: 'settings', icon: <Settings size={18} />, label: 'Settings' }
+//   ];
+
+//   return (
+//     <div className="flex h-screen bg-gray-100">
+//       {/* Mobile Header */}
+//       <div className="md:hidden bg-white shadow-sm p-4 fixed w-full z-10">
+//         <div className="flex justify-between items-center">
+//           <div className="flex items-center">
+//             <button onClick={toggleMobileMenu} className="mr-4">
+//               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+//             </button>
+//             <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+//           </div>
+//           <img 
+//             src="/api/placeholder/40/40" 
+//             alt="Agent profile" 
+//             className="h-10 w-10 rounded-full object-cover"
+//           />
+//         </div>
+//       </div>
+
+//       {/* Sidebar - Hidden on mobile when menu is closed */}
+//       <div 
+//         className={`${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
+//         md:translate-x-0 transform transition-transform duration-300 fixed 
+//         md:static w-64 bg-white shadow-md z-20 h-full`}
+//       >
+//         <div className="p-6 border-b">
+//           <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+//           <p className="text-sm text-gray-500">Agent Portal</p>
+//         </div>
+        
+//         <div className="flex flex-col mt-6">
+//           {navItems.map((item) => (
+//             <button
+//               key={item.id}
+//               className={`flex items-center px-6 py-3 ${activeTab === item.id ? 
+//                 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 
+//                 'text-gray-600'}`}
+//               onClick={() => {
+//                 setActiveTab(item.id);
+//                 if (windowWidth <= 768) setIsMobileMenuOpen(false);
+//               }}
+//             >
+//               <span className="mr-3">{item.icon}</span>
+//               <span>{item.label}</span>
+//             </button>
+//           ))}
+//         </div>
+        
+//         <div className="absolute bottom-0 w-64 p-6 border-t">
+//           <button className="flex items-center text-red-600">
+//             <LogOut size={18} className="mr-3" />
+//             <span>Logout</span>
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Overlay for mobile menu */}
+//       {isMobileMenuOpen && (
+//         <div 
+//           className="fixed inset-0 bg-black bg-opacity-50 z-10 md:hidden"
+//           onClick={() => setIsMobileMenuOpen(false)}
+//         />
+//       )}
+
+//       {/* Main Content - Adjusted for mobile header */}
+//       <div className={`flex-1 overflow-y-auto ${windowWidth <= 768 ? 'pt-16' : ''}`}>
+//         {/* Desktop Header */}
+//         <div className="hidden md:block bg-white shadow-sm p-4">
+//           <div className="flex justify-between items-center">
+//             <h1 className="text-2xl font-bold text-gray-800">Agent Dashboard</h1>
+//             <div className="flex items-center space-x-4">
+//               <div className="relative">
+//                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+//                   <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+//                     <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+//                   </svg>
+//                 </span>
+//                 <input 
+//                   type="text"
+//                   placeholder="Search..."
+//                   className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+//                 />
+//               </div>
+//               <div className="flex items-center">
+//                 <img 
+//                   src="/api/placeholder/40/40" 
+//                   alt="Agent profile" 
+//                   className="h-10 w-10 rounded-full object-cover"
+//                 />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+        
+//         {/* Content based on active tab */}
+//         {/* <div className="p-4 md:p-6">
+//           {/* Your existing tab content remains the same */}
+//           {activeTab === 'overview' && (
+//             <div>
+//               {/* Overview content */}
+//             </div>
+//           )}
+//           {/* Other tabs... */}
+//         {/* </div> */} 
+//         //         <div className="p-6">
+// //           {activeTab === 'overview' && (
+//             <div>
+//               {/* Profile section */}
+//               <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
+//                 <div className="flex items-start">
+//                   <img 
+//                     src={agent.profileImg} 
+//                     alt={agent.name} 
+//                     className="h-24 w-24 rounded-full object-cover mr-6"
+//                   />
+//                   <div className="flex-1">
+//                     <div className="flex justify-between items-start">
+//                       <div>
+//                         <h2 className="text-2xl font-bold text-gray-800">{agent.name}</h2>
+//                         <p className="text-gray-600">Agent ID: {agent.agentId}</p>
+//                         <p className="text-gray-600">{agent.agency}</p>
+//                       </div>
+//                       <button className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+//                         Edit Profile
+//                       </button>
+//                     </div>
+                    
+//                     <div className="grid grid-cols-3 gap-4 mt-6">
+//                       <div className="flex items-center">
+//                         <Mail size={18} className="text-gray-500 mr-2" />
+//                         <span className="text-gray-700">{agent.email}</span>
+//                       </div>
+//                       <div className="flex items-center">
+//                         <Phone size={18} className="text-gray-500 mr-2" />
+//                         <span className="text-gray-700">{agent.phone}</span>
+//                       </div>
+//                       <div className="flex items-center">
+//                         <MapPin size={18} className="text-gray-500 mr-2" />
+//                         <span className="text-gray-700">{agent.location}</span>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+              
+//               {/* Stats cards */}
+//               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Total Bookings</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">{agent.stats.totalBookings}</h3>
+//                     </div>
+//                     <div className="bg-orange-100 p-3 rounded-full">
+//                       <Calendar size={20} className="text-orange-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+                
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Monthly Revenue</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">₹{agent.stats.monthlyRevenue.toLocaleString()}</h3>
+//                     </div>
+//                     <div className="bg-green-100 p-3 rounded-full">
+//                       <BarChart2 size={20} className="text-green-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+                
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Total Commission</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">₹{agent.stats.totalCommission.toLocaleString()}</h3>
+//                     </div>
+//                     <div className="bg-purple-100 p-3 rounded-full">
+//                       <DollarSign size={20} className="text-purple-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+                
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Conversion Rate</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">{agent.stats.conversionRate}%</h3>
+//                     </div>
+//                     <div className="bg-orange-100 p-3 rounded-full">
+//                       <Tag size={20} className="text-orange-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+              
+//               {/* Recent bookings */}
+//               <div className="bg-white p-6 rounded-lg shadow-sm">
+//                 <div className="flex justify-between items-center mb-4">
+//                   <h3 className="text-lg font-semibold">Recent Bookings</h3>
+//                   <button className="text-orange-600 text-sm">View All</button>
+//                 </div>
+                
+//                 <div className="overflow-x-auto">
+//                   <table className="min-w-full divide-y divide-gray-200">
+//                     <thead>
+//                       <tr>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking ID</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Package</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+//                       </tr>
+//                     </thead>
+//                     <tbody className="bg-white divide-y divide-gray-200">
+//                       {recentBookings.map((booking, index) => (
+//                         <tr key={index}>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-orange-600">{booking.id}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{booking.client}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.package}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.date}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">₹{booking.value.toLocaleString()}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap">
+//                             <span className={`px-2 py-1 text-xs rounded-full ${
+//                               booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 
+//                               booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
+//                               'bg-orange-100 text-orange-800'
+//                             }`}>
+//                               {booking.status}
+//                             </span>
+//                           </td>
+//                         </tr>
+//                       ))}
+//                     </tbody>
+//                   </table>
+//                 </div>
+//               </div>
+//             </div>
+//           )}
+          
+//           {activeTab === 'special-rates' && <SpecialRatesSection specialRates={specialRates} />}
+          
+//           {activeTab === 'itinerary-builder' && <ItineraryBuilder />}
+          
+//           {activeTab === 'bookings' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">All Bookings</h3>
+//               {/* <p className="text-gray-600">Detailed booking management interface would go here.</p> */}
+//             </div>
+//           )}
+          
+//           {activeTab === 'commission' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">Commission Tracking</h3>
+//               {/* <p className="text-gray-600">Commission history and payment tracking would go here.</p> */}
+//             </div>
+//           )}
+          
+//           {activeTab === 'marketing' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">Marketing Resources</h3>
+//               {/* <p className="text-gray-600">Marketing materials and promotional content would go here.</p> */}
+//             </div>
+//           )}
+          
+//           {activeTab === 'settings' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">Account Settings</h3>
+//               {/* <p className="text-gray-600">Profile and preference settings would go here.</p> */}
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+  // const { authState, logout } = useContext(AuthContext);
+// export default AgentProfileDashboard;
+import React, { useState, useContext, useEffect } from 'react';
+// import { AuthContext } from './AuthContext';
+import { 
+  User, 
+  Calendar, 
+  DollarSign, 
+  Tag, 
+  Map, 
+  Briefcase, 
+  Settings, 
+  LogOut,
+  Mail,
+  Phone,
+  MapPin,
+  BarChart2,
+  Menu,
+  X
+} from 'lucide-react'; // Make sure to import Menu and X icons
 
 const AgentProfileDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { agentInfo, logout } = useContext(AuthContext);
   
-  // Sample agent data
-  const agent = {
-    name: "",
+  // Toggle sidebar for mobile view
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  // If no agent data is available yet, use this sample data
+  const defaultAgentData = {
+    name: "Agent Name",
     agentId: "KT-4872",
-    agency: "",
-    email: "",
-    phone: "",
-    location: "",
-    joinDate: "",
+    agency: "Travel Agency",
+    email: "agent@example.com",
+    phone: "+91 98765 43210",
+    location: "New Delhi, India",
+    joinDate: "01 Jan 2025",
     profileImg: "/api/placeholder/150/150",
     stats: {
       totalBookings: 0,
@@ -1176,6 +1541,17 @@ const AgentProfileDashboard = () => {
       totalCommission: 0,
       conversionRate: 0
     }
+  };
+  
+  // Combine agentInfo with default data structure
+  const agent = {
+    ...defaultAgentData,
+    name: agentInfo?.companyName || defaultAgentData.name,
+    email: agentInfo?.workEmail || defaultAgentData.email,
+    phone: agentInfo?.phoneNumber || defaultAgentData.phone,
+    location: agentInfo ? `${agentInfo.city || ''}, ${agentInfo.state || ''}, ${agentInfo.country || ''}` : defaultAgentData.location,
+    agency: agentInfo?.companyName || defaultAgentData.agency,
+    joinDate: agentInfo ? new Date(agentInfo.createdAt).toLocaleDateString() : defaultAgentData.joinDate,
   };
   
   // Sample bookings data
@@ -1192,68 +1568,124 @@ const AgentProfileDashboard = () => {
     { package: "Gulmarg Ski Resort", regularRate: 12000, agentRate: 10200, validUntil: "15 May 2025" },
     { package: "Srinagar City Tour", regularRate: 3500, agentRate: 2800, validUntil: "Ongoing" }
   ];
+  
+  // Handler for Edit Profile button
+  const handleEditProfile = () => {
+    setActiveTab('settings');
+  };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md">
-        <div className="p-6 border-b">
-          <h2 className="text-xl font-bold text-blue-900">Kashmir Travel</h2>
+    <div className="flex flex-col md:flex-row h-screen bg-gray-100">
+      {/* Mobile Header with Hamburger */}
+      <div className="md:hidden bg-white shadow-sm p-4">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <button onClick={toggleMenu} className="mr-4">
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+            <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+          </div>
+          <div className="flex items-center">
+            <img 
+              src={agent.profileImg} 
+              alt="Agent profile" 
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+      
+      {/* Sidebar - Hidden on mobile unless menu is open */}
+      <div className={`${menuOpen ? 'block' : 'hidden'} md:block md:w-64 bg-white shadow-md h-full md:h-screen z-10 absolute md:relative w-full md:w-64`}>
+        <div className="p-6 border-b hidden md:block">
+          <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
           <p className="text-sm text-gray-500">Agent Portal</p>
         </div>
         
         <div className="flex flex-col mt-6">
           <button 
-            className={`flex items-center px-6 py-3 ${activeTab === 'overview' ? 'bg-blue-100 text-blue-800 border-l-4 border-blue-800' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('overview')}
+            className={`flex items-center px-6 py-3 ${activeTab === 'overview' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+            onClick={() => {
+              setActiveTab('overview');
+              setMenuOpen(false);
+            }}
           >
             <User size={18} className="mr-3" />
             <span>Overview</span>
           </button>
           
           <button 
-            className={`flex items-center px-6 py-3 ${activeTab === 'bookings' ? 'bg-blue-100 text-blue-800 border-l-4 border-blue-800' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('bookings')}
+            className={`flex items-center px-6 py-3 ${activeTab === 'bookings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+            onClick={() => {
+              setActiveTab('bookings');
+              setMenuOpen(false);
+            }}
           >
             <Calendar size={18} className="mr-3" />
             <span>Bookings</span>
           </button>
           
           <button 
-            className={`flex items-center px-6 py-3 ${activeTab === 'commission' ? 'bg-blue-100 text-blue-800 border-l-4 border-blue-800' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('commission')}
+            className={`flex items-center px-6 py-3 ${activeTab === 'commission' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+            onClick={() => {
+              setActiveTab('commission');
+              setMenuOpen(false);
+            }}
           >
             <DollarSign size={18} className="mr-3" />
             <span>Commission</span>
           </button>
           
           <button 
-            className={`flex items-center px-6 py-3 ${activeTab === 'special-rates' ? 'bg-blue-100 text-blue-800 border-l-4 border-blue-800' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('special-rates')}
+            className={`flex items-center px-6 py-3 ${activeTab === 'special-rates' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+            onClick={() => {
+              setActiveTab('special-rates');
+              setMenuOpen(false);
+            }}
           >
             <Tag size={18} className="mr-3" />
             <span>Special Rates</span>
           </button>
           
           <button 
-            className={`flex items-center px-6 py-3 ${activeTab === 'marketing' ? 'bg-blue-100 text-blue-800 border-l-4 border-blue-800' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('marketing')}
+            className={`flex items-center px-6 py-3 ${activeTab === 'itinerary-builder' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+            onClick={() => {
+              setActiveTab('itinerary-builder');
+              setMenuOpen(false);
+            }}
+          >
+            <Map size={18} className="mr-3" />
+            <span>Itinerary Builder</span>
+          </button>
+          
+          <button 
+            className={`flex items-center px-6 py-3 ${activeTab === 'marketing' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+            onClick={() => {
+              setActiveTab('marketing');
+              setMenuOpen(false);
+            }}
           >
             <Briefcase size={18} className="mr-3" />
             <span>Marketing</span>
           </button>
           
           <button 
-            className={`flex items-center px-6 py-3 ${activeTab === 'settings' ? 'bg-blue-100 text-blue-800 border-l-4 border-blue-800' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('settings')}
+            className={`flex items-center px-6 py-3 ${activeTab === 'settings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+            onClick={() => {
+              setActiveTab('settings');
+              setMenuOpen(false);
+            }}
           >
             <Settings size={18} className="mr-3" />
             <span>Settings</span>
           </button>
         </div>
         
-        <div className="absolute bottom-0 w-64 p-6 border-t">
-          <button className="flex items-center text-red-600">
+        <div className="md:absolute bottom-0 w-full md:w-64 p-6 border-t">
+          <button 
+            className="flex items-center text-red-600"
+            onClick={logout}
+          >
             <LogOut size={18} className="mr-3" />
             <span>Logout</span>
           </button>
@@ -1262,10 +1694,15 @@ const AgentProfileDashboard = () => {
       
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto">
-        {/* Header */}
-        <div className="bg-white shadow-sm p-4">
+        {/* Desktop Header */}
+        <div className="hidden md:block bg-white shadow-sm p-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-800">Agent Dashboard</h1>
+            <div className="flex items-center">
+              <button onClick={toggleMenu} className="mr-4 text-gray-500 hover:text-gray-700">
+                <Menu size={24} />
+              </button>
+              <h1 className="text-2xl font-bold text-gray-800">Agent Dashboard</h1>
+            </div>
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -1276,12 +1713,12 @@ const AgentProfileDashboard = () => {
                 <input 
                   type="text"
                   placeholder="Search..."
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
               </div>
               <div className="flex items-center">
                 <img 
-                  src="/api/placeholder/40/40" 
+                  src={agent.profileImg} 
                   alt="Agent profile" 
                   className="h-10 w-10 rounded-full object-cover"
                 />
@@ -1296,34 +1733,37 @@ const AgentProfileDashboard = () => {
             <div>
               {/* Profile section */}
               <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-                <div className="flex items-start">
+                <div className="flex flex-col md:flex-row md:items-start">
                   <img 
                     src={agent.profileImg} 
                     alt={agent.name} 
-                    className="h-24 w-24 rounded-full object-cover mr-6"
+                    className="h-24 w-24 rounded-full object-cover mb-4 md:mb-0 md:mr-6 mx-auto md:mx-0"
                   />
                   <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                      <div>
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+                      <div className="text-center md:text-left mb-4 md:mb-0">
                         <h2 className="text-2xl font-bold text-gray-800">{agent.name}</h2>
                         <p className="text-gray-600">Agent ID: {agent.agentId}</p>
                         <p className="text-gray-600">{agent.agency}</p>
                       </div>
-                      <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                      <button 
+                        className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 self-center md:self-start"
+                        onClick={handleEditProfile}
+                      >
                         Edit Profile
                       </button>
                     </div>
                     
-                    <div className="grid grid-cols-3 gap-4 mt-6">
-                      <div className="flex items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                      <div className="flex items-center justify-center md:justify-start">
                         <Mail size={18} className="text-gray-500 mr-2" />
                         <span className="text-gray-700">{agent.email}</span>
                       </div>
-                      <div className="flex items-center">
+                      <div className="flex items-center justify-center md:justify-start">
                         <Phone size={18} className="text-gray-500 mr-2" />
                         <span className="text-gray-700">{agent.phone}</span>
                       </div>
-                      <div className="flex items-center">
+                      <div className="flex items-center justify-center md:justify-start">
                         <MapPin size={18} className="text-gray-500 mr-2" />
                         <span className="text-gray-700">{agent.location}</span>
                       </div>
@@ -1340,8 +1780,8 @@ const AgentProfileDashboard = () => {
                       <p className="text-gray-500 text-sm">Total Bookings</p>
                       <h3 className="text-2xl font-bold text-gray-800">{agent.stats.totalBookings}</h3>
                     </div>
-                    <div className="bg-blue-100 p-3 rounded-full">
-                      <Calendar size={20} className="text-blue-700" />
+                    <div className="bg-orange-100 p-3 rounded-full">
+                      <Calendar size={20} className="text-orange-700" />
                     </div>
                   </div>
                 </div>
@@ -1376,8 +1816,8 @@ const AgentProfileDashboard = () => {
                       <p className="text-gray-500 text-sm">Conversion Rate</p>
                       <h3 className="text-2xl font-bold text-gray-800">{agent.stats.conversionRate}%</h3>
                     </div>
-                    <div className="bg-yellow-100 p-3 rounded-full">
-                      <Tag size={20} className="text-yellow-700" />
+                    <div className="bg-orange-100 p-3 rounded-full">
+                      <Tag size={20} className="text-orange-700" />
                     </div>
                   </div>
                 </div>
@@ -1387,7 +1827,7 @@ const AgentProfileDashboard = () => {
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-lg font-semibold">Recent Bookings</h3>
-                  <button className="text-blue-600 text-sm">View All</button>
+                  <button className="text-orange-600 text-sm">View All</button>
                 </div>
                 
                 <div className="overflow-x-auto">
@@ -1405,7 +1845,7 @@ const AgentProfileDashboard = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {recentBookings.map((booking, index) => (
                         <tr key={index}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">{booking.id}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-orange-600">{booking.id}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{booking.client}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.package}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.date}</td>
@@ -1414,7 +1854,7 @@ const AgentProfileDashboard = () => {
                             <span className={`px-2 py-1 text-xs rounded-full ${
                               booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 
                               booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
-                              'bg-blue-100 text-blue-800'
+                              'bg-orange-100 text-orange-800'
                             }`}>
                               {booking.status}
                             </span>
@@ -1427,11 +1867,12 @@ const AgentProfileDashboard = () => {
               </div>
             </div>
           )}
+           {activeTab === 'special-rates' && <SpecialRatesSection specialRates={specialRates} />}
           
-          {activeTab === 'special-rates' && (
+                     {activeTab === 'itinerary-builder' && <ItineraryBuilder />}
+          {/* {activeTab === 'special-rates' && (
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold mb-4">Special Agent Rates</h3>
-              
+              <h3 className="text-lg font-semibold mb-4">Special Rates</h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead>
@@ -1439,26 +1880,20 @@ const AgentProfileDashboard = () => {
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Package</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Regular Rate</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent Rate</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Savings</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valid Until</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {specialRates.map((rate, index) => (
                       <tr key={index}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{rate.package}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{rate.package}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">₹{rate.regularRate.toLocaleString()}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">₹{rate.agentRate.toLocaleString()}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">₹{rate.agentRate.toLocaleString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600">
-                          {Math.round((1 - rate.agentRate/rate.regularRate) * 100)}%
+                          {Math.round((1 - rate.agentRate / rate.regularRate) * 100)}%
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{rate.validUntil}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <button className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700">
-                            Book Now
-                          </button>
-                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -1467,32 +1902,107 @@ const AgentProfileDashboard = () => {
             </div>
           )}
           
-          {/* Placeholder content for other tabs */}
+          {activeTab === 'itinerary-builder' && (
+            <div className="bg-white p-6 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold mb-4">Itinerary Builder</h3>
+              <p className="text-gray-600">Create custom itineraries for your clients.</p>
+            </div>
+          )} */}
+          
           {activeTab === 'bookings' && (
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-lg font-semibold mb-4">All Bookings</h3>
-              {/* <p className="text-gray-600">Detailed booking management interface would go here.</p> */}
+              <p className="text-gray-600">Manage your bookings and check their status.</p>
             </div>
           )}
           
           {activeTab === 'commission' && (
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-lg font-semibold mb-4">Commission Tracking</h3>
-              {/* <p className="text-gray-600">Commission history and payment tracking would go here.</p> */}
+              <p className="text-gray-600">Track your earnings and commission history.</p>
             </div>
           )}
           
           {activeTab === 'marketing' && (
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-lg font-semibold mb-4">Marketing Resources</h3>
-              {/* <p className="text-gray-600">Marketing materials and promotional content would go here.</p> */}
+              <p className="text-gray-600">Access marketing materials and promotional content.</p>
             </div>
           )}
           
           {activeTab === 'settings' && (
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-lg font-semibold mb-4">Account Settings</h3>
-              {/* <p className="text-gray-600">Profile and preference settings would go here.</p> */}
+              {agentInfo ? (
+                <div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Company Name
+                      </label>
+                      <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
+                        {agentInfo.companyName || "Not set"}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        GST Number
+                      </label>
+                      <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
+                        {agentInfo.gstNumber || "Not set"}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
+                      </label>
+                      <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
+                        {agentInfo.workEmail || "Not set"}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Phone Number
+                      </label>
+                      <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
+                        {agentInfo.phoneNumber || "Not set"}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        License Number
+                      </label>
+                      <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
+                        {agentInfo.licenseNumber || "Not set"}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Address
+                      </label>
+                      <div className="p-3 bg-gray-50 rounded-md border border-gray-200">
+                        {agentInfo.street ? `${agentInfo.street}, ${agentInfo.city}, ${agentInfo.state}, ${agentInfo.country}, ${agentInfo.pincode}` : "Not set"}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6">
+                    <button
+                      onClick={handleEditProfile}
+                      className="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700"
+                    >
+                      Edit Profile Details
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-gray-600">Loading profile information...</p>
+              )}
             </div>
           )}
         </div>
@@ -1502,3 +2012,1184 @@ const AgentProfileDashboard = () => {
 };
 
 export default AgentProfileDashboard;
+// const AgentProfileDashboard = () => {
+//   const [activeTab, setActiveTab] = useState('overview');
+  
+//   // Sample agent data
+//   const agent = {
+//     name: "",
+//     agentId: "KT-4872",
+//     agency: "",
+//     email: "",
+//     phone: "",
+//     location: "",
+//     joinDate: "",
+//     profileImg: "/api/placeholder/150/150",
+//     stats: {
+//       totalBookings: 0,
+//       activeBookings: 0,
+//       monthlyRevenue: 0,
+//       totalCommission: 0,
+//       conversionRate: 0
+//     }
+//   };
+  
+//   // Sample bookings data
+//   const recentBookings = [
+//     { id: "BK-9872", client: "Raj Sharma", package: "Gulmarg Winter Retreat", date: "15 Mar 2025", value: 45000, status: "Confirmed" },
+//     { id: "BK-9871", client: "Priya Patel", package: "Dal Lake Houseboat Experience", date: "12 Mar 2025", value: 28000, status: "Pending" },
+//     { id: "BK-9868", client: "John Williams", package: "Pahalgam Adventure Trek", date: "10 Mar 2025", value: 35000, status: "Confirmed" },
+//     { id: "BK-9865", client: "Meera Singh", package: "Kashmir Cultural Tour", date: "05 Mar 2025", value: 42000, status: "Completed" }
+//   ];
+  
+//   // Sample special rates
+//   const specialRates = [
+//     { package: "Deluxe Houseboat Stay", regularRate: 8000, agentRate: 6800, validUntil: "30 Apr 2025" },
+//     { package: "Gulmarg Ski Resort", regularRate: 12000, agentRate: 10200, validUntil: "15 May 2025" },
+//     { package: "Srinagar City Tour", regularRate: 3500, agentRate: 2800, validUntil: "Ongoing" }
+//   ];
+//   return (
+//     <div className="flex h-screen bg-gray-100">
+//       {/* Sidebar */}
+//       <div className="w-64 bg-white shadow-md">
+//         <div className="p-6 border-b">
+//           <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+//           <p className="text-sm text-gray-500">Agent Portal</p>
+//         </div>
+        
+//         <div className="flex flex-col mt-6">
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'overview' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => setActiveTab('overview')}
+//           >
+//             <User size={18} className="mr-3" />
+//             <span>Overview</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'bookings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => setActiveTab('bookings')}
+//           >
+//             <Calendar size={18} className="mr-3" />
+//             <span>Bookings</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'commission' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => setActiveTab('commission')}
+//           >
+//             <DollarSign size={18} className="mr-3" />
+//             <span>Commission</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'special-rates' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => setActiveTab('special-rates')}
+//           >
+//             <Tag size={18} className="mr-3" />
+//             <span>Special Rates</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'itinerary-builder' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => setActiveTab('itinerary-builder')}
+//           >
+//             <Map size={18} className="mr-3" />
+//             <span>Itinerary Builder</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'marketing' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => setActiveTab('marketing')}
+//           >
+//             <Briefcase size={18} className="mr-3" />
+//             <span>Marketing</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'settings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => setActiveTab('settings')}
+//           >
+//             <Settings size={18} className="mr-3" />
+//             <span>Settings</span>
+//           </button>
+//         </div>
+        
+//         <div className="absolute bottom-0 w-64 p-6 border-t">
+//           <button className="flex items-center text-red-600">
+//             <LogOut size={18} className="mr-3" />
+//             <span>Logout</span>
+//           </button>
+//         </div>
+//       </div>
+      
+//       {/* Main Content */}
+//       <div className="flex-1 overflow-y-auto">
+//         {/* Header */}
+//         <div className="bg-white shadow-sm p-4">
+//           <div className="flex justify-between items-center">
+//             <h1 className="text-2xl font-bold text-gray-800">Agent Dashboard</h1>
+//             <div className="flex items-center space-x-4">
+//               <div className="relative">
+//                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+//                   <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+//                     <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+//                   </svg>
+//                 </span>
+//                 <input 
+//                   type="text"
+//                   placeholder="Search..."
+//                   className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+//                 />
+//               </div>
+//               <div className="flex items-center">
+//                 <img 
+//                   src="/api/placeholder/40/40" 
+//                   alt="Agent profile" 
+//                   className="h-10 w-10 rounded-full object-cover"
+//                 />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+        
+//         {/* Content based on active tab */}
+//         <div className="p-6">
+//           {activeTab === 'overview' && (
+//             <div>
+//               {/* Profile section */}
+//               <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
+//                 <div className="flex items-start">
+//                   <img 
+//                     src={agent.profileImg} 
+//                     alt={agent.name} 
+//                     className="h-24 w-24 rounded-full object-cover mr-6"
+//                   />
+//                   <div className="flex-1">
+//                     <div className="flex justify-between items-start">
+//                       <div>
+//                         <h2 className="text-2xl font-bold text-gray-800">{agent.name}</h2>
+//                         <p className="text-gray-600">Agent ID: {agent.agentId}</p>
+//                         <p className="text-gray-600">{agent.agency}</p>
+//                       </div>
+//                       <button className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+//                         Edit Profile
+//                       </button>
+//                     </div>
+                    
+//                     <div className="grid grid-cols-3 gap-4 mt-6">
+//                       <div className="flex items-center">
+//                         <Mail size={18} className="text-gray-500 mr-2" />
+//                         <span className="text-gray-700">{agent.email}</span>
+//                       </div>
+//                       <div className="flex items-center">
+//                         <Phone size={18} className="text-gray-500 mr-2" />
+//                         <span className="text-gray-700">{agent.phone}</span>
+//                       </div>
+//                       <div className="flex items-center">
+//                         <MapPin size={18} className="text-gray-500 mr-2" />
+//                         <span className="text-gray-700">{agent.location}</span>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+              
+//               {/* Stats cards */}
+//               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Total Bookings</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">{agent.stats.totalBookings}</h3>
+//                     </div>
+//                     <div className="bg-orange-100 p-3 rounded-full">
+//                       <Calendar size={20} className="text-orange-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+                
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Monthly Revenue</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">₹{agent.stats.monthlyRevenue.toLocaleString()}</h3>
+//                     </div>
+//                     <div className="bg-green-100 p-3 rounded-full">
+//                       <BarChart2 size={20} className="text-green-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+                
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Total Commission</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">₹{agent.stats.totalCommission.toLocaleString()}</h3>
+//                     </div>
+//                     <div className="bg-purple-100 p-3 rounded-full">
+//                       <DollarSign size={20} className="text-purple-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+                
+//                 <div className="bg-white p-6 rounded-lg shadow-sm">
+//                   <div className="flex items-center justify-between">
+//                     <div>
+//                       <p className="text-gray-500 text-sm">Conversion Rate</p>
+//                       <h3 className="text-2xl font-bold text-gray-800">{agent.stats.conversionRate}%</h3>
+//                     </div>
+//                     <div className="bg-orange-100 p-3 rounded-full">
+//                       <Tag size={20} className="text-orange-700" />
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+              
+//               {/* Recent bookings */}
+//               <div className="bg-white p-6 rounded-lg shadow-sm">
+//                 <div className="flex justify-between items-center mb-4">
+//                   <h3 className="text-lg font-semibold">Recent Bookings</h3>
+//                   <button className="text-orange-600 text-sm">View All</button>
+//                 </div>
+                
+//                 <div className="overflow-x-auto">
+//                   <table className="min-w-full divide-y divide-gray-200">
+//                     <thead>
+//                       <tr>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking ID</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Package</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+//                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+//                       </tr>
+//                     </thead>
+//                     <tbody className="bg-white divide-y divide-gray-200">
+//                       {recentBookings.map((booking, index) => (
+//                         <tr key={index}>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-orange-600">{booking.id}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{booking.client}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.package}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.date}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">₹{booking.value.toLocaleString()}</td>
+//                           <td className="px-6 py-4 whitespace-nowrap">
+//                             <span className={`px-2 py-1 text-xs rounded-full ${
+//                               booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 
+//                               booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
+//                               'bg-orange-100 text-orange-800'
+//                             }`}>
+//                               {booking.status}
+//                             </span>
+//                           </td>
+//                         </tr>
+//                       ))}
+//                     </tbody>
+//                   </table>
+//                 </div>
+//               </div>
+//             </div>
+//           )}
+          
+//           {activeTab === 'special-rates' && <SpecialRatesSection specialRates={specialRates} />}
+          
+//           {activeTab === 'itinerary-builder' && <ItineraryBuilder />}
+          
+//           {activeTab === 'bookings' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">All Bookings</h3>
+//               {/* <p className="text-gray-600">Detailed booking management interface would go here.</p> */}
+//             </div>
+//           )}
+          
+//           {activeTab === 'commission' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">Commission Tracking</h3>
+//               {/* <p className="text-gray-600">Commission history and payment tracking would go here.</p> */}
+//             </div>
+//           )}
+          
+//           {activeTab === 'marketing' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">Marketing Resources</h3>
+//               {/* <p className="text-gray-600">Marketing materials and promotional content would go here.</p> */}
+//             </div>
+//           )}
+          
+//           {activeTab === 'settings' && (
+//             <div className="bg-white p-6 rounded-lg shadow-sm">
+//               <h3 className="text-lg font-semibold mb-4">Account Settings</h3>
+//               {/* <p className="text-gray-600">Profile and preference settings would go here.</p> */}
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+//   export default AgentProfileDashboard;
+
+// import React, { useState, useEffect, useContext } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { AuthContext } from "./AuthContext";
+// import axios from 'axios';
+// import { User, Calendar, DollarSign, Tag, Map, Briefcase, Settings, LogOut, Mail, Phone, MapPin, BarChart2, Menu, X } from 'lucide-react';
+
+// import React, { useState, useContext } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { AuthContext } from "./AuthContext";
+// import { 
+//   User, Mail, Phone, MapPin, Menu, X, LogOut, Settings, 
+//   Calendar, DollarSign, Tag, Map, Briefcase, BarChart2 
+// } from 'lucide-react';
+
+// const AgentProfileDashboard= () => {
+//   const [activeTab, setActiveTab] = useState('overview');
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const { authState, logout } = useContext(AuthContext);
+//   const navigate = useNavigate();
+//   const [loading, setLoading] = useState(false); // Changed to false since we're using static data
+
+//   // Static data for bookings
+//   const [recentBookings] = useState([
+//     { id: "BK-9872", client: "Raj Sharma", package: "Gulmarg Winter Retreat", date: "15 Mar 2025", value: 45000, status: "Confirmed" },
+//     { id: "BK-9871", client: "Priya Patel", package: "Dal Lake Houseboat Experience", date: "12 Mar 2025", value: 28000, status: "Pending" },
+//     { id: "BK-9868", client: "John Williams", package: "Pahalgam Adventure Trek", date: "10 Mar 2025", value: 35000, status: "Confirmed" },
+//     { id: "BK-9865", client: "Meera Singh", package: "Kashmir Cultural Tour", date: "05 Mar 2025", value: 42000, status: "Completed" }
+//   ]);
+
+//   // Static data for special rates
+//   const [specialRates] = useState([
+//     { package: "Deluxe Houseboat Stay", regularRate: 8000, agentRate: 6800, validUntil: "30 Apr 2025" },
+//     { package: "Gulmarg Ski Resort", regularRate: 12000, agentRate: 10200, validUntil: "15 May 2025" },
+//     { package: "Srinagar City Tour", regularRate: 3500, agentRate: 2800, validUntil: "Ongoing" }
+//   ]);
+
+//   // Static data for special rates
+
+
+//   // Get agent data from authState with fallback values
+//   const agent = authState.agent || {
+//     companyName: "",
+//     gstNumber: "",
+//     workEmail: "",
+//     address: "",
+//     street: "",
+//     city: "",
+//     state: "",
+//     country: "",
+//     pincode: "",
+//     phoneNumber: "",
+//     licenseNumber: "",
+//     createdAt: new Date(),
+//     emailVerified: false,
+//     profileImg: "/api/placeholder/150/150",
+//     stats: {
+//       totalBookings: 0,
+//       activeBookings: 0,
+//       monthlyRevenue: 0,
+//       totalCommission: 0,
+//       conversionRate: 0
+//     }
+//   };
+ 
+//   useEffect(() => {
+//     // Check if user is authenticated
+//     if (!authState.isAuthenticated) {
+//       navigate('/login');
+//     }
+//   }, [authState, navigate]);
+
+//   const handleLogout = () => {
+//     logout();
+//     navigate('/login');
+//   };
+
+//   const toggleSidebar = () => {
+//     setSidebarOpen(!sidebarOpen);
+//   };
+
+//   const SpecialRatesSection = ({ specialRates }) => (
+//     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//       <h3 className="text-lg font-semibold mb-4">Special Rates</h3>
+//       <div className="overflow-x-auto">
+//         <table className="min-w-full divide-y divide-gray-200">
+//           <thead className="bg-gray-50">
+//             <tr>
+//               <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Package</th>
+//               <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Regular Rate</th>
+//               <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agent Rate</th>
+//               <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valid Until</th>
+//             </tr>
+//           </thead>
+//           <tbody className="bg-white divide-y divide-gray-200">
+//             {specialRates.map((rate, index) => (
+//               <tr key={index}>
+//                 <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{rate.package}</td>
+//                 <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-600">₹{rate.regularRate.toLocaleString()}</td>
+//                 <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-orange-600 font-medium">₹{rate.agentRate.toLocaleString()}</td>
+//                 <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-600">{rate.validUntil}</td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+
+//   const ItineraryBuilder = () => (
+//     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//       <h3 className="text-lg font-semibold mb-4">Itinerary Builder</h3>
+//       <p className="text-gray-600">Tool for creating custom travel itineraries would go here.</p>
+//     </div>
+//   );
+
+//   return (
+//     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+//       {/* Mobile Menu Button */}
+//       <div className="md:hidden bg-white p-4 shadow-md flex justify-between items-center">
+//         <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+//         <button onClick={toggleSidebar} className="focus:outline-none">
+//           {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+//         </button>
+//       </div>
+
+//       {/* Sidebar */}
+//       <div className={`${sidebarOpen ? 'block' : 'hidden'} md:block md:w-64 bg-white shadow-md z-10 md:relative absolute inset-0 md:inset-auto overflow-y-auto`}>
+//         <div className="p-6 border-b">
+//           <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+//           <p className="text-sm text-gray-500">Agent Portal</p>
+//         </div>
+        
+//         <div className="flex flex-col mt-6">
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'overview' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('overview');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <User size={18} className="mr-3" />
+//             <span>Overview</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'bookings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('bookings');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Calendar size={18} className="mr-3" />
+//             <span>Bookings</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'commission' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('commission');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <DollarSign size={18} className="mr-3" />
+//             <span>Commission</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'special-rates' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('special-rates');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Tag size={18} className="mr-3" />
+//             <span>Special Rates</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'itinerary-builder' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('itinerary-builder');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Map size={18} className="mr-3" />
+//             <span>Itinerary Builder</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'marketing' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('marketing');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Briefcase size={18} className="mr-3" />
+//             <span>Marketing</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'settings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('settings');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Settings size={18} className="mr-3" />
+//             <span>Settings</span>
+//           </button>
+//         </div>
+        
+//         <div className="p-6 border-t mt-6 md:absolute md:bottom-0 md:w-64">
+//           <button 
+//             className="flex items-center text-red-600"
+//             onClick={handleLogout}
+//           >
+//             <LogOut size={18} className="mr-3" />
+//             <span>Logout</span>
+//           </button>
+//         </div>
+//       </div>
+      
+//       {/* Main Content */}
+//       <div className="flex-1 overflow-y-auto">
+//         {/* Header */}
+//         <div className="bg-white shadow-sm p-4">
+//           <div className="flex justify-between items-center">
+//             <h1 className="text-xl md:text-2xl font-bold text-gray-800">Agent Dashboard</h1>
+//             <div className="flex items-center space-x-4">
+//               <div className="relative hidden md:block">
+//                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+//                   <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+//                     <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+//                   </svg>
+//                 </span>
+//                 <input 
+//                   type="text"
+//                   placeholder="Search..."
+//                   className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+//                 />
+//               </div>
+//               <div className="flex items-center">
+//                 <img 
+//                   src={agent.profileImg} 
+//                   alt="Agent profile" 
+//                   className="h-10 w-10 rounded-full object-cover"
+//                 />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+        
+//         {/* Content based on active tab */}
+//         <div className="p-4 md:p-6">
+//           {loading ? (
+//             <div className="flex justify-center items-center h-64">
+//               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+//             </div>
+//           ) : (
+//             <>
+//               {activeTab === 'overview' && (
+//                 <div>
+//                   {/* Profile section */}
+//                   <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm mb-6">
+//                     <div className="flex flex-col md:flex-row md:items-start">
+//                       <img 
+//                         src={agent.profileImg} 
+//                         alt={agent.name} 
+//                         className="h-24 w-24 rounded-full object-cover mx-auto md:mx-0 md:mr-6 mb-4 md:mb-0"
+//                       />
+//                       <div className="flex-1">
+//                         <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+//                           <div className="text-center md:text-left">
+//                             <h2 className="text-xl md:text-2xl font-bold text-gray-800">{agent.name}</h2>
+//                             <p className="text-gray-600">Agent ID: {agent.agentId}</p>
+//                             <p className="text-gray-600">{agent.agency}</p>
+//                           </div>
+//                           <button className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 mt-3 md:mt-0 w-full md:w-auto">
+//                             Edit Profile
+//                           </button>
+//                         </div>
+                        
+//                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+//                           <div className="flex items-center justify-center md:justify-start">
+//                             <Mail size={18} className="text-gray-500 mr-2" />
+//                             <span className="text-gray-700">{agent.email}</span>
+//                           </div>
+//                           <div className="flex items-center justify-center md:justify-start">
+//                             <Phone size={18} className="text-gray-500 mr-2" />
+//                             <span className="text-gray-700">{agent.phone}</span>
+//                           </div>
+//                           <div className="flex items-center justify-center md:justify-start">
+//                             <MapPin size={18} className="text-gray-500 mr-2" />
+//                             <span className="text-gray-700">{agent.location}</span>
+//                           </div>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+                  
+//                   {/* Stats cards */}
+//                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Total Bookings</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">{agent.stats.totalBookings}</h3>
+//                         </div>
+//                         <div className="bg-orange-100 p-3 rounded-full">
+//                           <Calendar size={20} className="text-orange-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+                    
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Monthly Revenue</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">₹{agent.stats.monthlyRevenue.toLocaleString()}</h3>
+//                         </div>
+//                         <div className="bg-green-100 p-3 rounded-full">
+//                           <BarChart2 size={20} className="text-green-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+                    
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Total Commission</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">₹{agent.stats.totalCommission.toLocaleString()}</h3>
+//                         </div>
+//                         <div className="bg-purple-100 p-3 rounded-full">
+//                           <DollarSign size={20} className="text-purple-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+                    
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Conversion Rate</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">{agent.stats.conversionRate}%</h3>
+//                         </div>
+//                         <div className="bg-orange-100 p-3 rounded-full">
+//                           <Tag size={20} className="text-orange-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+                  
+//                   {/* Recent bookings */}
+//                   <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                     <div className="flex justify-between items-center mb-4">
+//                       <h3 className="text-lg font-semibold">Recent Bookings</h3>
+//                       <button className="text-orange-600 text-sm">View All</button>
+//                     </div>
+                    
+//                     <div className="overflow-x-auto">
+//                       <table className="min-w-full divide-y divide-gray-200">
+//                         <thead className="bg-gray-50">
+//                           <tr>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+//                             <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Package</th>
+//                             <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+//                           </tr>
+//                         </thead>
+//                         <tbody className="bg-white divide-y divide-gray-200">
+//                           {recentBookings.map((booking, index) => (
+//                             <tr key={index}>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm font-medium text-orange-600">{booking.id}</td>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-800">{booking.client}</td>
+//                               <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.package}</td>
+//                               <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.date}</td>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-800">₹{booking.value.toLocaleString()}</td>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+//                                 <span className={`px-2 py-1 text-xs rounded-full ${
+//                                   booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 
+//                                   booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
+//                                   'bg-orange-100 text-orange-800'
+//                                 }`}>
+//                                   {booking.status}
+//                                 </span>
+//                               </td>
+//                             </tr>
+//                           ))}
+//                         </tbody>
+//                       </table>
+//                     </div>
+//                   </div>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'special-rates' && <SpecialRatesSection specialRates={specialRates} />}
+              
+//               {activeTab === 'itinerary-builder' && <ItineraryBuilder />}
+              
+//               {activeTab === 'bookings' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">All Bookings</h3>
+//                   <p className="text-gray-600">Detailed booking management interface would go here.</p>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'commission' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">Commission Tracking</h3>
+//                   <p className="text-gray-600">Commission history and payment tracking would go here.</p>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'marketing' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">Marketing Resources</h3>
+//                   <p className="text-gray-600">Marketing materials and promotional content would go here.</p>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'settings' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">Account Settings</h3>
+//                   <p className="text-gray-600">Profile and preference settings would go here.</p>
+//                 </div>
+//               )}
+//             </>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AgentProfileDashboard;
+
+// const AgentProfileDashboard = () => {
+//   const [activeTab, setActiveTab] = useState('overview');
+//   const [sidebarOpen, setSidebarOpen] = useState(false);
+//   const { authState, logout } = useContext(AuthContext);
+//   const navigate = useNavigate();
+//   const [loading, setLoading] = useState(true);
+//   const [agent, setAgent] = useState({
+//     name: "",
+//     agentId: "",
+//     agency: "",
+//     email: "",
+//     phone: "",
+//     location: "",
+//     joinDate: "",
+//     profileImg: "/api/placeholder/150/150",
+//     stats: {
+//       totalBookings: 0,
+//       activeBookings: 0,
+//       monthlyRevenue: 0,
+//       totalCommission: 0,
+//       conversionRate: 0
+//     }
+//   });
+  
+//   const [recentBookings, setRecentBookings] = useState([]);
+//   const [specialRates, setSpecialRates] = useState([]);
+
+//   useEffect(() => {
+//     // Check if user is authenticated
+//     if (!authState.isAuthenticated) {
+//       navigate('/login');
+//       return;
+//     }
+
+//     // Set agent data from context
+//     if (authState.agent) {
+//       setAgent({
+//         name: authState.agent.name || "",
+//         agentId: authState.agent.agentId || "",
+//         agency: authState.agent.agency || "",
+//         email: authState.agent.email || "",
+//         phone: authState.agent.phone || "",
+//         location: authState.agent.location || "",
+//         joinDate: authState.agent.joinDate || "",
+//         profileImg: authState.agent.profileImg || "/api/placeholder/150/150",
+//         stats: authState.agent.stats || {
+//           totalBookings: 0,
+//           activeBookings: 0,
+//           monthlyRevenue: 0,
+//           totalCommission: 0,
+//           conversionRate: 0
+//         }
+//       });
+//     }
+
+//     // Fetch bookings data
+//     const fetchBookings = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:5000/api/bookings', {
+//           headers: { Authorization: `Bearer ${authState.token}` }
+//         });
+//         setRecentBookings(response.data);
+//       } catch (error) {
+//         console.error('Error fetching bookings:', error);
+//         // Fallback to sample data if API fails
+//         setRecentBookings([
+//           { id: "BK-9872", client: "Raj Sharma", package: "Gulmarg Winter Retreat", date: "15 Mar 2025", value: 45000, status: "Confirmed" },
+//           { id: "BK-9871", client: "Priya Patel", package: "Dal Lake Houseboat Experience", date: "12 Mar 2025", value: 28000, status: "Pending" },
+//           { id: "BK-9868", client: "John Williams", package: "Pahalgam Adventure Trek", date: "10 Mar 2025", value: 35000, status: "Confirmed" },
+//           { id: "BK-9865", client: "Meera Singh", package: "Kashmir Cultural Tour", date: "05 Mar 2025", value: 42000, status: "Completed" }
+//         ]);
+//       }
+//     };
+
+//     // Fetch special rates
+//     const fetchSpecialRates = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:5000/api/special-rates', {
+//           headers: { Authorization: `Bearer ${authState.token}` }
+//         });
+//         setSpecialRates(response.data);
+//       } catch (error) {
+//         console.error('Error fetching special rates:', error);
+//         // Fallback to sample data if API fails
+//         setSpecialRates([
+//           { package: "Deluxe Houseboat Stay", regularRate: 8000, agentRate: 6800, validUntil: "30 Apr 2025" },
+//           { package: "Gulmarg Ski Resort", regularRate: 12000, agentRate: 10200, validUntil: "15 May 2025" },
+//           { package: "Srinagar City Tour", regularRate: 3500, agentRate: 2800, validUntil: "Ongoing" }
+//         ]);
+//       }
+//     };
+
+//     Promise.all([fetchBookings(), fetchSpecialRates()])
+//       .finally(() => setLoading(false));
+
+//   }, [authState, navigate]);
+
+//   const handleLogout = () => {
+//     logout();
+//     navigate('/login');
+//   };
+
+//   const toggleSidebar = () => {
+//     setSidebarOpen(!sidebarOpen);
+//   };
+
+//   return (
+//     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+//       {/* Mobile Menu Button */}
+//       <div className="md:hidden bg-white p-4 shadow-md flex justify-between items-center">
+//         <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+//         <button onClick={toggleSidebar} className="focus:outline-none">
+//           {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+//         </button>
+//       </div>
+
+//       {/* Sidebar */}
+//       <div className={`${sidebarOpen ? 'block' : 'hidden'} md:block md:w-64 bg-white shadow-md z-10 md:relative absolute inset-0 md:inset-auto overflow-y-auto`}>
+//         <div className="p-6 border-b">
+//           <h2 className="text-xl font-bold text-orange-600">Kashmir Travel</h2>
+//           <p className="text-sm text-gray-500">Agent Portal</p>
+//         </div>
+        
+//         <div className="flex flex-col mt-6">
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'overview' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('overview');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <User size={18} className="mr-3" />
+//             <span>Overview</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'bookings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('bookings');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Calendar size={18} className="mr-3" />
+//             <span>Bookings</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'commission' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('commission');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <DollarSign size={18} className="mr-3" />
+//             <span>Commission</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'special-rates' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('special-rates');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Tag size={18} className="mr-3" />
+//             <span>Special Rates</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'itinerary-builder' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('itinerary-builder');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Map size={18} className="mr-3" />
+//             <span>Itinerary Builder</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'marketing' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('marketing');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Briefcase size={18} className="mr-3" />
+//             <span>Marketing</span>
+//           </button>
+          
+//           <button 
+//             className={`flex items-center px-6 py-3 ${activeTab === 'settings' ? 'bg-orange-100 text-orange-800 border-l-4 border-orange-600' : 'text-gray-600'}`}
+//             onClick={() => {
+//               setActiveTab('settings');
+//               setSidebarOpen(false);
+//             }}
+//           >
+//             <Settings size={18} className="mr-3" />
+//             <span>Settings</span>
+//           </button>
+//         </div>
+        
+//         <div className="p-6 border-t mt-6 md:absolute md:bottom-0 md:w-64">
+//           <button 
+//             className="flex items-center text-red-600"
+//             onClick={handleLogout}
+//           >
+//             <LogOut size={18} className="mr-3" />
+//             <span>Logout</span>
+//           </button>
+//         </div>
+//       </div>
+      
+//       {/* Main Content */}
+//       <div className="flex-1 overflow-y-auto">
+//         {/* Header */}
+//         <div className="bg-white shadow-sm p-4">
+//           <div className="flex justify-between items-center">
+//             <h1 className="text-xl md:text-2xl font-bold text-gray-800">Agent Dashboard</h1>
+//             <div className="flex items-center space-x-4">
+//               <div className="relative hidden md:block">
+//                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+//                   <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+//                     <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+//                   </svg>
+//                 </span>
+//                 <input 
+//                   type="text"
+//                   placeholder="Search..."
+//                   className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+//                 />
+//               </div>
+//               <div className="flex items-center">
+//                 <img 
+//                   src={agent.profileImg} 
+//                   alt="Agent profile" 
+//                   className="h-10 w-10 rounded-full object-cover"
+//                 />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+        
+//         {/* Content based on active tab */}
+//         <div className="p-4 md:p-6">
+//           {loading ? (
+//             <div className="flex justify-center items-center h-64">
+//               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+//             </div>
+//           ) : (
+//             <>
+//               {activeTab === 'overview' && (
+//                 <div>
+//                   {/* Profile section */}
+//                   <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm mb-6">
+//                     <div className="flex flex-col md:flex-row md:items-start">
+//                       <img 
+//                         src={agent.profileImg} 
+//                         alt={agent.name} 
+//                         className="h-24 w-24 rounded-full object-cover mx-auto md:mx-0 md:mr-6 mb-4 md:mb-0"
+//                       />
+//                       <div className="flex-1">
+//                         <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+//                           <div className="text-center md:text-left">
+//                             <h2 className="text-xl md:text-2xl font-bold text-gray-800">{agent.name || "Complete your profile"}</h2>
+//                             <p className="text-gray-600">Agent ID: {agent.agentId}</p>
+//                             <p className="text-gray-600">{agent.agency}</p>
+//                           </div>
+//                           <button className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 mt-3 md:mt-0 w-full md:w-auto">
+//                             Edit Profile
+//                           </button>
+//                         </div>
+                        
+//                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+//                           <div className="flex items-center justify-center md:justify-start">
+//                             <Mail size={18} className="text-gray-500 mr-2" />
+//                             <span className="text-gray-700">{agent.email || "Add email"}</span>
+//                           </div>
+//                           <div className="flex items-center justify-center md:justify-start">
+//                             <Phone size={18} className="text-gray-500 mr-2" />
+//                             <span className="text-gray-700">{agent.phone || "Add phone"}</span>
+//                           </div>
+//                           <div className="flex items-center justify-center md:justify-start">
+//                             <MapPin size={18} className="text-gray-500 mr-2" />
+//                             <span className="text-gray-700">{agent.location || "Add location"}</span>
+//                           </div>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+                  
+//                   {/* Stats cards */}
+//                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Total Bookings</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">{agent.stats.totalBookings}</h3>
+//                         </div>
+//                         <div className="bg-orange-100 p-3 rounded-full">
+//                           <Calendar size={20} className="text-orange-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+                    
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Monthly Revenue</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">₹{agent.stats.monthlyRevenue.toLocaleString()}</h3>
+//                         </div>
+//                         <div className="bg-green-100 p-3 rounded-full">
+//                           <BarChart2 size={20} className="text-green-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+                    
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Total Commission</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">₹{agent.stats.totalCommission.toLocaleString()}</h3>
+//                         </div>
+//                         <div className="bg-purple-100 p-3 rounded-full">
+//                           <DollarSign size={20} className="text-purple-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+                    
+//                     <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                       <div className="flex items-center justify-between">
+//                         <div>
+//                           <p className="text-gray-500 text-sm">Conversion Rate</p>
+//                           <h3 className="text-xl md:text-2xl font-bold text-gray-800">{agent.stats.conversionRate}%</h3>
+//                         </div>
+//                         <div className="bg-orange-100 p-3 rounded-full">
+//                           <Tag size={20} className="text-orange-700" />
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+                  
+//                   {/* Recent bookings */}
+//                   <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                     <div className="flex justify-between items-center mb-4">
+//                       <h3 className="text-lg font-semibold">Recent Bookings</h3>
+//                       <button className="text-orange-600 text-sm">View All</button>
+//                     </div>
+                    
+//                     <div className="overflow-x-auto">
+//                       <table className="min-w-full divide-y divide-gray-200">
+//                         <thead className="bg-gray-50">
+//                           <tr>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+//                             <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Package</th>
+//                             <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+//                             <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+//                           </tr>
+//                         </thead>
+//                         <tbody className="bg-white divide-y divide-gray-200">
+//                           {recentBookings.map((booking, index) => (
+//                             <tr key={index}>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm font-medium text-orange-600">{booking.id}</td>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-800">{booking.client}</td>
+//                               <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.package}</td>
+//                               <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-600">{booking.date}</td>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap text-sm text-gray-800">₹{booking.value.toLocaleString()}</td>
+//                               <td className="px-4 md:px-6 py-4 whitespace-nowrap">
+//                                 <span className={`px-2 py-1 text-xs rounded-full ${
+//                                   booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 
+//                                   booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
+//                                   'bg-orange-100 text-orange-800'
+//                                 }`}>
+//                                   {booking.status}
+//                                 </span>
+//                               </td>
+//                             </tr>
+//                           ))}
+//                         </tbody>
+//                       </table>
+//                     </div>
+//                   </div>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'special-rates' && <SpecialRatesSection specialRates={specialRates} />}
+              
+//               {activeTab === 'itinerary-builder' && <ItineraryBuilder />}
+              
+//               {activeTab === 'bookings' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">All Bookings</h3>
+//                   <p className="text-gray-600">Detailed booking management interface would go here.</p>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'commission' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">Commission Tracking</h3>
+//                   <p className="text-gray-600">Commission history and payment tracking would go here.</p>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'marketing' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">Marketing Resources</h3>
+//                   <p className="text-gray-600">Marketing materials and promotional content would go here.</p>
+//                 </div>
+//               )}
+              
+//               {activeTab === 'settings' && (
+//                 <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm">
+//                   <h3 className="text-lg font-semibold mb-4">Account Settings</h3>
+//                   <p className="text-gray-600">Profile and preference settings would go here.</p>
+//                 </div>
+//               )}
+//             </>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AgentProfileDashboard;

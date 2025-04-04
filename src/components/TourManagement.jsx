@@ -430,32 +430,79 @@ const TourManagement = () => {
   //     console.error('Error uploading image:', error);
   //   }
   // };
+  // const handleImageUpload = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
+  
+  //   const formData = new FormData();
+  //   formData.append('image', file);
+  
+  //   try {
+  //     const response = await axios.post('https://backend-1-7zwm.onrender.com/api/upload', formData, {
+  //       headers: { 'Content-Type': 'multipart/form-data' },
+  //     });
+  
+  //     const uploadedImagePath = response.data.imageUrl; // "/uploads/1739887359913.jpeg"
+  //     const fullImageUrl = `https://backend-1-7zwm.onrender.com${uploadedImagePath}`; // Full URL
+  
+  //     console.log('Full image URL:', fullImageUrl);
+  
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       image: fullImageUrl, // Save the full URL
+  //     }));
+  //   } catch (error) {
+  //     console.error('Error uploading image:', error);
+  //   }
+  // };
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+  
+    console.log('Selected file:', {
+      name: file.name,
+      type: file.type,
+      size: file.size
+    });
   
     const formData = new FormData();
     formData.append('image', file);
   
     try {
+      console.log('Sending upload request to backend...');
       const response = await axios.post('https://backend-1-7zwm.onrender.com/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
   
-      const uploadedImagePath = response.data.imageUrl; // "/uploads/1739887359913.jpeg"
-      const fullImageUrl = `https://backend-1-7zwm.onrender.com${uploadedImagePath}`; // Full URL
+      console.log('Full response from backend:', response.data);
   
-      console.log('Full image URL:', fullImageUrl);
+      // Use the Supabase URL if available, otherwise fall back to the old method
+      const imageUrl = response.data.supabaseUrl || 
+                      `https://backend-1-7zwm.onrender.com${response.data.imageUrl}`;
+  
+      console.log('Final image URL being used:', imageUrl);
   
       setFormData((prev) => ({
         ...prev,
-        image: fullImageUrl, // Save the full URL
+        image: imageUrl,
       }));
+      
+      // Test if the image URL is accessible
+      try {
+        const imgResponse = await fetch(imageUrl, { method: 'HEAD' });
+        console.log('Image URL accessibility test:', {
+          status: imgResponse.status,
+          ok: imgResponse.ok,
+          headers: Object.fromEntries([...imgResponse.headers])
+        });
+      } catch (imgError) {
+        console.error('Error testing image URL:', imgError);
+      }
     } catch (error) {
       console.error('Error uploading image:', error);
+      console.error('Error details:', error.response?.data || error.message);
     }
   };
-  
   // Modified handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import { useNavigate } from "react-router-dom";
+import EnhancedPlanTripButton from './EnhancedPlanTripButton';
 // Sample authentication check - replace with your actual auth logic
 const useAuth = () => {
   // This would typically connect to your authentication context/provider
@@ -117,7 +118,379 @@ const TripPlanner = () => {
     { id: 'ultraLuxury', name: 'Ultra Luxury', range: '₹70,000+ per person' },
     { id: 'flexible', name: 'Flexible', range: 'Customize based on preferences' },
   ];
-  
+  const EnhancedPlanTripButton = () => {
+    const [isHovered, setIsHovered] = React.useState(false);
+    const [isClicked, setIsClicked] = React.useState(false);
+    const [isGlowing, setIsGlowing] = React.useState(false);
+    const [pulseEffect, setPulseEffect] = React.useState(false);
+    
+    React.useEffect(() => {
+      // Attention-grabbing effects that cycle through different animations
+      const glowInterval = setInterval(() => {
+        setIsGlowing(true);
+        setTimeout(() => setIsGlowing(false), 1500);
+      }, 7000);
+      
+      // Secondary pulse effect that alternates with the glow
+      const pulseInterval = setInterval(() => {
+        setPulseEffect(true);
+        setTimeout(() => setPulseEffect(false), 1000);
+      }, 4000);
+      
+      return () => {
+        clearInterval(glowInterval);
+        clearInterval(pulseInterval);
+      };
+    }, []);
+    
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+    };
+    
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+    };
+    
+    const handleClick = () => {
+      setIsClicked(true);
+      setTimeout(() => setIsClicked(false), 500);
+      
+      // Your existing modal opening logic
+      openModal();
+    };
+    
+    return (
+      <div className="relative group">
+        {/* Enhanced animated glow effect with multiple color layers */}
+        <div 
+          className={`
+            absolute -inset-2 bg-gradient-to-r from-amber-300 via-orange-300 to-red-300 
+            rounded-full opacity-0 blur-lg transition-all duration-1000 
+            ${isHovered ? 'opacity-70 scale-105' : ''} 
+            ${isGlowing ? 'opacity-70 animate-pulse' : ''}
+            ${pulseEffect ? 'opacity-50' : ''}
+          `}
+        ></div>
+        
+        {/* Secondary subtle outer ring */}
+        <div 
+          className={`
+            absolute -inset-4 bg-gradient-to-r from-amber-200 to-orange-200 
+            rounded-full opacity-0 blur-xl transition-all duration-700 
+            ${isHovered ? 'opacity-30 scale-110' : ''} 
+          `}
+        ></div>
+        
+        <button
+          onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={`
+            group relative inline-flex items-center justify-center
+            overflow-hidden rounded-full 
+            bg-gradient-to-br from-orange-500 to-orange-600 
+            p-0.5 font-medium text-white hover:text-white 
+            shadow-md hover:shadow-lg active:shadow-sm 
+            transition-all duration-300 ease-out
+            ${isHovered ? 'scale-105' : ''}
+            ${isClicked ? 'scale-95' : ''}
+            ${isGlowing ? 'ring-2 ring-orange-300' : ''}
+            ${pulseEffect ? 'ring-1 ring-orange-200' : ''}
+            z-10
+          `}
+          aria-label="Plan your trip to Kashmir"
+        >
+          {/* Background span with enhanced gradient */}
+          <span className={`
+            relative flex items-center gap-2 rounded-full 
+            bg-gradient-to-br from-orange-500 to-orange-600 
+            px-4 py-2 sm:px-6 sm:py-3 
+            text-[clamp(0.75rem,2vw,1rem)] 
+            transition-all duration-300 ease-out 
+            group-hover:bg-opacity-0
+          `}>
+            {/* Animated clock icon with pulse effect */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`
+                h-[clamp(1rem,4vw,1.25rem)] w-[clamp(1rem,4vw,1.25rem)]
+                transition-transform duration-500 ease-in-out
+                ${isHovered ? 'rotate-12 scale-110' : ''}
+                ${pulseEffect ? 'animate-ping animate-once animate-duration-500' : ''}
+              `}
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                clipRule="evenodd"
+                className={isHovered ? 'animate-pulse' : ''}
+              />
+            </svg>
+            
+            {/* Enhanced button text with better animation */}
+            <span className={`
+              font-bold transition-all duration-300 ease-out 
+              ${isHovered ? 'tracking-wider scale-105' : ''} 
+              ${isClicked ? 'tracking-normal' : ''}
+            `}>
+              Plan My Trip
+            </span>
+            
+            {/* Enhanced arrow animation */}
+            <svg 
+              className={`
+                h-5 transition-all duration-300 ease-out overflow-hidden
+                ${isHovered ? 'w-5 ml-1 opacity-100 translate-x-0' : 'w-0 opacity-0 -translate-x-2'}
+              `}
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth="2" 
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                className={isHovered ? 'animate-bounce animate-once animate-duration-1000' : ''}
+              />
+            </svg>
+          </span>
+          
+          {/* Enhanced shine effect - smoother and more visible */}
+          <div 
+            className={`
+              absolute top-0 -left-full h-full w-2/3 
+              bg-gradient-to-r from-transparent via-white to-transparent 
+              opacity-40 transform skew-x-12 transition-all duration-700 
+              ${isHovered ? 'left-full' : ''}
+            `}
+          ></div>
+          
+          {/* Enhanced click ripple effect - multiple ripples */}
+          {isClicked && (
+            <>
+              <span className="absolute inset-0 rounded-full bg-white opacity-30" style={{
+                animation: 'ripple 0.7s linear forwards',
+              }} />
+              <span className="absolute inset-0 rounded-full bg-orange-200 opacity-20" style={{
+                animation: 'ripple 1s linear forwards 0.1s',
+              }} />
+            </>
+          )}
+        </button>
+        
+        {/* Enhanced hint text with icons */}
+        <div 
+          className={`
+            absolute -bottom-8 left-0 right-0 text-center 
+            text-xs text-orange-800 font-medium 
+            transition-all duration-500 flex items-center justify-center gap-1
+            ${isHovered ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-1'}
+          `}
+        >
+          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+          </svg>
+          Create your perfect Kashmir adventure
+          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </div>
+        
+        {/* Micro-interactions: Floating particles on hover */}
+        {isHovered && (
+          <div className="absolute inset-0">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 rounded-full bg-orange-200 opacity-70"
+                style={{
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                  animation: `float${i} ${1 + Math.random() * 2}s ease-in-out infinite`,
+                }}
+              />
+            ))}
+          </div>
+        )}
+        
+        <style jsx>{`
+          @keyframes ripple {
+            to {
+              transform: scale(2.5);
+              opacity: 0;
+            }
+          }
+          
+          @keyframes float0 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(10px, -10px); }
+          }
+          
+          @keyframes float1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-15px, -5px); }
+          }
+          
+          @keyframes float2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(5px, -15px); }
+          }
+          
+          @keyframes float3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-10px, -8px); }
+          }
+          
+          @keyframes float4 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(12px, -12px); }
+          }
+        `}</style>
+      </div>
+    );
+  };
+  // const EnhancedPlanTripButton = () => {
+  //     const [isHovered, setIsHovered] = React.useState(false);
+  //     const [isClicked, setIsClicked] = React.useState(false);
+  //     const [isGlowing, setIsGlowing] = React.useState(false);
+      
+  //     React.useEffect(() => {
+  //       // Subtle attention-grabbing glow effect every few seconds
+  //       const glowInterval = setInterval(() => {
+  //         setIsGlowing(true);
+  //         setTimeout(() => setIsGlowing(false), 1500);
+  //       }, 7000);
+        
+  //       return () => clearInterval(glowInterval);
+  //     }, []);
+      
+  //     const handleMouseEnter = () => {
+  //       setIsHovered(true);
+  //     };
+      
+  //     const handleMouseLeave = () => {
+  //       setIsHovered(false);
+  //     };
+      
+  //     const handleClick = () => {
+  //       setIsClicked(true);
+  //       setTimeout(() => setIsClicked(false), 500);
+        
+  //       // Your existing modal opening logic
+  //       openModal();
+  //     };
+      
+  //     return (
+  //       <div className="relative">
+  //         {/* Animated glow effect that appears periodically */}
+  //         <div className={`absolute -inset-2 bg-gradient-to-r from-amber-300 via-orange-300 to-red-300 rounded-full opacity-0 blur-lg transition-opacity duration-1000 ${isHovered || isGlowing ? 'opacity-70' : ''}`}></div>
+          
+  //         <button
+  //           onClick={handleClick}
+  //           onMouseEnter={handleMouseEnter}
+  //           onMouseLeave={handleMouseLeave}
+  //           className={`
+  //             group relative inline-flex items-center justify-center
+  //             overflow-hidden rounded-full 
+  //             bg-gradient-to-br from-orange-500 to-orange-600 
+  //             p-0.5 font-medium text-white hover:text-white 
+  //             shadow-md hover:shadow-lg active:shadow-sm 
+  //             transition-all duration-300 ease-out
+  //             ${isHovered ? 'scale-105' : ''}
+  //             ${isClicked ? 'scale-95' : ''}
+  //             ${isGlowing ? 'ring-2 ring-orange-300' : ''}
+  //             z-10
+  //           `}
+  //           aria-label="Plan your trip to Kashmir"
+  //         >
+  //           {/* Background span with gradient */}
+  //           <span className={`
+  //             relative flex items-center gap-2 rounded-full 
+  //             bg-gradient-to-br from-orange-500 to-orange-600 
+  //             px-4 py-[0.5rem] sm:px-6 sm:py-3 
+  //             text-[clamp(0.75rem,2vw,1rem)] 
+  //             transition-all duration-300 ease-out 
+  //             group-hover:bg-opacity-0
+  //           `}>
+  //             {/* Clock icon with rotation effect */}
+  //             <svg
+  //               xmlns="http://www.w3.org/2000/svg"
+  //               className={`
+  //                 h-[clamp(1rem,4vw,1.25rem)] w-[clamp(1rem,4vw,1.25rem)]
+  //                 transition-transform duration-500 ease-in-out
+  //                 ${isHovered ? 'rotate-12 scale-110' : ''}
+  //               `}
+  //               viewBox="0 0 20 20"
+  //               fill="currentColor"
+  //             >
+  //               <path
+  //                 fillRule="evenodd"
+  //                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+  //                 clipRule="evenodd"
+  //                 className={isHovered ? 'animate-pulse' : ''}
+  //               />
+  //             </svg>
+              
+  //             {/* Button text */}
+  //             <span className={`font-bold transition-all duration-300 ease-out ${isHovered ? 'tracking-wider' : ''}`}>
+  //               Plan My Trip
+  //             </span>
+              
+  //             {/* Arrow that appears on hover */}
+  //             <svg 
+  //               className={`w-0 h-5 transition-all duration-300 ease-out ${isHovered ? 'w-5 ml-1 opacity-100' : 'opacity-0'}`}
+  //               fill="none" 
+  //               stroke="currentColor" 
+  //               viewBox="0 0 24 24" 
+  //               xmlns="http://www.w3.org/2000/svg"
+  //             >
+  //               <path 
+  //                 strokeLinecap="round" 
+  //                 strokeLinejoin="round" 
+  //                 strokeWidth="2" 
+  //                 d="M14 5l7 7m0 0l-7 7m7-7H3"
+  //               />
+  //             </svg>
+  //           </span>
+            
+  //           {/* Shine effect that moves across button */}
+  //           <div 
+  //             className={`absolute top-0 -left-full h-full w-2/3 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 transform skew-x-12 transition-all duration-700 ${isHovered ? 'left-full' : ''}`}
+  //           ></div>
+            
+  //           {/* Click ripple effect */}
+  //           {isClicked && (
+  //             <span className="absolute inset-0 rounded-full bg-white opacity-30" style={{
+  //               animation: 'ripple 0.7s linear forwards',
+  //             }} />
+  //           )}
+  //         </button>
+          
+  //         {/* Subtle hint text that appears on hover */}
+  //         <div 
+  //           className={`absolute -bottom-8 left-0 right-0 text-center text-xs text-orange-800 font-medium transition-all duration-500 ${isHovered ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-1'}`}
+  //         >
+  //           Create your perfect Kashmir adventure
+  //         </div>
+          
+  //         <style jsx>{`
+  //           @keyframes ripple {
+  //             to {
+  //               transform: scale(2);
+  //               opacity: 0;
+  //             }
+  //           }
+  //         `}</style>
+  //       </div>
+  //     );
+  //   };
+    
+    // export default EnhancedPlanTripButton;
   // Sample packages - in a real app, these would come from your API
   const packageData = [
     {
@@ -525,7 +898,7 @@ const TripPlanner = () => {
 
           return (
   <>
-   <button
+   {/* <button
   onClick={openModal}
   className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-0.5 font-medium text-white hover:text-white shadow-md hover:shadow-lg active:shadow-sm transition duration-300 ease-out"
   aria-label="Plan your trip to Kashmir"
@@ -545,8 +918,8 @@ const TripPlanner = () => {
     </svg>
     Plan My Trip
   </span>
-</button>
-
+</button> */}
+<EnhancedPlanTripButton/>
     {/* <button
   onClick={openModal}
   className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-orange-500 to-orange-600 p-0.5 font-medium text-white hover:text-white shadow-md hover:shadow-lg active:shadow-sm transition duration-300 ease-out"
