@@ -3605,7 +3605,7 @@ const handleSmoothScroll = (e, target) => {
                 alt="Kashmir Travels Logo"
                 className="h-11 w-auto mr-2"
               />  */}
-              <span className={`text-2xl font-bold ${isScrolled ? 'text-orange-600' : 'text-orange-600'}`}>Kashmir Travels</span>
+              <span className={`text-2xl font-bold ${isScrolled ? 'text-orange-600' : 'text-orange-600'}`}>FreelanceForge</span>
             </div>
   
             {/* Desktop Navigation */}

@@ -2214,7 +2214,7 @@ const Footer = () => {
               © {currentYear} Kashmir Travels. All rights reserved.
             </p> */}
             <p className="text-sm text-gray-600 mb-4 md:mb-0">
-  © {currentYear} Kashmir Travels. All rights reserved. | Developed by{" "}
+  © {currentYear} FreelanceForge. All rights reserved. | Developed by{" "}
   <a
     href="https://wa.me/919541515012"
     target="_blank"
