@@ -3600,12 +3600,12 @@ const handleSmoothScroll = (e, target) => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="flex items-center">
-               {/* <img
-                src="./images/bg.jpg"
+               <img
+                src="./images/logo.jpg"
                 alt="Kashmir Travels Logo"
                 className="h-11 w-auto mr-2"
-              />  */}
-              <span className={`text-2xl font-bold ${isScrolled ? 'text-orange-600' : 'text-orange-600'}`}>FreelanceForge</span>
+              /> 
+              <span className={`text-2xl font-bold ${isScrolled ? 'text-orange-600' : 'text-orange-600'}`}></span>
             </div>
   
             {/* Desktop Navigation */}
