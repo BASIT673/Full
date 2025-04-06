@@ -50,10 +50,10 @@ const Home = () => {
  
     return (
       <>
-          <KashmirTravelSalesBanner/>
+        
         <KashmirHeader/>
         <HeroSection/>
-   
+        <KashmirTravelSalesBanner/>
         <FeatureCards1/>
      
 
