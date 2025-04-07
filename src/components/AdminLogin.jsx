@@ -35,7 +35,7 @@ const AdminLogin = () => {
       const body = JSON.stringify({ email, password });
       
       // Admin-specific endpoint
-      const res = await axios.post('http://localhost:5000/api/admin/login', body, config);
+      const res = await axios.post('https://backend-1-7zwm.onrender.com/api/admin/login', body, config);
       
       // Store admin token in localStorage
       localStorage.setItem('adminToken', res.data.token);
