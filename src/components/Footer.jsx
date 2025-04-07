@@ -1852,7 +1852,7 @@ import TourQueryForm from './querfrom';
 // };
 
 // export default Footer;
-
+import AdminLoginButton from './AdminLoginBtn';
 import  { useState, useEffect } from 'react';
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Send, Phone, Mail, MapPin, CreditCard, Globe, ArrowUp, Check, AlertCircle } from 'lucide-react';
 // import setupI18n from '../setupI18n'
@@ -2205,7 +2205,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
-        
+        {/* <AdminLoginBtn/>
+         */}
+         <AdminLoginButton/>
       {/* Copyright with improved mobile layout */}
       <div className="bg-orange-50 py-6">
         <div className="container mx-auto px-4">
