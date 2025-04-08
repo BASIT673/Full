@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
+import { createPortal } from 'react-dom';
 import { useNavigate } from "react-router-dom";
 import EnhancedPlanTripButton from './EnhancedPlanTripButton';
 // Sample authentication check - replace with your actual auth logic
@@ -43,8 +44,21 @@ const TripPlanner = () => {
   const [priceEstimate, setPriceEstimate] = useState(null);
   const [availablePackages, setAvailablePackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState(null);
-  
+  const [modalPosition, setModalPosition] = useState(0);
   // Form data
+  const modalContainerRef = useRef(null);
+
+  // Create the modal container dynamically on mount
+  useEffect(() => {
+    const modalDiv = document.createElement('div');
+    document.body.appendChild(modalDiv);
+    modalContainerRef.current = modalDiv;
+
+    // Clean up when component unmounts
+    return () => {
+      document.body.removeChild(modalDiv);
+    };
+  }, []);
   const [tripDetails, setTripDetails] = useState({
     destination: 'Srinagar',
     startDate: format(new Date().setDate(new Date().getDate() + 30), 'yyyy-MM-dd'),
@@ -841,7 +855,7 @@ const TripPlanner = () => {
   // Destination card component for step 1
   const DestinationCard = ({ destination, isSelected, onSelect }) => (
     <div 
-      className={`border rounded-lg overflow-hidden cursor-pointer transition transform hover:shadow-lg hover:-translate-y-1 ${
+      className={ `   border rounded-lg overflow-hidden cursor-pointer transition transform hover:shadow-lg hover:-translate-y-1 ${
         isSelected ? 'border-orange-500 ring-2 ring-orange-500 shadow-md' : 'border-gray-200 hover:border-orange-300'
       }`}
       onClick={() => onSelect(destination.id)}
@@ -857,9 +871,9 @@ const TripPlanner = () => {
   );
   
   // Package card component for step 2
-  const PackageCard = ({ pkg, isSelected, onSelect }) => (
+  const PackageCard = ({  pkg, isSelected, onSelect }) => (
     <div 
-      className={`border rounded-lg overflow-hidden cursor-pointer transition hover:shadow-lg ${
+      className={` border rounded-lg overflow-hidden cursor-pointer transition hover:shadow-lg ${
         isSelected ? 'border-orange-500 ring-2 ring-orange-500' : 'border-gray-200'
       }`}
       onClick={() => onSelect(pkg.id)}
@@ -895,7 +909,11 @@ const TripPlanner = () => {
   );
 
 
-
+  useEffect(() => {
+    if (isModalOpen) {
+      setModalPosition(window.scrollY + window.innerHeight/2 - 300);
+    }
+  }, [isModalOpen]);
           return (
   <>
    {/* <button
@@ -941,10 +959,8 @@ const TripPlanner = () => {
     Plan My Trip
   </span>
 </button> */}
-
-
-    {/* Modal */}
-    {isModalOpen && (
+ {/* Modal */}
+ {isModalOpen && (
       <div className="fixed inset-0 z-[100] overflow-y-auto">
         <div className="fixed inset-0 z-[60]  flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
 
@@ -955,6 +971,9 @@ const TripPlanner = () => {
             ref={modalRef}
             className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl max-h-[90vh] overflow-y-auto"
           >
+
+    {/* Modal */}
+    
             {/* Modal Content */}
             {!showSuccessMessage ? (
               <div className="bg-white">
@@ -1638,7 +1657,7 @@ const TripPlanner = () => {
             )}
           </div>
         </div>
-      </div>
+      // </div>
     )}
   </>
   

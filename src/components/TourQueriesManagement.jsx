@@ -2689,7 +2689,7 @@ const TourQueriesManagement = () => {
   const fetchQueries = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/tour-queries');
+      const response = await axios.get('https://backend-1-7zwm.onrender.com/tour-queries');
       setSelectedQuery(response.data.data);
       console.log("📡 Query Data:", response.data);
       // Transform data to add priority and status if they don't exist
@@ -2739,7 +2739,7 @@ const handleNoteChange = (e) => {
   const handleDelete = async (id) => {
     if (confirmDelete === id) {
       try {
-        await axios.delete(`http://localhost:5000/api/tour-queries/${id}`);
+        await axios.delete(`https://backend-1-7zwm.onrender.com/api/tour-queries/${id}`);
         setQueries(queries.filter(query => query._id !== id));
         setConfirmDelete(null);
         setSelectedQuery(null);
@@ -2758,7 +2758,7 @@ const handleNoteChange = (e) => {
   // Handle bulk delete
   const handleBulkDelete = async () => {
     try {
-      await Promise.all(selectedQueries.map(id => axios.delete(`http://localhost:5000/api/tour-queries/${id}`)));
+      await Promise.all(selectedQueries.map(id => axios.delete(`https://backend-1-7zwm.onrender.com/api/tour-queries/${id}`)));
       setQueries(queries.filter(query => !selectedQueries.includes(query._id)));
       setSelectedQueries([]);
       setShowBulkActions(false);
@@ -2773,7 +2773,7 @@ const handleNoteChange = (e) => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.patch(`http://localhost:5000/api/tour-queries/${selectedQuery._id}`, editForm);
+      const response = await axios.patch(`https://backend-1-7zwm.onrender.com/api/tour-queries/${selectedQuery._id}`, editForm);
       
       // Update the queries state
       const updatedQueries = queries.map(q => 
@@ -2793,7 +2793,7 @@ const handleNoteChange = (e) => {
   // Handle status change
   const handleStatusChange = async (id, status) => {
     try {
-      const response = await axios.patch(`http://localhost:5000/api/tour-queries/${id}`, { status });
+      const response = await axios.patch(`https://backend-1-7zwm.onrender.com/api/tour-queries/${id}`, { status });
       const updatedQueries = queries.map(q => 
         q._id === id ? { ...q, status } : q
       );
@@ -2811,7 +2811,7 @@ const handleNoteChange = (e) => {
   };
   const handlePriorityChange = async (id, priority) => {
     try {
-        const response = await axios.patch(`http://localhost:5000/api/tour-queries/${id}`, { priority });
+        const response = await axios.patch(`https://backend-1-7zwm.onrender.com/api/tour-queries/${id}`, { priority });
 
         if (response.data.success) {
             // Merge only the priority update while keeping other fields intact
@@ -2904,7 +2904,7 @@ const handleNoteChange = (e) => {
       console.log("📝 Updated Notes:", updatedNotes);
       console.log("📌 New Note Before Saving:", newNote);
 
-      const response = await fetch(`http://localhost:5000/api/tour-queries/${selectedQuery._id}`, {
+      const response = await fetch(`https://backend-1-7zwm.onrender.com/api/tour-queries/${selectedQuery._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ notes: updatedNotes }),
@@ -3043,7 +3043,7 @@ const handleNoteChange = (e) => {
       // Update query status to "Responded"
       const updatedQuery = { ...selectedQuery, status: 'Responded' };
       
-      await axios.patch(`/api/tour-queries/${selectedQuery._id}`, {
+      await axios.patch(`https://backend-1-7zwm.onrender.com/api/tour-queries/${selectedQuery._id}`, {
         status: 'Responded'
       });
       

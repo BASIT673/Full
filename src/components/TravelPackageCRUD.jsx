@@ -300,7 +300,7 @@ const TravelPackageCRUD = () => {
 
   const fetchPackages = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/packages');
+      const response = await axios.get('https://backend-1-7zwm.onrender.com0/api/packages');
       setPackages(response.data.data);
     } catch (error) {
       console.error('Error fetching packages:', error);
@@ -309,7 +309,7 @@ const TravelPackageCRUD = () => {
 
   const createPackage = async () => {
     try {
-      await axios.post('http://localhost:5000/api/packages', formData);
+      await axios.post('https://backend-1-7zwm.onrender.com/api/packages', formData);
       fetchPackages();
       resetForm();
       setIsDialogOpen(false);
@@ -331,7 +331,7 @@ const TravelPackageCRUD = () => {
 
   const deletePackage = async (packageId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/packages/${packageId}`);
+      await axios.delete(`https://backend-1-7zwm.onrender.com/api/packages/${packageId}`);
       fetchPackages();
     } catch (error) {
       console.error('Error deleting package:', error);

@@ -36,7 +36,7 @@ const DiscoverPackageCRUD = () => {
   const [notification, setNotification] = useState({ show: false, message: '', type: '' });
 
   // API URL - replace with your actual backend URL
-  const API_URL = 'http://localhost:5000/api/packages';
+  const API_URL = 'https://backend-1-7zwm.onrender.com/api/packages';
 
   // Fetch all packages
   const fetchPackages = async () => {

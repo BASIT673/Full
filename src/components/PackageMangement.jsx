@@ -5644,7 +5644,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 const fetchPackages = useCallback(async () => {
   console.log('Fetching packages from API...');
   try {
-    const response = await axios.get('http://localhost:5000/api/packagesoffers');
+    const response = await axios.get('https://backend-1-7zwm.onrender.com/api/packagesoffers');
     console.log('API Response:', response.data);
     
     if (response.data?.packages) {
@@ -5679,8 +5679,8 @@ const handleSubmit = async (e) => {
 
   try {
     const url = isEditing 
-      ? `http://localhost:5000/api/packagesoffers/${editingPackageId}`
-      : 'http://localhost:5000/api/packagesoffers';
+      ? `https://backend-1-7zwm.onrender.com/api/packagesoffers/${editingPackageId}`
+      : 'https://backend-1-7zwm.onrender.com/api/packagesoffers';
     
     const method = isEditing ? 'put' : 'post';
     
@@ -5772,7 +5772,7 @@ const deletePackage = async (id) => {
   
   try {
     console.log('Deleting package:', id);
-    const response = await axios.delete(`http://localhost:5000/api/packagesoffers/${id}`);
+    const response = await axios.delete(`https://backend-1-7zwm.onrender.com/api/packagesoffers/${id}`);
     
     if (response.data?.success) {
       setPackages(prev => prev.filter(pkg => pkg._id !== id));

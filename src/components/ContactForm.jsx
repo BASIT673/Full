@@ -30,7 +30,7 @@ const ContactForm = () => {
     
     try {
       // Send data to your API endpoint
-      await axios.post('http://localhost:5000/api/contact', formData);
+      await axios.post('https://backend-1-7zwm.onrender.com/api/contact', formData);
       setSuccess(true);
       // Reset form after successful submission
       setFormData({

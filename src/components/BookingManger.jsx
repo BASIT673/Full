@@ -71,7 +71,7 @@ const BookingManager = () => {
   const fetchBookings = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/api/bookings');
+      const response = await axios.get('https://backend-1-7zwm.onrender.com/api/bookings');
       if (response.data.success) {
         setBookings(response.data.data);
         setPagination(prev => ({
@@ -92,7 +92,7 @@ const BookingManager = () => {
   // Fetch packages for the form
   const fetchPackages = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/discover');
+      const response = await axios.get('https://backend-1-7zwm.onrender.com/api/discover');
       if (response.data.success) {
         setPackages(response.data.data);
       }
@@ -117,13 +117,13 @@ const BookingManager = () => {
 
       let response;
       if (editMode) {
-        response = await axios.put(`http://localhost:5000/api/bookings/${currentBooking._id}`, formattedValues);
+        response = await axios.put(`https://backend-1-7zwm.onrender.com/api/bookings/${currentBooking._id}`, formattedValues);
         if (response.data.success) {
           message.success('Booking updated successfully');
           fetchBookings();
         }
       } else {
-        response = await axios.post('http://localhost:5000/api/bookings', formattedValues);
+        response = await axios.post('https://backend-1-7zwm.onrender.com/api/bookings', formattedValues);
         if (response.data.success) {
           message.success('Booking created successfully');
           fetchBookings();
@@ -144,7 +144,7 @@ const BookingManager = () => {
   const handleDelete = async (id) => {
     try {
       setLoading(true);
-      const response = await axios.delete(`http://localhost:5000/api/bookings/${id}`);
+      const response = await axios.delete(`https://backend-1-7zwm.onrender.com/api/bookings/${id}`);
       if (response.data.success) {
         message.success('Booking deleted successfully');
         fetchBookings();

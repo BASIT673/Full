@@ -34,7 +34,7 @@ const PromoCodeManager = () => {
   // Function to fetch all promo codes
   const fetchPromos = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/promos');
+      const response = await axios.get('https://backend-1-7zwm.onrender.com/api/promos');
       if (response.data.success) {
         setPromos(response.data.data);
         console.log(response)
@@ -62,10 +62,10 @@ const PromoCodeManager = () => {
       
       if (editMode) {
         // Update existing promo
-        response = await axios.put(`http://localhost:5000/api/promos/${currentPromoId}`, formData);
+        response = await axios.put(`https://backend-1-7zwm.onrender.com/api/promos/${currentPromoId}`, formData);
       } else {
         // Create new promo
-        response = await axios.post('http://localhost:5000/api/promos', formData);
+        response = await axios.post('https://backend-1-7zwm.onrender.com/api/promos', formData);
       }
       
       if (response.data.success) {
@@ -91,7 +91,7 @@ const PromoCodeManager = () => {
   // Function to handle edit button click
   const handleEdit = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/promos/${id}`);
+      const response = await axios.get(`https://backend-1-7zwm.onrender.com/api/promos/${id}`);
       if (response.data.success) {
         const promo = response.data.data;
         // Format dates for form inputs
@@ -118,7 +118,7 @@ const PromoCodeManager = () => {
     if (!confirmDelete) return;
     
     try {
-      const response = await axios.delete(`http://localhost:5000/api/promos/${confirmDelete}`);
+      const response = await axios.delete(`https://backend-1-7zwm.onrender.com/api/promos/${confirmDelete}`);
       if (response.data.success) {
         setMessage({ type: 'success', text: 'Promo code deleted successfully!' });
         // Refresh promo list

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DiscoverPackageList from './DiscoverPackageList';
 import DiscoverPackageDetails from './DiscoverPackageDetails';
 
-// import DiscoverPa from './DiscoverPackageList';
+
 import DiscoverPackageForm from './DiscoverPackageForm';
 
 const DiscoverPackages = () => {
